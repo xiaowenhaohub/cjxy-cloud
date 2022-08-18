@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>cjxy-cloud</artifactId>
-        <groupId>com.cjxy</groupId>
+        <groupId>com.changji</groupId>
         <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -15,5 +15,6 @@
         <module>cjxycloud-common-core</module>
         <module>cjxycloud-common-security</module>
     </modules>
+    <description>cjxycloud-common通用模块</description>
 
 </project>
