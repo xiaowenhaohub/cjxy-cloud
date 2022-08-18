@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.cjxy</groupId>
+    <groupId>com.cjxy</groupId>
     <artifactId>cjxy-cloud</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
@@ -14,7 +14,7 @@
 
         <module>cjxycloud-common</module>
         <module>cjxycloud-gateway</module>
-        <module>cjxycloud-common-security</module>
+        <module>cjxycloud-auth</module>
     </modules>
     <!-- 依赖版本管理 -->
     <properties>
@@ -27,6 +27,7 @@
         <spring-boot.version>2.4.2</spring-boot.version>
         <spring-cloud.version>2020.0.2</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
+        <alibaba.seata.version>1.5.1</alibaba.seata.version>
         <!--及时更新-->
         <seata.version>1.4.2</seata.version>
         <nacos.version>2.0.1</nacos.version>
@@ -38,7 +39,7 @@
         <knife4j.version>3.0.2</knife4j.version>
         <swagger2.version>2.9.2</swagger2.version>
         <swagger-bootstrap.version>1.9.6</swagger-bootstrap.version>
-        <hutool-version>5.5.8</hutool-version>
+        <hutool.version>5.5.8</hutool.version>
         <mybatis-spring-boot-starter.version>2.1.4</mybatis-spring-boot-starter.version>
         <log4j.version>2.17.1</log4j.version>
     </properties>
@@ -71,27 +72,16 @@
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
                 <version>${spring-cloud-alibaba.version}</version>
-                <!--                <exclusions>-->
-                <!--                    <exclusion>-->
-                <!--                        <groupId>com.alibaba.cloud</groupId>-->
-                <!--                        <artifactId>spring-cloud-alibaba-seata</artifactId>-->
-                <!--                    </exclusion>-->
-                <!--                </exclusions>-->
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--spring cloud seata-->
+            <!-- Alibaba Seata 配置 -->
             <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-seata</artifactId>
-                <version>${spring-cloud-alibaba.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>seata-spring-boot-starter</groupId>
-                        <artifactId>io.seata</artifactId>
-                    </exclusion>
-                </exclusions>
+                <groupId>io.seata</groupId>
+                <artifactId>seata-spring-boot-starter</artifactId>
+                <version>${alibaba.seata.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>io.seata</groupId>
                 <artifactId>seata-spring-boot-starter</artifactId>
@@ -166,11 +156,11 @@
                 <artifactId>swagger-bootstrap-ui</artifactId>
                 <version>${swagger-bootstrap.version}</version>
             </dependency>
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
-                <version>${hutool.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>cn.hutool</groupId>-->
+<!--                <artifactId>hutool-all</artifactId>-->
+<!--                <version>${hutool.version}</version>-->
+<!--            </dependency>-->
             <!-- log4j -->
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
@@ -201,17 +191,17 @@
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-core</artifactId>
-                <version>${hutool-version}</version>
+                <version>${hutool.version}</version>
             </dependency>
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-crypto</artifactId>
-                <version>${hutool-version}</version>
+                <version>${hutool.version}</version>
             </dependency>
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-http</artifactId>
-                <version>${hutool-version}</version>
+                <version>${hutool.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
