@@ -9,11 +9,3 @@
 # Maven
 **/target/
 #
-## others
-*.jar
-*.war
-*.zip
-*.tar
-*.tar.gz
-*.pid
-*.orig
