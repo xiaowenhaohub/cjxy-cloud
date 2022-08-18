@@ -15,6 +15,7 @@
         <module>cjxycloud-common</module>
         <module>cjxycloud-gateway</module>
         <module>cjxycloud-auth</module>
+        <module>test</module>
     </modules>
     <!-- 依赖版本管理 -->
     <properties>
