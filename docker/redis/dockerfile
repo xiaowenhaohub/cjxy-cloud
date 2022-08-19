@@ -1,0 +1,11 @@
+FROM redis
+
+MAINTAINER xiaowenhao
+
+VOLUME /home/changji/redis
+
+RUN mkdir -p /home/changji/redis
+
+WORKDIR /home/changji/redis
+
+COPY ./conf/redis.conf /home/changji/redis/redis.conf

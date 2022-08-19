@@ -1,0 +1,5 @@
+FROM nacos/nacos-server
+
+MAINTAINER xiaowenhao
+
+COPY ./conf/application.properties /home/nacos/conf/application.properties

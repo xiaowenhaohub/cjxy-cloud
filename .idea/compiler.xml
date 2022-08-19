@@ -7,12 +7,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="cjxycloud-auth" />
+        <module name="cjxycloud-api" />
         <module name="cjxycloud-gateway" />
         <module name="test" />
-        <module name="cjxycloud-common-core" />
         <module name="cjxycloud-common-redis" />
         <module name="cjxycloud-common-security" />
+        <module name="cjxycloud-auth" />
+        <module name="cjxycloud-common-core" />
       </profile>
     </annotationProcessing>
   </component>
