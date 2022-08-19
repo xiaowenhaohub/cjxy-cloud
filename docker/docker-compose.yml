@@ -7,6 +7,8 @@ services:
       context: ./nacos
     environment:
       - MODE=standalone
+      - JVM_XMS=256m
+      - JVM_XMX=256m
     volumes:
       - ./nacos/logs/:/home/nacos/logs
       - ./nacos/conf/application.properties:/home/nacos/conf/application.properties
@@ -16,6 +18,8 @@ services:
       - "9849:9849"
     depends_on:
       - cjxycloud-mysql
+
+
   cjxycloud-mysql:
     container_name: cjxycloud-mysql
     image: mysql:8.0
@@ -49,11 +53,11 @@ services:
       - ./redis/data:/data
     command: redis-server /home/changji/redis/redis.conf
 
-  cjxycloud-gateway:
-    container_name: cjxycloud-gateway
-    build:
-      context: ./cjxy/gateway
-      dockerfile: dockerfile
-    ports:
-      - "4230:4230"
+#  cjxycloud-gateway:
+#    container_name: cjxycloud-gateway
+#    build:
+#      context: ./cjxy/gateway
+#      dockerfile: dockerfile
+#    ports:
+#      - "4230:4230"
 
