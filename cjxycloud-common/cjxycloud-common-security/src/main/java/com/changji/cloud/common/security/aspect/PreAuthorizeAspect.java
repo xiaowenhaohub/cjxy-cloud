@@ -1,6 +1,7 @@
 package com.changji.cloud.common.security.aspect;
 
 import com.changji.cloud.common.security.annotation.RequiresPermissions;
+import com.changji.cloud.common.security.auth.AuthUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -62,15 +63,14 @@ public class PreAuthorizeAspect {
 
 
     /**
-     * 检查方法的注解
+     * 检查方法的注解 根据权限注解检查用户权限
      * @param method
      */
     public void checkMethodAnnotation(Method method) {
 
         RequiresPermissions requiresPermissions = method.getAnnotation(RequiresPermissions.class);
         if (requiresPermissions != null) {
-            System.out.println("checkMethodAnnotation");
-            System.out.println(requiresPermissions.value().toString());
+            AuthUtil.checkPermissions(requiresPermissions);
         }
 
     }

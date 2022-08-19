@@ -4,16 +4,13 @@ import com.alibaba.ttl.TransmittableThreadLocal;
 import com.changji.cloud.common.core.constant.SecurityConstants;
 import com.changji.cloud.common.core.text.Convert;
 import com.changji.cloud.common.core.utils.StringUtils;
-
-
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author 小问号
  * @date 2022/8/18 18
- * description  获取当前线程变量中的 用户id、用户名称、Token等信息
+ * description  获取当前线程变量中的 用户id、用户名称、Token等信息 Thread_local 操作类
  */
 
 public class SecurityContextHolder {

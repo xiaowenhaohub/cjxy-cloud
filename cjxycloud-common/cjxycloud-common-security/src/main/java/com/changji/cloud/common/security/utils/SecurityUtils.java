@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  /**
  * @ Author     ：小问号.
  * @ Date       ：Created in 0:17 2022/8/19
- * @ Modified By：权限获取工具类
+ * @ Modified By：权限获取工具类 对SecurityContextHolder 进行封装
  */
 public class SecurityUtils
 {
@@ -79,7 +79,7 @@ public class SecurityUtils
 
     /**
      * 是否为管理员
-     * 
+     *
      * @param userId 用户ID
      * @return 结果
      */
