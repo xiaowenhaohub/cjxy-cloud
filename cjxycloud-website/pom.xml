@@ -9,17 +9,17 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cjxycloud-api</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>cjxycloud-api-website</module>
-    </modules>
+    <artifactId>cjxycloud-website</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.changji</groupId>
             <artifactId>cjxycloud-common-core</artifactId>
             <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
         </dependency>
     </dependencies>
 

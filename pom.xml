@@ -17,6 +17,7 @@
         <module>cjxycloud-auth</module>
         <module>test</module>
         <module>cjxycloud-api</module>
+        <module>cjxycloud-website</module>
     </modules>
     <!-- 依赖版本管理 -->
     <properties>

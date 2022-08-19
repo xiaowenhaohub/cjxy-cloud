@@ -17,6 +17,8 @@ public enum ResponseEnum {
      */
     SHOW_FAIL("400", ""),
 
+    ACCOUNT_ERROR("400", "用户名或密码错误"),
+
     /**
      * 方法参数没有校验，内容由输入内容决定
      */
