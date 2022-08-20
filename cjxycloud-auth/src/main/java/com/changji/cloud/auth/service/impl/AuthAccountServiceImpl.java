@@ -37,30 +37,31 @@ public class AuthAccountServiceImpl implements AuthAccountService {
     @Override
     public AuthAccount login(String username, String password) {
 
+
+        //从数据库查询用户
         AuthAccount authAccount = authAccountMapper.queryByUserName(username);
 
         if (authAccount != null) {
             return authAccount;
         }
-        ServerResponseEntity<AuthAccountVO> byUserNameAndPassword = websiteFeignClient.getByUserNameAndPassword(username, password);
 
+        //从教务管理系统查询用户
+        ServerResponseEntity<AuthAccountVO> byUserNameAndPassword = websiteFeignClient.getByUserNameAndPassword(username, password);
         if (!byUserNameAndPassword.isSuccess()) {
             throw new ServiceException(byUserNameAndPassword.getMsg());
         }
         AuthAccountVO authAccountVO = byUserNameAndPassword.getData();
+        authAccount  = mapperFacade.map(authAccountVO, AuthAccount.class);
+        authAccount.setStatus(1);
 
+        // 从leaf获取uid
         ServerResponseEntity<Long> responseEntity = segmentFeignClient.getSegmentId(LeafKeyEnum.AUTH_UID_KEY.value());
-
         if (!responseEntity.isSuccess()) {
             throw new ServiceException("获取uid 失败");
         }
-
-        authAccount  = mapperFacade.map(authAccountVO, AuthAccount.class);
         authAccount.setUid(responseEntity.getData());
-        authAccount.setStatus(1);
 
-        System.out.println(authAccount);
 
-        return null;
+        return authAccount;
     }
 }
