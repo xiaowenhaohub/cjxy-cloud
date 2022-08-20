@@ -10,9 +10,20 @@
         select <include refid="all_columns"></include> from auth_account where username =#{username}
     </select>
 
+    <select id="queryUserMenuByUid" resultType="java.lang.String">
+        SELECT m.perms FROM sys_auth_role ar
+            LEFT JOIN sys_role r on ar.role_id = r.role_id
+            LEFT JOIN sys_role_menu rm on rm.role_id = r.role_id
+            LEFT JOIN sys_menu m on m.menu_id = rm.menu_id
+        WHERE ar.uid = #{uid}
+    </select>
+
     <insert id="save">
         insert into auth_account (<include refid="all_columns"></include>)
         values (#{authAccount.uid},#{authAccount.username},#{authAccount.password},#{authAccount.createIp},#{authAccount.status},#{authAccount.userId})
+    </insert>
+    <insert id="saveAuthRole">
+        insert into sys_auth_role (uid, role_id) values (#{uid}, #{roleId})
     </insert>
 
 </mapper>

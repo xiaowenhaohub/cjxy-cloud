@@ -138,7 +138,21 @@ public class LoginUser implements Serializable {
         this.roles = roles;
     }
 
-//    public SysUser getSysUser()
+    @Override
+    public String toString() {
+        return "LoginUser{" +
+                "token='" + token + '\'' +
+                ", userId=" + userId +
+                ", username='" + username + '\'' +
+                ", loginTime=" + loginTime +
+                ", expireTime=" + expireTime +
+                ", ipaddr='" + ipaddr + '\'' +
+                ", permissions=" + permissions +
+                ", roles=" + roles +
+                '}';
+    }
+
+    //    public SysUser getSysUser()
 //    {
 //        return sysUser;
 //    }

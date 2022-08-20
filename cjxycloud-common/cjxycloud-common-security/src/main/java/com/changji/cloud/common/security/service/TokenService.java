@@ -2,6 +2,7 @@ package com.changji.cloud.common.security.service;
 
 import com.changji.cloud.common.core.constant.CacheConstants;
 import com.changji.cloud.common.core.constant.SecurityConstants;
+import com.changji.cloud.common.core.utils.IpUtils;
 import com.changji.cloud.common.core.utils.JwtUtils;
 import com.changji.cloud.common.core.utils.ServletUtils;
 import com.changji.cloud.common.core.utils.StringUtils;
@@ -53,12 +54,13 @@ public class TokenService {
     public Map<String, Object> createToken(LoginUser loginUser) {
         String token = IdUtils.fastUUID();
         loginUser.setToken(token);
+        loginUser.setIpaddr(IpUtils.getIpAddr(ServletUtils.getRequest()));
         refreshToken(loginUser);
         // Jwt存储信息
         Map<String, Object> claimsMap = new HashMap<>();
         claimsMap.put(SecurityConstants.USER_KEY, token);
 
-        Map<String, Object> rspMap = new HashMap<String, Object>();
+        Map<String, Object> rspMap = new HashMap<>();
         rspMap.put("access_token", JwtUtils.createToken(claimsMap));
         rspMap.put("expires_in", expireTime);
         return rspMap;

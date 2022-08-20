@@ -4,7 +4,6 @@ import com.changji.cloud.api.leaf.enums.LeafKeyEnum;
 import com.changji.cloud.api.leaf.feign.SegmentFeignClient;
 import com.changji.cloud.api.website.feign.WebsiteFeignClient;
 import com.changji.cloud.api.website.vo.AuthAccountVO;
-import com.changji.cloud.auth.dto.AuthenticationDTO;
 import com.changji.cloud.auth.mapper.AuthAccountMapper;
 import com.changji.cloud.auth.model.AuthAccount;
 import com.changji.cloud.auth.service.AuthAccountService;
@@ -12,9 +11,9 @@ import com.changji.cloud.common.core.exception.ServiceException;
 import com.changji.cloud.common.core.response.ServerResponseEntity;
 import com.changji.cloud.common.core.utils.IpUtils;
 import com.changji.cloud.common.core.utils.ServletUtils;
+import com.changji.cloud.common.security.enums.AuthRoleEnum;
 import com.changji.cloud.common.security.model.LoginUser;
 import ma.glasnost.orika.MapperFacade;
-import org.bouncycastle.pqc.crypto.newhope.NHOtherInfoGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,7 +49,9 @@ public class AuthAccountServiceImpl implements AuthAccountService {
         AuthAccount authAccount = authAccountMapper.queryByUserName(username);
 
         if (authAccount != null) {
-            return toLoginUser(authAccount,null);
+            //查询用户权限列表
+            List<String> permission = authAccountMapper.queryUserMenuByUid(authAccount.getUid());
+            return toLoginUser(authAccount, permission);
         }
 
         //从教务管理系统查询用户
@@ -71,9 +72,13 @@ public class AuthAccountServiceImpl implements AuthAccountService {
         authAccount.setUid(uidResponseEntity.getData());
         authAccount.setUserId(userIdResponseEntity.getData());
         authAccount.setCreateIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
+        //保存用户到auth数据库
         authAccountMapper.save(authAccount);
-
-        return toLoginUser(authAccount,null);
+        //保存用户角色到数据库
+        authAccountMapper.saveAuthRole(uidResponseEntity.getData(), AuthRoleEnum.COMMON_ROLE.value());
+        //获取角色权限
+        List<String> permission = authAccountMapper.queryUserMenuByUid(authAccount.getUid());
+        return toLoginUser(authAccount,permission);
     }
 
     public LoginUser toLoginUser(AuthAccount authAccount,  List<String> permissions) {
