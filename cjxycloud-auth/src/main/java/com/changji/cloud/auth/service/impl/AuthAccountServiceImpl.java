@@ -1,5 +1,7 @@
 package com.changji.cloud.auth.service.impl;
 
+import com.changji.cloud.api.leaf.enums.LeafKeyEnum;
+import com.changji.cloud.api.leaf.feign.SegmentFeignClient;
 import com.changji.cloud.api.website.feign.WebsiteFeignClient;
 import com.changji.cloud.api.website.vo.AuthAccountVO;
 import com.changji.cloud.auth.dto.AuthenticationDTO;
@@ -29,6 +31,9 @@ public class AuthAccountServiceImpl implements AuthAccountService {
     @Autowired
     private MapperFacade mapperFacade;
 
+    @Autowired
+    private SegmentFeignClient segmentFeignClient;
+
     @Override
     public AuthAccount login(String username, String password) {
 
@@ -44,7 +49,14 @@ public class AuthAccountServiceImpl implements AuthAccountService {
         }
         AuthAccountVO authAccountVO = byUserNameAndPassword.getData();
 
+        ServerResponseEntity<Long> responseEntity = segmentFeignClient.getSegmentId(LeafKeyEnum.AUTH_UID_KEY.value());
+
+        if (!responseEntity.isSuccess()) {
+            throw new ServiceException("获取uid 失败");
+        }
+
         authAccount  = mapperFacade.map(authAccountVO, AuthAccount.class);
+        authAccount.setUid(responseEntity.getData());
         authAccount.setStatus(1);
 
         System.out.println(authAccount);

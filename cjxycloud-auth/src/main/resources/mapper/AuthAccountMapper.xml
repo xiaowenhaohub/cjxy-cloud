@@ -3,7 +3,7 @@
 <mapper namespace="com.changji.cloud.auth.mapper.AuthAccountMapper">
 
     <sql id="all_columns">
-        username, password ,create_ip,status,user_id
+        uid, username, password , create_ip, status, user_id
     </sql>
 
     <select id="queryByUserName" resultType="com.changji.cloud.auth.model.AuthAccount">
@@ -12,7 +12,7 @@
 
     <insert id="save">
         insert into auth_account (<include refid="all_columns"></include>)
-        values (#{authAccount.username},#{authAccount.password},#{authAccount.createIp},#{authAccount.status},#{authAccount.userId})
+        values (#{authAccount.uid},#{authAccount.username},#{authAccount.password},#{authAccount.createIp},#{authAccount.status},#{authAccount.userId})
     </insert>
 
 </mapper>
