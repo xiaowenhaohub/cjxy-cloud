@@ -3,6 +3,7 @@ package com.changji.cloud.website;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @ Author     ：小问号.
@@ -11,6 +12,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @SpringBootApplication
 @EnableFeignClients
+@ComponentScan(basePackages = {"com.changji.cloud"})
 public class WebsiteApplication {
     public static void main(String[] args) {
         SpringApplication.run(WebsiteApplication.class, args);

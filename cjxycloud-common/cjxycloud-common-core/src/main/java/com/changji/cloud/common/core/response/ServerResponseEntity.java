@@ -19,7 +19,7 @@ public class ServerResponseEntity<T> implements Serializable {
     /**
      * 状态码
      */
-    private String code;
+    private Integer code;
 
     /**
      * 信息
@@ -31,11 +31,11 @@ public class ServerResponseEntity<T> implements Serializable {
      */
     private T data;
 
-    public String getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 
@@ -113,6 +113,14 @@ public class ServerResponseEntity<T> implements Serializable {
         serverResponseEntity.setMsg(oldServerResponseEntity.getMsg());
         serverResponseEntity.setCode(oldServerResponseEntity.getCode());
         log.error(serverResponseEntity.toString());
+        return serverResponseEntity;
+    }
+
+    public static <T> ServerResponseEntity<T> customResponse(Integer code, String msg, T data) {
+        ServerResponseEntity<T> serverResponseEntity = new ServerResponseEntity<>();
+        serverResponseEntity.setCode(code);
+        serverResponseEntity.setMsg(msg);
+        serverResponseEntity.setData(data);
         return serverResponseEntity;
     }
 

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/cjxycloud-api/cjxycloud-api-auth/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cjxycloud-api/cjxycloud-api-website/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cjxycloud-api/cjxycloud-api-website/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cjxycloud-auth/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cjxycloud-auth/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cjxycloud-common/cjxycloud-common-core/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cjxycloud-common/cjxycloud-common-datasource/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cjxycloud-common/cjxycloud-common-redis/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cjxycloud-common/cjxycloud-common-security/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cjxycloud-gateway/src/main/java" charset="UTF-8" />

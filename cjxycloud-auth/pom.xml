@@ -32,12 +32,18 @@
             <version>1.0</version>
         </dependency>
 
-
+        <dependency>
+            <groupId>com.changji</groupId>
+            <artifactId>cjxycloud-common-datasource</artifactId>
+            <version>1.0</version>
+        </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.changji</groupId>
+            <artifactId>cjxycloud-api-auth</artifactId>
+            <version>1.0</version>
         </dependency>
+
     </dependencies>
 
     <build>

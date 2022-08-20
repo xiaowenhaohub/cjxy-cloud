@@ -33,8 +33,7 @@ public class CookieUtil {
      * @param user
      * @return
      */
-    public static CookieStore getCookieStore(WebsiteUser user) {
-        String url = HttpConstants.BASE_URL.value() + HttpConstants.LOGIN_URL.value();
+    public static CookieStore getCookieStore(WebsiteUser user, String url) {
         HttpClientContext context = new HttpClientContext();
         CloseableHttpResponse response = getResponse(context, url, user);
         if(response.getStatusLine().getStatusCode() != 302){
@@ -54,11 +53,7 @@ public class CookieUtil {
     public static CloseableHttpResponse getResponse(HttpClientContext context, String url, WebsiteUser user) {
         CloseableHttpClient httpClient = getHttpClient();
         HttpPost httpPost = getHttpPost(user, url);
-        try {
-            return httpClient.execute(httpPost, context);
-        } catch (IOException e) {
-            throw new ServiceException("获取cookie 异常", ResponseEnum.EXCEPTION);
-        }
+        return HttpClientUtils.getResponse(context,httpClient, httpPost);
     }
 
     public static CloseableHttpClient getHttpClient() {

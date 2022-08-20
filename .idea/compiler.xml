@@ -11,10 +11,12 @@
         <module name="cjxycloud-gateway" />
         <module name="test" />
         <module name="cjxycloud-common-redis" />
+        <module name="cjxycloud-common-datasource" />
         <module name="cjxycloud-common-security" />
         <module name="cjxycloud-auth" />
         <module name="cjxycloud-common-core" />
         <module name="cjxycloud-website" />
+        <module name="cjxycloud-api-auth" />
       </profile>
     </annotationProcessing>
   </component>

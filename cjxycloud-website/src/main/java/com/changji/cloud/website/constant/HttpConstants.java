@@ -13,6 +13,11 @@ public enum HttpConstants {
     BASE_URL("https://219.247.64.162/jsxsd"),
 
     /**
+     * 我的课表url
+     */
+    MY_COURSE_URL("/xskb/xskb_list.do"),
+
+    /**
      * 登录url
      */
     LOGIN_URL("/xk/LoginToXk")

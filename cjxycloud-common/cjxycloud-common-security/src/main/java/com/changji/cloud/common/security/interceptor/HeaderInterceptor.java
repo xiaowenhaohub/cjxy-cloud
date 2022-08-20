@@ -4,9 +4,7 @@ import com.changji.cloud.common.core.constant.SecurityConstants;
 import com.changji.cloud.common.core.constant.TokenConstants;
 import com.changji.cloud.common.core.context.SecurityContextHolder;
 import com.changji.cloud.common.core.utils.ServletUtils;
-import com.changji.cloud.common.core.utils.StringUtils;
 import com.changji.cloud.common.security.utils.SecurityUtils;
-import org.apache.tomcat.websocket.Constants;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 

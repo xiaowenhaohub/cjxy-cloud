@@ -15,6 +15,7 @@
         <module>cjxycloud-common-core</module>
         <module>cjxycloud-common-security</module>
         <module>cjxycloud-common-redis</module>
+        <module>cjxycloud-common-datasource</module>
     </modules>
     <description>cjxycloud-common通用模块</description>
 

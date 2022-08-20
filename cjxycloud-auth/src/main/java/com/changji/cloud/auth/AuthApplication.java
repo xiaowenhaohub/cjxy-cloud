@@ -2,6 +2,7 @@ package com.changji.cloud.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -10,8 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
  * description
  */
 
-@SpringBootApplication
-@ComponentScan(basePackages = {"com.changji.cloud"})
+@SpringBootApplication(scanBasePackages = {"com.changji.cloud"})
+@EnableFeignClients(basePackages = "com.changji.cloud.api.**.feign")
 public class AuthApplication {
     public static void main(String[] args) {
         SpringApplication.run(AuthApplication.class, args);

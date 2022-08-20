@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>cjxycloud-api-website</module>
+        <module>cjxycloud-api-auth</module>
     </modules>
 
     <dependencies>

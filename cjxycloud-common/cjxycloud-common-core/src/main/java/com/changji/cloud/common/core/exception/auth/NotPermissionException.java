@@ -8,17 +8,14 @@ import org.apache.commons.lang.StringUtils;
  * description 未能通过的权限认证异常
  */
 
-public class NotPermissionException extends RuntimeException
-{
+public class NotPermissionException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    public NotPermissionException(String permission)
-    {
+    public NotPermissionException(String permission) {
         super(permission);
     }
 
-    public NotPermissionException(String[] permissions)
-    {
+    public NotPermissionException(String[] permissions) {
         super(StringUtils.join(permissions, ","));
     }
 }

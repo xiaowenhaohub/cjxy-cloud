@@ -18,8 +18,19 @@
             <version>1.0</version>
         </dependency>
         <dependency>
+            <groupId>com.changji</groupId>
+            <artifactId>cjxycloud-common-security</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.changji</groupId>
+            <artifactId>cjxycloud-api-website</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 

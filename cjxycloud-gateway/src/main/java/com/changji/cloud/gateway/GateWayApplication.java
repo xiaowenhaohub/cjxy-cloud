@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.changji.cloud"})
 public class GateWayApplication {
     public static void main(String[] args) {
         SpringApplication.run(GateWayApplication.class, args);
