@@ -1,6 +1,7 @@
 package com.changji.cloud.common.security.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 
@@ -20,7 +21,7 @@ public class LoginUser implements Serializable {
     /**
      * 用户名id
      */
-    private Long userid;
+    private Long userId;
 
     /**
      * 用户名
@@ -45,7 +46,7 @@ public class LoginUser implements Serializable {
     /**
      * 权限列表
      */
-    private Set<String> permissions;
+    private List<String> permissions;
 
     /**
      * 角色列表
@@ -69,12 +70,12 @@ public class LoginUser implements Serializable {
 
     public Long getUserid()
     {
-        return userid;
+        return userId;
     }
 
-    public void setUserid(Long userid)
+    public void setUserid(Long userId)
     {
-        this.userid = userid;
+        this.userId = userId;
     }
 
     public String getUsername()
@@ -117,12 +118,12 @@ public class LoginUser implements Serializable {
         this.ipaddr = ipaddr;
     }
 
-    public Set<String> getPermissions()
+    public List<String> getPermissions()
     {
         return permissions;
     }
 
-    public void setPermissions(Set<String> permissions)
+    public void setPermissions(List<String> permissions)
     {
         this.permissions = permissions;
     }

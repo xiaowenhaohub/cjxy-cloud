@@ -5,6 +5,7 @@ import com.changji.cloud.auth.dto.AuthenticationDTO;
 import com.changji.cloud.auth.model.AuthAccount;
 import com.changji.cloud.auth.service.AuthAccountService;
 import com.changji.cloud.common.core.response.ServerResponseEntity;
+import com.changji.cloud.common.security.model.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,10 @@ public class TokenController {
     @PostMapping("login")
     public ServerResponseEntity<TokenInfoVO> login(@Validated @RequestBody AuthenticationDTO authenticationDTO) {
         System.out.println(authenticationDTO);
-        AuthAccount authAccount = authAccountService.login(authenticationDTO.getUsername(), authenticationDTO.getPassword());
+        LoginUser loginUser = authAccountService.login(authenticationDTO.getUsername(), authenticationDTO.getPassword());
+
+
+
         return ServerResponseEntity.success(null);
     }
 }

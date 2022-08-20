@@ -2,6 +2,7 @@ package com.changji.cloud.common.core.utils;
 
 import com.alibaba.fastjson2.JSON;
 import com.changji.cloud.common.core.constant.Constants;
+import com.changji.cloud.common.core.constant.TokenConstants;
 import com.changji.cloud.common.core.response.ResponseEnum;
 import com.changji.cloud.common.core.response.ServerResponseEntity;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -51,6 +52,25 @@ public class ServletUtils {
         return urlDecode(value);
     }
 
+    /**
+     * 根据request获取请求token
+     */
+    public static String getToken(HttpServletRequest request) {
+        // 从header获取token标识
+        String token = request.getHeader(TokenConstants.AUTHENTICATION);
+        return replaceTokenPrefix(token);
+    }
+
+    /**
+     * 裁剪token前缀
+     */
+    public static String replaceTokenPrefix(String token) {
+        // 如果前端设置了令牌前缀，则裁剪掉前缀
+        if (StringUtils.isNotEmpty(token) && token.startsWith(TokenConstants.PREFIX)) {
+            token = token.replaceFirst(TokenConstants.PREFIX, "");
+        }
+        return token;
+    }
     /**
      * 内容解码
      *

@@ -9,9 +9,7 @@ import com.changji.cloud.common.security.model.LoginUser;
 import com.changji.cloud.common.security.utils.SecurityUtils;
 import org.springframework.util.PatternMatchUtils;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -49,7 +47,7 @@ public class AuthLogic {
      * @param permissions
      */
     public void checkPermissionAnd(String... permissions) {
-        Set<String> permissionList = getPermissionList();
+        List<String> permissionList = getPermissionList();
 
         for (String permission : permissions) {
             if (!hasPermission(permissionList, permission)){
@@ -59,7 +57,7 @@ public class AuthLogic {
     }
 
     public void checkPermissionOr(String... permissions) {
-        Set<String> permissionList = getPermissionList();
+        List<String> permissionList = getPermissionList();
         for (String permission : permissions) {
             if (hasPermission(permissionList, permission)) {
                 return;
@@ -94,12 +92,12 @@ public class AuthLogic {
      *
      * @return 权限列表
      */
-    public Set<String> getPermissionList() {
+    public List<String> getPermissionList() {
         try {
             LoginUser loginUser = getLoginUser();
             return loginUser.getPermissions();
         }catch (Exception e) {
-            return new HashSet<>();
+            return new ArrayList<>();
         }
     }
 

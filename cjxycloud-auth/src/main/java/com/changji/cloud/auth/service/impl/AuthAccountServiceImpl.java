@@ -12,10 +12,14 @@ import com.changji.cloud.common.core.exception.ServiceException;
 import com.changji.cloud.common.core.response.ServerResponseEntity;
 import com.changji.cloud.common.core.utils.IpUtils;
 import com.changji.cloud.common.core.utils.ServletUtils;
+import com.changji.cloud.common.security.model.LoginUser;
 import ma.glasnost.orika.MapperFacade;
+import org.bouncycastle.pqc.crypto.newhope.NHOtherInfoGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @ Author     ：小问号.
@@ -39,14 +43,14 @@ public class AuthAccountServiceImpl implements AuthAccountService {
 
     @Override
     @Transactional
-    public AuthAccount login(String username, String password) {
+    public LoginUser login(String username, String password) {
 
 
         //从数据库查询用户
         AuthAccount authAccount = authAccountMapper.queryByUserName(username);
 
         if (authAccount != null) {
-            return authAccount;
+            return toLoginUser(authAccount,null);
         }
 
         //从教务管理系统查询用户
@@ -69,6 +73,12 @@ public class AuthAccountServiceImpl implements AuthAccountService {
         authAccount.setCreateIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
         authAccountMapper.save(authAccount);
 
-        return authAccount;
+        return toLoginUser(authAccount,null);
+    }
+
+    public LoginUser toLoginUser(AuthAccount authAccount,  List<String> permissions) {
+        LoginUser loginUser = mapperFacade.map(authAccount, LoginUser.class);
+        loginUser.setPermissions(permissions);
+        return loginUser;
     }
 }

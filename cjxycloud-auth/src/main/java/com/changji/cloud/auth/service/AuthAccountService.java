@@ -2,6 +2,7 @@ package com.changji.cloud.auth.service;
 
 import com.changji.cloud.auth.dto.AuthenticationDTO;
 import com.changji.cloud.auth.model.AuthAccount;
+import com.changji.cloud.common.security.model.LoginUser;
 
 /**
  * @ Author     ：小问号.
@@ -16,5 +17,5 @@ public interface AuthAccountService {
      * @param password
      * @return
      */
-    AuthAccount login(String username, String password);
+    LoginUser login(String username, String password);
 }
