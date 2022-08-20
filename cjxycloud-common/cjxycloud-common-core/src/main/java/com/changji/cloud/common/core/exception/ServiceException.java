@@ -17,8 +17,8 @@ public class ServiceException extends RuntimeException{
 
     public ServiceException(){}
 
-    public ServiceException(ResponseEnum responseEnum) {
-        this.responseEnum = responseEnum;
+    public ServiceException(String message) {
+        this.message = message;
     }
 
     public ServiceException(String message, ResponseEnum responseEnum ) {

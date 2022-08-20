@@ -12,11 +12,11 @@
     <artifactId>cjxycloud-common-security</artifactId>
 
     <dependencies>
-        <!-- Spring Web -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-        </dependency>
+<!--        &lt;!&ndash; Spring Web &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework</groupId>-->
+<!--            <artifactId>spring-webmvc</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.aspectj</groupId>

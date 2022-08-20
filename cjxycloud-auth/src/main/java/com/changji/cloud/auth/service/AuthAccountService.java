@@ -12,7 +12,8 @@ public interface AuthAccountService {
 
     /**
      * 根据用户名首先从数据库查询用户，如果为空，则从教务管理系统验证用户
-     * @param authenticationDTO
+     * @param username
+     * @param password
      * @return
      */
     AuthAccount login(String username, String password);

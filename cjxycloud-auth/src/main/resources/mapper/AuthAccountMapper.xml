@@ -2,7 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.changji.cloud.auth.mapper.AuthAccountMapper">
 
+    <sql id="all_columns">
+        username, password ,create_ip,status,user_id
+    </sql>
+
     <select id="queryByUserName" resultType="com.changji.cloud.auth.model.AuthAccount">
-        select username, password ,create_ip,status,user_id from auth_account where username =#{username}
+        select <include refid="all_columns"></include> from auth_account where username =#{username}
     </select>
+
+    <insert id="save">
+        insert into auth_account (<include refid="all_columns"></include>)
+        values (#{authAccount.username},#{authAccount.password},#{authAccount.createIp},#{authAccount.status},#{authAccount.userId})
+    </insert>
+
 </mapper>

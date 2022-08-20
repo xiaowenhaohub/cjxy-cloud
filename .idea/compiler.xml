@@ -13,7 +13,9 @@
         <module name="cjxycloud-common-redis" />
         <module name="cjxycloud-common-datasource" />
         <module name="cjxycloud-common-security" />
+        <module name="cjxycloud-leaf" />
         <module name="cjxycloud-auth" />
+        <module name="cjxycloud-api-leaf" />
         <module name="cjxycloud-common-core" />
         <module name="cjxycloud-website" />
         <module name="cjxycloud-api-auth" />

@@ -13,7 +13,7 @@ public class AuthAccount extends BaseModel {
     /**
      * 全平台用户唯一id
      */
-    private Long uid;
+    private Long id;
 
     /**
      * 用户名
@@ -41,11 +41,11 @@ public class AuthAccount extends BaseModel {
     private Long userId;
 
     public Long getUid() {
-        return uid;
+        return id;
     }
 
-    public void setUid(Long uid) {
-        this.uid = uid;
+    public void setUid(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -91,7 +91,7 @@ public class AuthAccount extends BaseModel {
     @Override
     public String toString() {
         return "AuthAccount{" +
-                "uid=" + uid +
+                "uid=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", createIp='" + createIp + '\'' +

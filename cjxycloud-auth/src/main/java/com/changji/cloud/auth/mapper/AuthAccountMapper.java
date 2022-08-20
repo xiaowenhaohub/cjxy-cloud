@@ -9,6 +9,7 @@ import org.mapstruct.Mapper;
  * @ Date       ：Created in 15:37 2022/8/20
  * @ Modified By：
  */
+@Mapper
 public interface AuthAccountMapper {
 
     /**
@@ -16,5 +17,12 @@ public interface AuthAccountMapper {
      * @return
      */
     AuthAccount queryByUserName(@Param("username") String username);
+
+
+    /**
+     * 保存用户
+     * @param authAccount
+     */
+    void save(@Param("authAccount") AuthAccount authAccount);
 
 }

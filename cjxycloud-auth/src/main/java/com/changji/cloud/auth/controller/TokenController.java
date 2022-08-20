@@ -2,8 +2,14 @@ package com.changji.cloud.auth.controller;
 
 import com.changji.cloud.api.auth.vo.TokenInfoVO;
 import com.changji.cloud.auth.dto.AuthenticationDTO;
+import com.changji.cloud.auth.model.AuthAccount;
+import com.changji.cloud.auth.service.AuthAccountService;
 import com.changji.cloud.common.core.response.ServerResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -14,8 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TokenController {
 
+    @Autowired
+    private AuthAccountService authAccountService;
+
     @PostMapping("login")
-    public ServerResponseEntity<TokenInfoVO> login(AuthenticationDTO authenticationDTO) {
-        return null;
+    public ServerResponseEntity<TokenInfoVO> login(@Validated @RequestBody AuthenticationDTO authenticationDTO) {
+        System.out.println(authenticationDTO);
+        AuthAccount authAccount = authAccountService.login(authenticationDTO.getUsername(), authenticationDTO.getPassword());
+        return ServerResponseEntity.success(null);
     }
 }

@@ -8,6 +8,12 @@
     <artifactId>cjxy-cloud</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
+    <description>
+        4230 gateway
+        4231 auth
+        4232 website
+        4233 leaf
+    </description>
 
     <!-- 模块 -->
     <modules>
@@ -18,6 +24,7 @@
         <module>test</module>
         <module>cjxycloud-api</module>
         <module>cjxycloud-website</module>
+        <module>cjxycloud-leaf</module>
     </modules>
     <!-- 依赖版本管理 -->
     <properties>
