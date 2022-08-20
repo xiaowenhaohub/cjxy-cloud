@@ -10,9 +10,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Map;
 
 /**
- * Jwt工具类
- *
- * @author ruoyi
+ * @ Author     ：小问号.
+ * @ Date       ：Created in 1:16 2022/8/19
+ * @ Modified By： Jwt工具类
  */
 public class JwtUtils {
     public static String secret = TokenConstants.SECRET;

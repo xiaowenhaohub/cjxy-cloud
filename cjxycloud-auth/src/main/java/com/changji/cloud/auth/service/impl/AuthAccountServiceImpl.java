@@ -10,9 +10,12 @@ import com.changji.cloud.auth.model.AuthAccount;
 import com.changji.cloud.auth.service.AuthAccountService;
 import com.changji.cloud.common.core.exception.ServiceException;
 import com.changji.cloud.common.core.response.ServerResponseEntity;
+import com.changji.cloud.common.core.utils.IpUtils;
+import com.changji.cloud.common.core.utils.ServletUtils;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @ Author     ：小问号.
@@ -35,6 +38,7 @@ public class AuthAccountServiceImpl implements AuthAccountService {
     private SegmentFeignClient segmentFeignClient;
 
     @Override
+    @Transactional
     public AuthAccount login(String username, String password) {
 
 
@@ -55,12 +59,15 @@ public class AuthAccountServiceImpl implements AuthAccountService {
         authAccount.setStatus(1);
 
         // 从leaf获取uid
-        ServerResponseEntity<Long> responseEntity = segmentFeignClient.getSegmentId(LeafKeyEnum.AUTH_UID_KEY.value());
-        if (!responseEntity.isSuccess()) {
-            throw new ServiceException("获取uid 失败");
+        ServerResponseEntity<Long> uidResponseEntity = segmentFeignClient.getSegmentId(LeafKeyEnum.AUTH_UID_KEY.value());
+        ServerResponseEntity<Long> userIdResponseEntity = segmentFeignClient.getSegmentId(LeafKeyEnum.USER_ID_KEY.value());
+        if (!uidResponseEntity.isSuccess() || !userIdResponseEntity.isSuccess()) {
+            throw new ServiceException("leaf获取id失败");
         }
-        authAccount.setUid(responseEntity.getData());
-
+        authAccount.setUid(uidResponseEntity.getData());
+        authAccount.setUserId(userIdResponseEntity.getData());
+        authAccount.setCreateIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
+        authAccountMapper.save(authAccount);
 
         return authAccount;
     }
