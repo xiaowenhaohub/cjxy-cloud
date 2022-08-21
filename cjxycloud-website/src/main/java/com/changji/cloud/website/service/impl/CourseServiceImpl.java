@@ -63,10 +63,10 @@ public class CourseServiceImpl implements CourseService {
         list.add(new BasicNameValuePair("sfFD",""));
         list.add(new BasicNameValuePair("wkbkc","1"));//无课表课程
         list.add(new BasicNameValuePair("kbjcmsid","A63DB2E690D94F43945978F87DBE514D"));//默认节次模式
+
         //发起http请求
-        HttpPost httpPost = HttpClientUtils.getHttpPost(list, url);
-        CloseableHttpClient httpClient = HttpClientUtils.createSSLClientCustom(cookieStore);
-        CloseableHttpResponse response = HttpClientUtils.getResponse(httpClient, httpPost);
+        CloseableHttpResponse response = HttpClientUtils.getResponse(url,cookieStore,list,null);
+
         String context = BufferUtil.inputToString(response);
 
         List<List<Course>> courseList = HTMLUtil.getCourseList(context);

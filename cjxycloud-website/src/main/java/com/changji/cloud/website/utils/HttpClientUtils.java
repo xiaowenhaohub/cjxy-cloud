@@ -24,6 +24,7 @@ import javax.net.ssl.SSLContext;
 import java.io.IOException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -120,6 +121,14 @@ public class HttpClientUtils {
 
     }
 
+    /**
+     * 根据url获取post
+     * @param url
+     * @return
+     */
+    public static HttpPost getHttpPost (String url) {
+        return getHttpPost(new ArrayList<>(), url);
+    }
 
 
     /**
@@ -145,6 +154,17 @@ public class HttpClientUtils {
      */
     public static CloseableHttpResponse getResponse(CloseableHttpClient httpClient, HttpPost httpPost ) {
        return getResponse(null,httpClient,httpPost);
+    }
+
+
+    public static CloseableHttpResponse getResponse(String url,  CookieStore cookieStore, List<NameValuePair> list, HttpClientContext context ) {
+        HttpPost httpPost = getHttpPost(list, url);
+        CloseableHttpClient httpClient = createSSLClientCustom(cookieStore);
+        return getResponse(context, httpClient, httpPost);
+    }
+
+    public static CloseableHttpResponse getResponse(String url,  CookieStore cookieStore) {
+        return getResponse(url, cookieStore, new ArrayList<>(),null);
     }
 
     /**

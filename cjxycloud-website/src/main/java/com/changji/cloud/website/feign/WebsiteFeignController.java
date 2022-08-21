@@ -5,8 +5,11 @@ import com.changji.cloud.api.website.vo.AuthAccountVO;
 import com.changji.cloud.common.core.response.ServerResponseEntity;
 import com.changji.cloud.common.core.utils.StringUtils;
 import com.changji.cloud.common.security.utils.SecurityUtils;
+import com.changji.cloud.website.model.StudentInfo;
 import com.changji.cloud.website.model.WebsiteUser;
 import com.changji.cloud.website.service.CookieService;
+import com.changji.cloud.website.service.StudentService;
+import org.apache.http.client.CookieStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +25,9 @@ public class WebsiteFeignController implements WebsiteFeignClient {
     @Autowired
     private CookieService cookieService;
 
+    @Autowired
+    private StudentService studentService;
+
     @Override
     public ServerResponseEntity<AuthAccountVO> getByUserNameAndPassword(String username, String password) {
 
@@ -32,8 +38,12 @@ public class WebsiteFeignController implements WebsiteFeignClient {
         websiteUser.setAccount(username);
         websiteUser.setPassword(password);
 
-        cookieService.getCookie(websiteUser);
-        AuthAccountVO authAccountVO = new AuthAccountVO();
+        CookieStore cookieStore = cookieService.getCookie(websiteUser);
+
+        /**
+         * 获取学生详情
+         */
+        AuthAccountVO authAccountVO = studentService.getStudentInfo(cookieStore);
         String encryptPassword = SecurityUtils.encryptPassword(password);
         authAccountVO.setUsername(username);
         authAccountVO.setPassword(encryptPassword);

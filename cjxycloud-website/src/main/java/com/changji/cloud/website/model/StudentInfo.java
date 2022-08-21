@@ -1,21 +1,11 @@
-package com.changji.cloud.api.website.vo;
+package com.changji.cloud.website.model;
 
 /**
  * @ Author     ：小问号.
- * @ Date       ：Created in 16:11 2022/8/20
+ * @ Date       ：Created in 23:17 2022/8/21
  * @ Modified By：
  */
-public class AuthAccountVO {
-
-    /**
-     * 学号
-     */
-    private String username;
-
-    /**
-     * 密码
-     */
-    private String password;
+public class StudentInfo {
 
     /**
      * 院校
@@ -36,22 +26,6 @@ public class AuthAccountVO {
      * 学生姓名
      */
     private String studentName;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getInstitute() {
         return institute;
@@ -87,10 +61,8 @@ public class AuthAccountVO {
 
     @Override
     public String toString() {
-        return "AuthAccountVO{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", institute='" + institute + '\'' +
+        return "StudentInfo{" +
+                "institute='" + institute + '\'' +
                 ", specialty='" + specialty + '\'' +
                 ", classes='" + classes + '\'' +
                 ", studentName='" + studentName + '\'' +

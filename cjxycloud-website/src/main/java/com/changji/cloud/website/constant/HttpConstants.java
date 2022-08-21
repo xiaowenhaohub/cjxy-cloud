@@ -20,7 +20,12 @@ public enum HttpConstants {
     /**
      * 登录url
      */
-    LOGIN_URL("/xk/LoginToXk")
+    LOGIN_URL("/xk/LoginToXk"),
+
+    /**
+     * 学生详情
+     */
+    STUDENT_INFO("/grxx/xsxx"),
     ;
 
     private String value;

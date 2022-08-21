@@ -61,6 +61,9 @@ public class AuthAccountServiceImpl implements AuthAccountService {
             throw new ServiceException(byUserNameAndPassword.getMsg());
         }
         AuthAccountVO authAccountVO = byUserNameAndPassword.getData();
+
+        System.out.println(authAccountVO);
+
         authAccount  = mapperFacade.map(authAccountVO, AuthAccount.class);
         authAccount.setStatus(1);
 

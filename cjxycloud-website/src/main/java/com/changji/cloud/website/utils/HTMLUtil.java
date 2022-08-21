@@ -1,7 +1,9 @@
 package com.changji.cloud.website.utils;
 
+import com.changji.cloud.api.website.vo.AuthAccountVO;
 import com.changji.cloud.common.core.exception.ServiceException;
 import com.changji.cloud.website.model.Course;
+import com.changji.cloud.website.model.StudentInfo;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -46,6 +48,28 @@ public class HTMLUtil {
      *  last id
      */
     private static final String END_ID = "-2";
+
+
+
+    public static AuthAccountVO getStudentInfo(String context) {
+
+        Document document = Jsoup.parse(context);
+        Element tr3 = getElementBySeq(document, "tr", 2);
+        Element tr4 = getElementBySeq(document, "tr", 3);
+        String institute = getElementBySeq(tr3, "td", 0).text().replaceFirst("院系：","");
+        String specialty = getElementBySeq(tr3, "td", 1).text().replaceFirst("专业：","");
+        String classes = getElementBySeq(tr3, "td", 3).text().replaceFirst("班级：信息","");
+        String name = getElementBySeq(tr4, "td", 1).text();
+
+        AuthAccountVO authAccountVO = new AuthAccountVO();
+        authAccountVO.setInstitute(institute);
+        authAccountVO.setSpecialty(specialty);
+        authAccountVO.setClasses(classes);
+        authAccountVO.setStudentName(name);
+
+        return authAccountVO;
+    }
+
 
 
     public static List<List<Course>> getCourseList(String context) {
@@ -112,6 +136,17 @@ public class HTMLUtil {
             throw new ServiceException("html id不存在");
         }
 
+    }
+
+    /**
+     * 更具序号选择element
+     * @param element
+     * @param table
+     * @param seq
+     * @return
+     */
+    public static Element getElementBySeq(Element element,String table, Integer seq) {
+        return element.select(table).get(seq);
     }
 
 
