@@ -26,4 +26,12 @@ public class WebsiteUser {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "WebsiteUser{" +
+                "account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

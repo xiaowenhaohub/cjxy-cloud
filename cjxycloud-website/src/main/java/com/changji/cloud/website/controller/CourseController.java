@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -18,14 +19,14 @@ import java.util.Map;
  * @ Date       ：Created in 15:30 2022/8/21
  * @ Modified By：
  */
-@RestController("course")
+@RestController()
 @Api("课表")
 public class CourseController {
 
     @Autowired
     private CourseService courseService;
 
-    @PostMapping("get")
+    @PostMapping("course/get")
     @RequiresPermissions("system:course:query")
     public ServerResponseEntity<Map<Integer, Course>> get(@RequestBody QueryCourseDTO queryCourseDTO) {
         System.out.println(queryCourseDTO);

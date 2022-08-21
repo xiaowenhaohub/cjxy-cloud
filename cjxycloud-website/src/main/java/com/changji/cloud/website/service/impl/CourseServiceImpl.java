@@ -40,13 +40,14 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public void getMyCourseList(QueryCourseDTO queryCourseDTO) {
 
+        //从thread_local获取用户名和密码
         LoginUser loginUser = AuthUtil.getLoginUser();
         WebsiteUser user = new WebsiteUser();
         user.setAccount(loginUser.getUsername());
         user.setPassword(SecurityUtils.getPassword());
+
+        //获取教务管理系统cookie
         CookieStore cookieStore = cookieService.getCookie(user);
-
-
         String url = HttpConstants.MY_COURSE_URL.value();
         List<NameValuePair> list = new ArrayList<>();
         list.add(new BasicNameValuePair("cj0701id", ""));
@@ -56,13 +57,10 @@ public class CourseServiceImpl implements CourseService {
         list.add(new BasicNameValuePair("sfFD",""));
         list.add(new BasicNameValuePair("wkbkc","1"));//无课表课程
         list.add(new BasicNameValuePair("kbjcmsid","A63DB2E690D94F43945978F87DBE514D"));//默认节次模式
-
+        //发起http请求
         HttpPost httpPost = HttpClientUtils.getHttpPost(list, url);
-
         CloseableHttpClient httpClient = HttpClientUtils.createSSLClientCustom(cookieStore);
-
         CloseableHttpResponse response = HttpClientUtils.getResponse(httpClient, httpPost);
-
         String context = BufferUtil.inputToString(response);
 
         System.out.println(context);

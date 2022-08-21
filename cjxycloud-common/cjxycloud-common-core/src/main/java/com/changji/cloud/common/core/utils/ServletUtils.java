@@ -46,7 +46,7 @@ public class ServletUtils {
 
     public static String getHeader(HttpServletRequest request, String name) {
         String value = request.getHeader(name);
-        if (StringUtils.isNotEmpty(value)) {
+        if (StringUtils.isEmpty(value)) {
             return StringUtils.EMPTY;
         }
         return urlDecode(value);
