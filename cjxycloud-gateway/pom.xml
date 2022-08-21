@@ -52,8 +52,8 @@
             <artifactId>cjxycloud-common-redis</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId></groupId>
-                    <artifactId></artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
                 </exclusion>
             </exclusions>
             <version>1.0</version>

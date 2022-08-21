@@ -62,7 +62,8 @@ public class TokenController {
         String token = ServletUtils.getToken(request);
         if (StringUtils.isNotEmpty(token)) {
             tokenService.delLoginUser(token);
+            return ServerResponseEntity.success();
         }
-        return ServerResponseEntity.success();
+        return ServerResponseEntity.showFailMsg("用户未登录");
     }
 }
