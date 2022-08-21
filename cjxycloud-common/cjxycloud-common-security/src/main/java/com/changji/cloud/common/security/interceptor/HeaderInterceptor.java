@@ -4,6 +4,9 @@ import com.changji.cloud.common.core.constant.SecurityConstants;
 import com.changji.cloud.common.core.constant.TokenConstants;
 import com.changji.cloud.common.core.context.SecurityContextHolder;
 import com.changji.cloud.common.core.utils.ServletUtils;
+import com.changji.cloud.common.core.utils.StringUtils;
+import com.changji.cloud.common.security.auth.AuthUtil;
+import com.changji.cloud.common.security.model.LoginUser;
 import com.changji.cloud.common.security.utils.SecurityUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
@@ -23,15 +26,21 @@ public class HeaderInterceptor implements AsyncHandlerInterceptor {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-        SecurityContextHolder.setUserId(ServletUtils.getHeader(request, SecurityConstants.DETAILS_USER_ID));
-        SecurityContextHolder.setUserName(ServletUtils.getHeader(request, SecurityConstants.DETAILS_USERNAME));
-        SecurityContextHolder.setUserKey(ServletUtils.getHeader(request, SecurityConstants.USER_KEY));
+//        SecurityContextHolder.setUserId(ServletUtils.getHeader(request, SecurityConstants.DETAILS_USER_ID));
+//        SecurityContextHolder.setUserName(ServletUtils.getHeader(request, SecurityConstants.DETAILS_USERNAME));
+//        SecurityContextHolder.setUserKey(ServletUtils.getHeader(request, SecurityConstants.USER_KEY));
+        //从当前线程获取 token
         String token = SecurityUtils.getToken();
-//        if (StringUtils.isNotEmpty(token)) {
-//
-//        }
-
-        System.out.println(ServletUtils.getHeader(request, TokenConstants.AUTHENTICATION));
+        if (StringUtils.isNotEmpty(token)) {
+            //从redis获取用户信息
+            LoginUser loginUser = AuthUtil.getLoginUser(token);
+            if (StringUtils.isNotNull(loginUser)) {
+                //验证过期时间
+                AuthUtil.verifyLoginUserExpire(loginUser);
+                // 存入 thread_local
+                SecurityContextHolder.set(SecurityConstants.LOGIN_USER, loginUser);
+            }
+        }
         return true;
     }
 

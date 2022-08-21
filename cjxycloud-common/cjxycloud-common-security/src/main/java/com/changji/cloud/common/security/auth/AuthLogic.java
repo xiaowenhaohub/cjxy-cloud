@@ -2,10 +2,12 @@ package com.changji.cloud.common.security.auth;
 
 import com.changji.cloud.common.core.exception.auth.NotLoginException;
 import com.changji.cloud.common.core.exception.auth.NotPermissionException;
+import com.changji.cloud.common.core.utils.SpringUtils;
 import com.changji.cloud.common.core.utils.StringUtils;
 import com.changji.cloud.common.security.annotation.Logical;
 import com.changji.cloud.common.security.annotation.RequiresPermissions;
 import com.changji.cloud.common.security.model.LoginUser;
+import com.changji.cloud.common.security.service.TokenService;
 import com.changji.cloud.common.security.utils.SecurityUtils;
 import org.springframework.util.PatternMatchUtils;
 
@@ -26,7 +28,7 @@ public class AuthLogic {
     /** 管理员角色权限标识 */
     private static final String SUPER_ADMIN = "admin";
 
-
+    private TokenService tokenService = SpringUtils.getBean(TokenService.class);
 
 
     /**
@@ -47,6 +49,7 @@ public class AuthLogic {
      * @param permissions
      */
     public void checkPermissionAnd(String... permissions) {
+        //当前用户权限列表
         List<String> permissionList = getPermissionList();
 
         for (String permission : permissions) {
@@ -71,7 +74,7 @@ public class AuthLogic {
 
     /**
      * 获取当前用户缓存信息, 如果未登录，则抛出异常
-     *
+     * 从securityContextHolder获取
      * @return 用户缓存信息
      */
     public LoginUser getLoginUser() {
@@ -86,6 +89,24 @@ public class AuthLogic {
         return loginUser;
     }
 
+    /**
+     * 验证当前用户有效期, 如果相差不足240分钟，自动刷新缓存
+     *
+     * @param loginUser 当前用户信息
+     */
+    public void verifyLoginUserExpire(LoginUser loginUser)
+    {
+        tokenService.verifyToken(loginUser);
+    }
+
+    /**
+     * 从redis 获取LoginUser
+     * @param token
+     * @return LoginUser
+     */
+    public LoginUser getLoginUser(String token) {
+        return tokenService.getLoginUser(token);
+    }
 
     /**
      * 获取当前用户的权限列表
@@ -93,12 +114,14 @@ public class AuthLogic {
      * @return 权限列表
      */
     public List<String> getPermissionList() {
-        try {
-            LoginUser loginUser = getLoginUser();
-            return loginUser.getPermissions();
-        }catch (Exception e) {
-            return new ArrayList<>();
-        }
+//        try {
+//            LoginUser loginUser = getLoginUser();
+//            return loginUser.getPermissions();
+//        }catch (Exception e) {
+//            return new ArrayList<>();
+//        }
+
+        return getLoginUser().getPermissions();
     }
 
 

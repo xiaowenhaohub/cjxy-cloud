@@ -1,6 +1,7 @@
 package com.changji.cloud.common.security.config;
 
 import com.changji.cloud.common.security.interceptor.HeaderInterceptor;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -9,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @date 2022/8/19 14
  * description
  */
-
+@Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
     /** 不需要拦截地址 */
     public static final String[] excludeUrls = { "/login", "/logout", "/refresh" };

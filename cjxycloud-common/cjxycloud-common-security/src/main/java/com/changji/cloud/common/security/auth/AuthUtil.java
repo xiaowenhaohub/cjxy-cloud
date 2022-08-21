@@ -1,6 +1,7 @@
 package com.changji.cloud.common.security.auth;
 
 import com.changji.cloud.common.security.annotation.RequiresPermissions;
+import com.changji.cloud.common.security.model.LoginUser;
 
 /**
  * @author 小问号
@@ -18,6 +19,23 @@ public class AuthUtil {
      */
     public static void checkPermissions(RequiresPermissions requiresPermissions) {
         authlogic.checkPermissionByAnnotation(requiresPermissions);
+    }
+
+    /**
+     * 验证当前用户有效期
+     */
+    public static void verifyLoginUserExpire(LoginUser loginUser) {
+        authlogic.verifyLoginUserExpire(loginUser);
+    }
+
+
+    /**
+     * 根据token 从redis获取loginuser
+     * @param token
+     * @return
+     */
+    public static LoginUser getLoginUser(String token) {
+        return authlogic.getLoginUser(token);
     }
 
 }

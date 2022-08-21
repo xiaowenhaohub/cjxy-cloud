@@ -4,6 +4,8 @@ import com.changji.cloud.auth.dto.AuthenticationDTO;
 import com.changji.cloud.auth.model.AuthAccount;
 import com.changji.cloud.common.security.model.LoginUser;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @ Author     ：小问号.
  * @ Date       ：Created in 15:31 2022/8/20
@@ -18,4 +20,11 @@ public interface AuthAccountService {
      * @return
      */
     LoginUser login(String username, String password);
+
+    /**
+     * 刷新用户信息
+     * @param request
+     * @return
+     */
+    LoginUser refresh(LoginUser loginUser);
 }

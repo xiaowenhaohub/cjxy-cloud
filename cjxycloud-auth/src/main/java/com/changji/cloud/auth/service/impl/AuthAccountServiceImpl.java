@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -81,9 +82,22 @@ public class AuthAccountServiceImpl implements AuthAccountService {
         return toLoginUser(authAccount,permission);
     }
 
+    @Override
+    public LoginUser refresh(LoginUser loginUser) {
+        //从数据库查询用户
+        AuthAccount authAccount = authAccountMapper.queryByUserName(loginUser.getUsername());
+        //查询用户权限列表
+        List<String> permission = authAccountMapper.queryUserMenuByUid(authAccount.getUid());
+        LoginUser user = toLoginUser(authAccount, permission);
+        //保持token一致
+        user.setToken(loginUser.getToken());
+        return user;
+    }
+
     public LoginUser toLoginUser(AuthAccount authAccount,  List<String> permissions) {
         LoginUser loginUser = mapperFacade.map(authAccount, LoginUser.class);
         loginUser.setPermissions(permissions);
+        loginUser.setUserid(authAccount.getUserId());
         return loginUser;
     }
 }

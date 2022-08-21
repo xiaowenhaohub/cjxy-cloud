@@ -1,6 +1,7 @@
 package com.changji.cloud.common.security.handler;
 
 import com.changji.cloud.common.core.exception.ServiceException;
+import com.changji.cloud.common.core.exception.auth.NotLoginException;
 import com.changji.cloud.common.core.exception.auth.NotPermissionException;
 import com.changji.cloud.common.core.exception.auth.NotRoleException;
 import com.changji.cloud.common.core.response.ServerResponseEntity;
@@ -26,6 +27,21 @@ import java.util.List;
 @Slf4j
 public class GlobalExceptionHandler {
 
+
+    /**
+     * token异常
+     * @param e
+     * @param <T>
+     * @return
+     */
+    @ExceptionHandler(NotLoginException.class)
+    public <T> ServerResponseEntity<T> handleNotLoginException(NotLoginException e) {
+        String message = e.getMessage();
+        log.error(message);
+        return ServerResponseEntity.showFailMsg(message);
+    }
+
+
     /**
      * 权限码异常
      */
@@ -33,7 +49,7 @@ public class GlobalExceptionHandler {
     public <T> ServerResponseEntity<T>  handleNotPermissionException(NotPermissionException e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
         log.error("请求地址'{}',权限码校验失败'{}'", requestURI, e.getMessage());
-        return ServerResponseEntity.customResponse(HttpStatus.FORBIDDEN.value(), "没有访问权限，请联系管理员授权", null);
+        return ServerResponseEntity.showFailMsg("没有访问权限，请联系管理员授权");
     }
 
     /**
@@ -43,19 +59,18 @@ public class GlobalExceptionHandler {
     public <T> ServerResponseEntity<T>  handleNotRoleException(NotRoleException e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
         log.error("请求地址'{}',角色权限校验失败'{}'", requestURI, e.getMessage());
-        return ServerResponseEntity.customResponse(HttpStatus.FORBIDDEN.value(), "没有访问权限，请联系管理员授权", null);
+        return ServerResponseEntity.showFailMsg("没有访问权限，请联系管理员授权");
     }
 
     /**
      * 请求方式不支持
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public <T> ServerResponseEntity<T>  handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException e,
-                                                          HttpServletRequest request)
-    {
+    public <T> ServerResponseEntity<T>  handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        log.error("请求地址'{}',不支持'{}'请求", requestURI, e.getMethod());
-        return ServerResponseEntity.showFailMsg(e.getMessage());
+        String message = e.getMessage();
+        log.error("请求地址'{}',不支持'{}'请求", requestURI, message);
+        return ServerResponseEntity.showFailMsg(message);
     }
 
 
@@ -67,10 +82,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(ServiceException.class)
     public <T> ServerResponseEntity<T> handlerServiceException(ServiceException e, HttpServletRequest request) {
-
-        log.error(e.getMessage());
-
-        return ServerResponseEntity.showFailMsg(e.getMessage());
+        String message = e.getMessage();
+        log.error(message);
+        return ServerResponseEntity.showFailMsg(message);
     }
 
     /**
