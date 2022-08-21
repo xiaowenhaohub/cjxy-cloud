@@ -7,10 +7,12 @@ import com.changji.cloud.common.security.model.LoginUser;
 import com.changji.cloud.common.security.utils.SecurityUtils;
 import com.changji.cloud.website.constant.HttpConstants;
 import com.changji.cloud.website.dto.QueryCourseDTO;
+import com.changji.cloud.website.model.Course;
 import com.changji.cloud.website.model.WebsiteUser;
 import com.changji.cloud.website.service.CookieService;
 import com.changji.cloud.website.service.CourseService;
 import com.changji.cloud.website.utils.BufferUtil;
+import com.changji.cloud.website.utils.HTMLUtil;
 import com.changji.cloud.website.utils.HttpClientUtils;
 import org.apache.catalina.security.SecurityUtil;
 import org.apache.http.NameValuePair;
@@ -38,7 +40,7 @@ public class CourseServiceImpl implements CourseService {
     private CookieService cookieService;
 
     @Override
-    public void getMyCourseList(QueryCourseDTO queryCourseDTO) {
+    public List<List<Course>> getMyCourseList(QueryCourseDTO queryCourseDTO) {
 
         //从thread_local获取用户名和密码
         LoginUser loginUser = AuthUtil.getLoginUser();
@@ -63,7 +65,9 @@ public class CourseServiceImpl implements CourseService {
         CloseableHttpResponse response = HttpClientUtils.getResponse(httpClient, httpPost);
         String context = BufferUtil.inputToString(response);
 
-        System.out.println(context);
+        List<List<Course>> courseList = HTMLUtil.getCourseList(context);
+
+        return courseList;
 
     }
 }

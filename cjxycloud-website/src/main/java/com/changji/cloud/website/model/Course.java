@@ -58,4 +58,14 @@ public class Course {
     public void setCourseRoom(String courseRoom) {
         this.courseRoom = courseRoom;
     }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "courseName='" + courseName + '\'' +
+                ", teacherName='" + teacherName + '\'' +
+                ", weekly='" + weekly + '\'' +
+                ", courseRoom='" + courseRoom + '\'' +
+                '}';
+    }
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,10 +29,10 @@ public class CourseController {
 
     @PostMapping("course/get")
     @RequiresPermissions("system:course:query")
-    public ServerResponseEntity<Map<Integer, Course>> get(@RequestBody QueryCourseDTO queryCourseDTO) {
-        System.out.println(queryCourseDTO);
-        courseService.getMyCourseList(queryCourseDTO);
-        return null;
+    public ServerResponseEntity<List<List<Course>>> get(@RequestBody QueryCourseDTO queryCourseDTO) {
+
+        List<List<Course>> courseList = courseService.getMyCourseList(queryCourseDTO);
+        return ServerResponseEntity.success(courseList);
     }
 
 }
