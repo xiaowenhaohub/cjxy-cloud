@@ -86,7 +86,10 @@ public class HTMLUtil {
         Element div = td.select("div").get(1);
         String[] split = div.text().split(" ");
         if(split.length == 1){
-            course = null;
+            course.setCourseName("");
+            course.setTeacherName("");
+            course.setWeekly("");
+            course.setCourseRoom("");
         }else {
             course.setCourseName(split[0]);
             course.setTeacherName(split[1]);

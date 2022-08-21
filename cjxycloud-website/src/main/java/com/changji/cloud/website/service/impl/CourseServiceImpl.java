@@ -1,5 +1,8 @@
 package com.changji.cloud.website.service.impl;
 
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.TypeReference;
 import com.changji.cloud.common.core.exception.NullParamException;
 import com.changji.cloud.common.core.utils.StringUtils;
 import com.changji.cloud.common.security.auth.AuthUtil;
@@ -14,6 +17,7 @@ import com.changji.cloud.website.service.CourseService;
 import com.changji.cloud.website.utils.BufferUtil;
 import com.changji.cloud.website.utils.HTMLUtil;
 import com.changji.cloud.website.utils.HttpClientUtils;
+import netscape.javascript.JSObject;
 import org.apache.catalina.security.SecurityUtil;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.CookieStore;
@@ -66,8 +70,21 @@ public class CourseServiceImpl implements CourseService {
         String context = BufferUtil.inputToString(response);
 
         List<List<Course>> courseList = HTMLUtil.getCourseList(context);
-
+        String courseInfo = JSONObject.toJSONString(courseList);
+        courseList = JsonToCourseList(courseInfo);
         return courseList;
 
+    }
+
+    public List<List<Course>> JsonToCourseList(String courseInfo) {
+
+        List<List<Course>> courseList = new ArrayList<>();
+
+        List<String> list1 =  JSONObject.parseObject(courseInfo, new TypeReference<ArrayList<String>>(){});
+        list1.forEach(row -> {
+            List<Course> coursesRow = JSON.parseArray(row, Course.class);
+            courseList.add(coursesRow);
+        });
+        return courseList;
     }
 }
