@@ -39,4 +39,9 @@ public class SecurityConstants
      * 登录用户
      */
     public static final String LOGIN_USER = "login_user";
+
+    /**
+     * 用户密码
+     */
+    public static final String AUTH_PASSWORD = "auth_password";
 }

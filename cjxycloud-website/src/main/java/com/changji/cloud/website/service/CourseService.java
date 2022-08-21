@@ -1,5 +1,6 @@
 package com.changji.cloud.website.service;
 
+import com.changji.cloud.website.dto.QueryCourseDTO;
 import com.changji.cloud.website.model.WebsiteUser;
 
 /**
@@ -11,8 +12,8 @@ public interface CourseService {
 
     /**
      * 获取当前用户课表
-     * @param user
+     * @param queryCourseDTO
      */
-    void getMyCourseList(WebsiteUser user);
+    void getMyCourseList(QueryCourseDTO queryCourseDTO);
 
 }

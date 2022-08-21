@@ -63,14 +63,12 @@ public class SecurityContextHolder {
         set(SecurityConstants.DETAILS_USERNAME, username);
     }
 
-    public static String getUserKey()
-    {
-        return get(SecurityConstants.USER_KEY);
+    public static String getPassword() {
+        return get(SecurityConstants.AUTH_PASSWORD);
     }
 
-    public static void setUserKey(String userKey)
-    {
-        set(SecurityConstants.USER_KEY, userKey);
+    public static void setPassword(String password) {
+        set(SecurityConstants.AUTH_PASSWORD, password);
     }
 
     public static void remove()

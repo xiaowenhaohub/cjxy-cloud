@@ -38,4 +38,12 @@ public class AuthUtil {
         return authlogic.getLoginUser(token);
     }
 
+    /**
+     * 从securityContextHolder获取loginuser
+     * @return
+     */
+    public static LoginUser getLoginUser() {
+        return  authlogic.getLoginUser();
+    }
+
 }

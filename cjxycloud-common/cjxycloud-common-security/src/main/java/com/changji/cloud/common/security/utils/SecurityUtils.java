@@ -37,9 +37,9 @@ public class SecurityUtils
     /**
      * 获取用户key
      */
-    public static String getUserKey()
+    public static String getPassword()
     {
-        return SecurityContextHolder.getUserKey();
+        return SecurityContextHolder.getPassword();
     }
 
     /**

@@ -36,10 +36,9 @@ public class TokenController {
     @PostMapping("login")
     @ApiOperation(value = "登录", notes = "返回token")
     public ServerResponseEntity<Map<String, Object>> login(@Validated @RequestBody AuthenticationDTO authenticationDTO) {
-
         LoginUser loginUser = authAccountService.login(authenticationDTO.getUsername(), authenticationDTO.getPassword());
-
         Map<String, Object> response = tokenService.createToken(loginUser);
+        response.put("password", authenticationDTO.getPassword());
         return ServerResponseEntity.success(response);
     }
 

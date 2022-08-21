@@ -24,7 +24,6 @@ public class CookieServiceImpl implements CookieService {
         if (Objects.isNull(user)) {
             throw new NullParamException("获取cookie user不能为空");
         }
-
         return CookieUtil.getCookieStore(user, HttpConstants.LOGIN_URL.value());
     }
 }
