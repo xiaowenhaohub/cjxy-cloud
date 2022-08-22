@@ -3,11 +3,11 @@
 <mapper namespace="com.changji.cloud.auth.mapper.AuthAccountMapper">
 
     <sql id="all_columns">
-        uid, username, password , create_ip, status, user_id
+        uid, account, password , create_ip, status, user_id
     </sql>
 
-    <select id="queryByUserName" resultType="com.changji.cloud.auth.model.AuthAccount">
-        select <include refid="all_columns"></include> from auth_account where username =#{username}
+    <select id="queryByAccount" resultType="com.changji.cloud.auth.model.AuthAccount">
+        select <include refid="all_columns"></include> from auth_account where account =#{account}
     </select>
 
     <select id="queryUserMenuByUid" resultType="java.lang.String">
@@ -20,8 +20,9 @@
 
     <insert id="save">
         insert into auth_account (<include refid="all_columns"></include>)
-        values (#{authAccount.uid},#{authAccount.username},#{authAccount.password},#{authAccount.createIp},#{authAccount.status},#{authAccount.userId})
+        values (#{authAccount.uid},#{authAccount.account},#{authAccount.password},#{authAccount.createIp},#{authAccount.status},#{authAccount.userId})
     </insert>
+
     <insert id="saveAuthRole">
         insert into sys_auth_role (uid, role_id) values (#{uid}, #{roleId})
     </insert>

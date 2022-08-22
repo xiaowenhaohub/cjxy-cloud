@@ -7,6 +7,7 @@ import com.changji.cloud.common.core.exception.auth.NotRoleException;
 import com.changji.cloud.common.core.response.ServerResponseEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -39,6 +40,18 @@ public class GlobalExceptionHandler {
         String message = e.getMessage();
         log.error(message);
         return ServerResponseEntity.showFailMsg(message);
+    }
+
+    /**
+     * 处理参数校验异常 --Json 转换异常
+     * @param req
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    public <T> ServerResponseEntity<T> exceptionHandler(HttpServletRequest req, HttpMessageNotReadableException e) {
+        log.error("参数校验异常-json转换异常:", e);
+        return ServerResponseEntity.showFailMsg("参数校验异常-json转换异常:" + req.getRequestURI());
     }
 
 

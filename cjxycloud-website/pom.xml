@@ -44,6 +44,12 @@
             <version>1.0</version>
         </dependency>
         <dependency>
+            <groupId>com.changji</groupId>
+            <artifactId>cjxycloud-common-datasource</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
         </dependency>

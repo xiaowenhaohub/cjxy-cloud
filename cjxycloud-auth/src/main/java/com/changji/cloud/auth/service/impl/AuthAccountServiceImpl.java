@@ -43,11 +43,11 @@ public class AuthAccountServiceImpl implements AuthAccountService {
 
     @Override
     @Transactional
-    public LoginUser login(String username, String password) {
+    public LoginUser login(String account, String password) {
 
 
         //从数据库查询用户
-        AuthAccount authAccount = authAccountMapper.queryByUserName(username);
+        AuthAccount authAccount = authAccountMapper.queryByAccount(account);
 
         if (authAccount != null) {
             //查询用户权限列表
@@ -55,14 +55,12 @@ public class AuthAccountServiceImpl implements AuthAccountService {
             return toLoginUser(authAccount, permission);
         }
 
-        //从教务管理系统查询用户
-        ServerResponseEntity<AuthAccountVO> byUserNameAndPassword = websiteFeignClient.getByUserNameAndPassword(username, password);
+        //从教务管理系统查询用户 远程调用website模块
+        ServerResponseEntity<AuthAccountVO> byUserNameAndPassword = websiteFeignClient.getByAccountAndPassword(account, password);
         if (!byUserNameAndPassword.isSuccess()) {
             throw new ServiceException(byUserNameAndPassword.getMsg());
         }
         AuthAccountVO authAccountVO = byUserNameAndPassword.getData();
-
-        System.out.println(authAccountVO);
 
         authAccount  = mapperFacade.map(authAccountVO, AuthAccount.class);
         authAccount.setStatus(1);
@@ -88,7 +86,7 @@ public class AuthAccountServiceImpl implements AuthAccountService {
     @Override
     public LoginUser refresh(LoginUser loginUser) {
         //从数据库查询用户
-        AuthAccount authAccount = authAccountMapper.queryByUserName(loginUser.getUsername());
+        AuthAccount authAccount = authAccountMapper.queryByAccount(loginUser.getAccount());
         //查询用户权限列表
         List<String> permission = authAccountMapper.queryUserMenuByUid(authAccount.getUid());
         LoginUser user = toLoginUser(authAccount, permission);
@@ -100,7 +98,7 @@ public class AuthAccountServiceImpl implements AuthAccountService {
     public LoginUser toLoginUser(AuthAccount authAccount,  List<String> permissions) {
         LoginUser loginUser = mapperFacade.map(authAccount, LoginUser.class);
         loginUser.setPermissions(permissions);
-        loginUser.setUserid(authAccount.getUserId());
+        loginUser.setUserId(authAccount.getUserId());
         return loginUser;
     }
 }

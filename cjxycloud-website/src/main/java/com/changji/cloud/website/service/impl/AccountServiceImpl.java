@@ -1,22 +1,13 @@
 package com.changji.cloud.website.service.impl;
 
 import com.changji.cloud.api.website.vo.AuthAccountVO;
-import com.changji.cloud.common.security.auth.AuthUtil;
-import com.changji.cloud.common.security.model.LoginUser;
-import com.changji.cloud.common.security.utils.SecurityUtils;
 import com.changji.cloud.website.constant.HttpConstants;
-import com.changji.cloud.website.model.StudentInfo;
-import com.changji.cloud.website.model.WebsiteUser;
-import com.changji.cloud.website.service.CookieService;
-import com.changji.cloud.website.service.StudentService;
+import com.changji.cloud.website.service.AccountService;
 import com.changji.cloud.website.utils.BufferUtil;
 import com.changji.cloud.website.utils.HTMLUtil;
 import com.changji.cloud.website.utils.HttpClientUtils;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,11 +16,11 @@ import org.springframework.stereotype.Service;
  * @ Modified By：
  */
 @Service
-public class StudentServiceImpl implements StudentService {
+public class AccountServiceImpl implements AccountService {
 
 
     @Override
-    public AuthAccountVO getStudentInfo(CookieStore cookieStore) {
+    public AuthAccountVO getAccountInfo(CookieStore cookieStore) {
 
         String url = HttpConstants.STUDENT_INFO.value();
         CloseableHttpResponse response = HttpClientUtils.getResponse(url, cookieStore);

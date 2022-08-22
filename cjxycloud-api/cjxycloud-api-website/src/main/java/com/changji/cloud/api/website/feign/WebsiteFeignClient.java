@@ -21,6 +21,6 @@ public interface WebsiteFeignClient {
      * @return
      */
     @PostMapping(value =  "/feign/website/getByUserNameAndPassword")
-    ServerResponseEntity<AuthAccountVO> getByUserNameAndPassword(@RequestParam("username") String username,@RequestParam("password") String password);
+    ServerResponseEntity<AuthAccountVO> getByAccountAndPassword(@RequestParam("account") String account,@RequestParam("password") String password);
 
 }

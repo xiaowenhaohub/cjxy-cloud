@@ -1,7 +1,6 @@
 package com.changji.cloud.website.service;
 
 import com.changji.cloud.api.website.vo.AuthAccountVO;
-import com.changji.cloud.website.model.StudentInfo;
 import org.apache.http.client.CookieStore;
 
 /**
@@ -9,7 +8,7 @@ import org.apache.http.client.CookieStore;
  * @ Date       ：Created in 23:16 2022/8/21
  * @ Modified By：
  */
-public interface StudentService {
+public interface AccountService {
 
-    AuthAccountVO getStudentInfo(CookieStore cookieStore);
+    AuthAccountVO getAccountInfo(CookieStore cookieStore);
 }

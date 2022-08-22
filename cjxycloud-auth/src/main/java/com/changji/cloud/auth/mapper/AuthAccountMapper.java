@@ -17,7 +17,7 @@ public interface AuthAccountMapper {
      * 根据用户名查询用户
      * @return
      */
-    AuthAccount queryByUserName(@Param("username") String username);
+    AuthAccount queryByAccount(@Param("account") String account);
 
 
     /**

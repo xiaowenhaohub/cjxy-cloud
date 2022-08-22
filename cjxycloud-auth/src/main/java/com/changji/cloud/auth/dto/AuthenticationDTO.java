@@ -11,20 +11,20 @@ import javax.validation.constraints.NotBlank;
  */
 public class AuthenticationDTO {
 
-    @NotBlank(message = "用户名不能为空")
-    @ApiModelProperty(value = "用户名", required = true)
-    private String username;
+    @NotBlank(message = "学号不能为空")
+    @ApiModelProperty(value = "学号", required = true)
+    private String account;
 
     @NotBlank(message = "密码不能为空")
     @ApiModelProperty(value = "密码", required = true)
     private String password;
 
-    public String getUsername() {
-        return username;
+    public String getAccount() {
+        return account;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getPassword() {
@@ -38,7 +38,7 @@ public class AuthenticationDTO {
     @Override
     public String toString() {
         return "AuthenticationDTO{" +
-                "username='" + username + '\'' +
+                "account='" + account + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

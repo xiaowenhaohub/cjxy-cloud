@@ -5,7 +5,7 @@ package com.changji.cloud.website.model;
  * @ Date       ：Created in 13:00 2022/8/20
  * @ Modified By：
  */
-public class Course {
+public class Lesson {
 
     /**
      *课程名称

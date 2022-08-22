@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changji.cloud.website.mapper.CoursesMapper">
+
+    <sql id="all_columns">
+        classes, semester, weekly, institute, specialty, course_info, status
+    </sql>
+
+    <insert id="save">
+        insert into courses (<include refid="all_columns"></include>)
+        values (#{courses.classes}, #{courses.semester}, #{courses.weekly}, #{courses.institute},
+                #{courses.specialty}, #{courses.courseInfo}, #{courses.status})
+    </insert>
+
+    <select id="queryByInstituteAndClasses" resultType="com.changji.cloud.website.model.Courses">
+        select <include refid="all_columns"></include> from courses
+        <where>
+            <if test="queryCourseDTO.institute != null and queryCourseDTO.institute != '' ">
+                institute = #{queryCourseDTO.institute}
+            </if>
+            <if test="queryCourseDTO.classes != null and queryCourseDTO.classes != ''">
+                AND classes = #{queryCourseDTO.classes}
+            </if>
+            <if test="queryCourseDTO.weekly != null and queryCourseDTO.weekly != ''">
+                AND weekly = #{queryCourseDTO.weekly}
+            </if>
+            <if test="queryCourseDTO.semester != null and queryCourseDTO.semester != ''">
+                AND semester = #{queryCourseDTO.semester}
+            </if>
+        </where>
+    </select>
+</mapper>

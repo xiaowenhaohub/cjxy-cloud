@@ -27,7 +27,7 @@ public class AuthAccountTest {
         String token = "eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2tleSI6ImMyNWU3MmI3LWZkZGUtNDMxYy05YmJlLTYzZTE4MjhjZDljYSJ9.zxozUlqM91HDPvFqkdiSxWNdeiUzrbXpLltpOqH-eA8JB2d6JB1lP5AXi43WmbknV3eH3rdpn2uBVN2LmgOAaQ";
         AuthAccount authAccount = new AuthAccount();
         authAccount.setUserId(33333l);
-        authAccount.setUsername("xiaowenhao");
+        authAccount.setAccount("xiaowenhao");
         LoginUser loginUser = authAccountService.toLoginUser(authAccount, null);
         System.out.println(loginUser);
 

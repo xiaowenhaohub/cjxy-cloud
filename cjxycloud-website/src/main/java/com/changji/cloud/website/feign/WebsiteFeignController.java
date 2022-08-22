@@ -3,15 +3,12 @@ package com.changji.cloud.website.feign;
 import com.changji.cloud.api.website.feign.WebsiteFeignClient;
 import com.changji.cloud.api.website.vo.AuthAccountVO;
 import com.changji.cloud.common.core.response.ServerResponseEntity;
-import com.changji.cloud.common.core.utils.StringUtils;
 import com.changji.cloud.common.security.utils.SecurityUtils;
-import com.changji.cloud.website.model.StudentInfo;
 import com.changji.cloud.website.model.WebsiteUser;
+import com.changji.cloud.website.service.AccountService;
 import com.changji.cloud.website.service.CookieService;
-import com.changji.cloud.website.service.StudentService;
 import org.apache.http.client.CookieStore;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -26,16 +23,16 @@ public class WebsiteFeignController implements WebsiteFeignClient {
     private CookieService cookieService;
 
     @Autowired
-    private StudentService studentService;
+    private AccountService accountService;
 
     @Override
-    public ServerResponseEntity<AuthAccountVO> getByUserNameAndPassword(String username, String password) {
+    public ServerResponseEntity<AuthAccountVO> getByAccountAndPassword(String account, String password) {
 
-        if (username == null || password == null) {
+        if (account == null || password == null) {
             return ServerResponseEntity.showFailMsg("用户名或密码不能为空");
         }
         WebsiteUser websiteUser = new WebsiteUser();
-        websiteUser.setAccount(username);
+        websiteUser.setAccount(account);
         websiteUser.setPassword(password);
 
         CookieStore cookieStore = cookieService.getCookie(websiteUser);
@@ -43,9 +40,9 @@ public class WebsiteFeignController implements WebsiteFeignClient {
         /**
          * 获取学生详情
          */
-        AuthAccountVO authAccountVO = studentService.getStudentInfo(cookieStore);
+        AuthAccountVO authAccountVO = accountService.getAccountInfo(cookieStore);
         String encryptPassword = SecurityUtils.encryptPassword(password);
-        authAccountVO.setUsername(username);
+        authAccountVO.setAccount(account);
         authAccountVO.setPassword(encryptPassword);
         return ServerResponseEntity.success(authAccountVO);
     }

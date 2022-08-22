@@ -16,9 +16,9 @@ public class AuthAccount extends BaseModel {
     private Long uid;
 
     /**
-     * 用户名
+     * 学号
      */
-    private String username;
+    private String account;
 
     /**
      * 密码
@@ -48,12 +48,12 @@ public class AuthAccount extends BaseModel {
         this.uid = uid;
     }
 
-    public String getUsername() {
-        return username;
+    public String getAccount() {
+        return account;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getPassword() {
@@ -92,7 +92,7 @@ public class AuthAccount extends BaseModel {
     public String toString() {
         return "AuthAccount{" +
                 "uid=" + uid +
-                ", username='" + username + '\'' +
+                ", account='" + account + '\'' +
                 ", password='" + password + '\'' +
                 ", createIp='" + createIp + '\'' +
                 ", status=" + status +

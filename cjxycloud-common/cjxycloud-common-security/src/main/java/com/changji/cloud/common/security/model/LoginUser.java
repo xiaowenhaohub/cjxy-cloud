@@ -24,9 +24,9 @@ public class LoginUser implements Serializable {
     private Long userId;
 
     /**
-     * 用户名
+     * 学号
      */
-    private String username;
+    private String account;
 
     /**
      * 登录时间
@@ -58,83 +58,68 @@ public class LoginUser implements Serializable {
 //     */
 //    private SysUser sysUser;
 
-    public String getToken()
-    {
+
+    public String getToken() {
         return token;
     }
 
-    public void setToken(String token)
-    {
+    public void setToken(String token) {
         this.token = token;
     }
 
-    public Long getUserid()
-    {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserid(Long userId)
-    {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public String getUsername()
-    {
-        return username;
+    public String getAccount() {
+        return account;
     }
 
-    public void setUsername(String username)
-    {
-        this.username = username;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
-    public Long getLoginTime()
-    {
+    public Long getLoginTime() {
         return loginTime;
     }
 
-    public void setLoginTime(Long loginTime)
-    {
+    public void setLoginTime(Long loginTime) {
         this.loginTime = loginTime;
     }
 
-    public Long getExpireTime()
-    {
+    public Long getExpireTime() {
         return expireTime;
     }
 
-    public void setExpireTime(Long expireTime)
-    {
+    public void setExpireTime(Long expireTime) {
         this.expireTime = expireTime;
     }
 
-    public String getIpaddr()
-    {
+    public String getIpaddr() {
         return ipaddr;
     }
 
-    public void setIpaddr(String ipaddr)
-    {
+    public void setIpaddr(String ipaddr) {
         this.ipaddr = ipaddr;
     }
 
-    public List<String> getPermissions()
-    {
+    public List<String> getPermissions() {
         return permissions;
     }
 
-    public void setPermissions(List<String> permissions)
-    {
+    public void setPermissions(List<String> permissions) {
         this.permissions = permissions;
     }
 
-    public Set<String> getRoles()
-    {
+    public Set<String> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<String> roles)
-    {
+    public void setRoles(Set<String> roles) {
         this.roles = roles;
     }
 
@@ -143,7 +128,7 @@ public class LoginUser implements Serializable {
         return "LoginUser{" +
                 "token='" + token + '\'' +
                 ", userId=" + userId +
-                ", username='" + username + '\'' +
+                ", account='" + account + '\'' +
                 ", loginTime=" + loginTime +
                 ", expireTime=" + expireTime +
                 ", ipaddr='" + ipaddr + '\'' +
@@ -151,14 +136,4 @@ public class LoginUser implements Serializable {
                 ", roles=" + roles +
                 '}';
     }
-
-    //    public SysUser getSysUser()
-//    {
-//        return sysUser;
-//    }
-//
-//    public void setSysUser(SysUser sysUser)
-//    {
-//        this.sysUser = sysUser;
-//    }
 }

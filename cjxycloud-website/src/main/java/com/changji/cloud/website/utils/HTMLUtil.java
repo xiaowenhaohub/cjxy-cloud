@@ -2,8 +2,7 @@ package com.changji.cloud.website.utils;
 
 import com.changji.cloud.api.website.vo.AuthAccountVO;
 import com.changji.cloud.common.core.exception.ServiceException;
-import com.changji.cloud.website.model.Course;
-import com.changji.cloud.website.model.StudentInfo;
+import com.changji.cloud.website.model.Lesson;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -50,7 +49,11 @@ public class HTMLUtil {
     private static final String END_ID = "-2";
 
 
-
+    /**
+     * 对官网html进行解析抓取用户信息
+     * @param context
+     * @return
+     */
     public static AuthAccountVO getStudentInfo(String context) {
 
         Document document = Jsoup.parse(context);
@@ -60,27 +63,25 @@ public class HTMLUtil {
         String specialty = getElementBySeq(tr3, "td", 1).text().replaceFirst("专业：","");
         String classes = getElementBySeq(tr3, "td", 3).text().replaceFirst("班级：信息","");
         String name = getElementBySeq(tr4, "td", 1).text();
-
         AuthAccountVO authAccountVO = new AuthAccountVO();
         authAccountVO.setInstitute(institute);
         authAccountVO.setSpecialty(specialty);
         authAccountVO.setClasses(classes);
         authAccountVO.setStudentName(name);
-
         return authAccountVO;
     }
 
 
 
-    public static List<List<Course>> getCourseList(String context) {
-        List<List<Course>> courseList = new ArrayList<>();
+    public static List<List<Lesson>> getCourseList(String context) {
+        List<List<Lesson>> courseList = new ArrayList<>();
         Document document = Jsoup.parse(context);
 
         Element tbody = document.select("tbody").first();
         Elements trs = tbody.select("tr");
         for (int i = 1; i < 6; i ++) {
-            List<Course> courseRow = getCourseRow(trs.get(i));
-            courseList.add(courseRow);
+            List<Lesson> lessonRow = getCourseRow(trs.get(i));
+            courseList.add(lessonRow);
         }
         return courseList;
     }
@@ -90,11 +91,11 @@ public class HTMLUtil {
      * @param tr
      * @return
      */
-    public static List<Course> getCourseRow(Element tr){
-        List<Course> coursesRow = new ArrayList<>();
+    public static List<Lesson> getCourseRow(Element tr){
+        List<Lesson> coursesRow = new ArrayList<>();
         Elements tds = tr.select("td");
         for (int i  = 0 ; i < 7; i ++){
-            coursesRow.add(getCourse(tds.get(i)));
+            coursesRow.add(getLesson(tds.get(i)));
         }
         return coursesRow;
     }
@@ -104,9 +105,9 @@ public class HTMLUtil {
      * @param td
      * @return
      */
-    public static Course getCourse(Element td) {
+    public static Lesson getLesson(Element td) {
 
-        Course course = new Course();
+        Lesson course = new Lesson();
         Element div = td.select("div").get(1);
         String[] split = div.text().split(" ");
         if(split.length == 1){
