@@ -27,9 +27,6 @@ public class AccountServiceImpl implements AccountService {
         String context = BufferUtil.inputToString(response);
         AuthAccountVO authAccountVO = JsoupUtil.getStudentInfo(context);
 
-
-        System.out.println(authAccountVO);
-
         return authAccountVO;
     }
 }

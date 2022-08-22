@@ -88,10 +88,6 @@ public class AuthAccountServiceImpl implements AuthAccountService {
         //同步到user模块
         UserDTO userDTO = mapperFacade.map(authAccountVO, UserDTO.class);
         userDTO.setUserId(userId);
-
-
-
-
         ServerResponseEntity<Object> userResponseEntity = userFeignClient.saveUserInfo(userDTO);
         if (!userResponseEntity.isSuccess()) {
             throw new ServiceException("同步用户信息失败");
