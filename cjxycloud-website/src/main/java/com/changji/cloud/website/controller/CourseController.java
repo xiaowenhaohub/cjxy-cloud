@@ -6,6 +6,7 @@ import com.changji.cloud.website.dto.QueryCourseDTO;
 import com.changji.cloud.website.model.Lesson;
 import com.changji.cloud.website.service.CourseService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,10 +31,20 @@ public class CourseController {
 
     @PostMapping("course/get")
     @RequiresPermissions("system:course:query")
+    @ApiOperation("查询我的")
     public ServerResponseEntity<List<List<Lesson>>> getAccountCourse(@Validated @RequestBody QueryCourseDTO queryCourseDTO) {
-
         List<List<Lesson>> courseList = courseService.getMyCourseList(queryCourseDTO);
         return ServerResponseEntity.success(courseList);
     }
+
+    @PostMapping("course/query")
+    @RequiresPermissions("system:course:query")
+    @ApiOperation("查询课表")
+    public ServerResponseEntity<List<List<Lesson>>> queryCourseList(@Validated @RequestBody QueryCourseDTO queryCourseDTO) {
+        List<List<Lesson>> courseList = courseService.queryCourseList(queryCourseDTO);
+        return ServerResponseEntity.success(courseList);
+    }
+
+
 
 }

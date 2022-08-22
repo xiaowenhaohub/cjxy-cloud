@@ -18,6 +18,11 @@ public enum HttpConstants {
     MY_COURSE_URL("/xskb/xskb_list.do"),
 
     /**
+     * 他人课表
+     */
+    OTHER_COURSE_URL("/kbcx/kbxx_xzb_ifr"),
+
+    /**
      * 登录url
      */
     LOGIN_URL("/xk/LoginToXk"),

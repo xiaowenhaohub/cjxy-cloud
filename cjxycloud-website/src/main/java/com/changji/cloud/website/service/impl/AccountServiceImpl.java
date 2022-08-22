@@ -4,8 +4,8 @@ import com.changji.cloud.api.website.vo.AuthAccountVO;
 import com.changji.cloud.website.constant.HttpConstants;
 import com.changji.cloud.website.service.AccountService;
 import com.changji.cloud.website.utils.BufferUtil;
-import com.changji.cloud.website.utils.HTMLUtil;
 import com.changji.cloud.website.utils.HttpClientUtils;
+import com.changji.cloud.website.utils.JsoupUtil;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class AccountServiceImpl implements AccountService {
         String url = HttpConstants.STUDENT_INFO.value();
         CloseableHttpResponse response = HttpClientUtils.getResponse(url, cookieStore);
         String context = BufferUtil.inputToString(response);
-        AuthAccountVO authAccountVO = HTMLUtil.getStudentInfo(context);
+        AuthAccountVO authAccountVO = JsoupUtil.getStudentInfo(context);
         return authAccountVO;
     }
 }

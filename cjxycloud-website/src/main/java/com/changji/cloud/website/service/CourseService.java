@@ -19,4 +19,11 @@ public interface CourseService {
      */
     List<List<Lesson>> getMyCourseList(QueryCourseDTO queryCourseDTO);
 
+
+    /**
+     * 查询用户课表
+     * @param queryCourseDTO
+     */
+    List<List<Lesson>> queryCourseList(QueryCourseDTO queryCourseDTO);
+
 }

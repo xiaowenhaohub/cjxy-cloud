@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changji.cloud.website.mapper.InstituteInfoMapper">
+
+
+    <select id="queryIdByInstitute" resultType="com.changji.cloud.website.model.InstituteInfo">
+            select id, institute from institute_info where institute = #{institute}
+    </select>
+
+</mapper>
