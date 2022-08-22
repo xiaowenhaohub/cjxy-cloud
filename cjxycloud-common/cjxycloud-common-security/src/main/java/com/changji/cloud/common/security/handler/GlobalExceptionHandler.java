@@ -106,7 +106,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public <T> ServerResponseEntity<T>  handlerRuntimeException(RuntimeException e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        log.error("请求地址'{}',发送未知异常",requestURI,e);
+        log.error("请求地址'{}',发生未知异常",requestURI,e);
         return ServerResponseEntity.showFailMsg(e.getMessage());
     }
 

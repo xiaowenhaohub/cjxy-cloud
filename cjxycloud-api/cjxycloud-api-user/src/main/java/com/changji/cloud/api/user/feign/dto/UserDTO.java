@@ -1,41 +1,59 @@
-package com.changji.cloud.api.website.vo;
+package com.changji.cloud.api.user.feign.dto;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @ Author     ：小问号.
- * @ Date       ：Created in 16:11 2022/8/20
+ * @ Date       ：Created in 2:57 2022/8/23
  * @ Modified By：
  */
-public class AuthAccountVO {
+public class UserDTO {
+
+    /**
+     * 用户id
+     */
+    @NotNull(message = "userId不能为空")
+    private Long userId;
 
     /**
      * 学号
      */
+    @NotBlank(message = "学号不能为空")
     private String account;
 
     /**
-     * 密码
+     *  院校
      */
-    private String password;
-
-    /**
-     * 院校
-     */
+    @NotBlank(message = "院校不能为空")
     private String institute;
 
     /**
      * 专业
      */
+    @NotBlank(message = "专业不能为空")
     private String specialty;
 
     /**
-     * 学生班级
+     * 班级
      */
+    @NotBlank(message = "班级不能为空")
     private String classes;
 
     /**
-     * 学生姓名
+     * 真实姓名
      */
+    @NotBlank(message = "姓名不能为空")
     private String realName;
+
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public String getAccount() {
         return account;
@@ -43,14 +61,6 @@ public class AuthAccountVO {
 
     public void setAccount(String account) {
         this.account = account;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getInstitute() {
@@ -87,9 +97,9 @@ public class AuthAccountVO {
 
     @Override
     public String toString() {
-        return "AuthAccountVO{" +
-                "account='" + account + '\'' +
-                ", password='" + password + '\'' +
+        return "UserDTO{" +
+                "userId=" + userId +
+                ", account='" + account + '\'' +
                 ", institute='" + institute + '\'' +
                 ", specialty='" + specialty + '\'' +
                 ", classes='" + classes + '\'' +

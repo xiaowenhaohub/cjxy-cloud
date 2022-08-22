@@ -26,6 +26,10 @@ public class AccountServiceImpl implements AccountService {
         CloseableHttpResponse response = HttpClientUtils.getResponse(url, cookieStore);
         String context = BufferUtil.inputToString(response);
         AuthAccountVO authAccountVO = JsoupUtil.getStudentInfo(context);
+
+
+        System.out.println(authAccountVO);
+
         return authAccountVO;
     }
 }

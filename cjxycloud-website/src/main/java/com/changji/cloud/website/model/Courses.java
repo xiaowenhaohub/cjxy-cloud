@@ -1,11 +1,13 @@
 package com.changji.cloud.website.model;
 
+import com.changji.cloud.common.core.model.BaseModel;
+
 /**
  * @ Author     ：小问号.
  * @ Date       ：Created in 21:46 2022/8/22
  * @ Modified By：
  */
-public class Courses {
+public class Courses extends BaseModel {
 
 
     /**

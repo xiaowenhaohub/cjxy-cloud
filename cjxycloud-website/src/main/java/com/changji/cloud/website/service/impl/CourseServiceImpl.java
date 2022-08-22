@@ -104,7 +104,6 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<List<Lesson>> queryCourseList(QueryCourseDTO queryCourseDTO) {
 
-
         /**
          * 先从从本地数据库查询课程信息
          */

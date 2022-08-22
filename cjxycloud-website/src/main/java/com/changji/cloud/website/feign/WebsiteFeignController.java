@@ -31,14 +31,14 @@ public class WebsiteFeignController implements WebsiteFeignClient {
         if (account == null || password == null) {
             return ServerResponseEntity.showFailMsg("用户名或密码不能为空");
         }
-        WebsiteUser websiteUser = new WebsiteUser();
-        websiteUser.setAccount(account);
-        websiteUser.setPassword(password);
+        WebsiteUser user = new WebsiteUser();
+        user.setAccount(account);
+        user.setPassword(password);
 
-        CookieStore cookieStore = cookieService.getCookie(websiteUser);
+        CookieStore cookieStore = cookieService.getCookie(user);
 
         /**
-         * 获取学生详情
+         * 从官网获取学生详情
          */
         AuthAccountVO authAccountVO = accountService.getAccountInfo(cookieStore);
         String encryptPassword = SecurityUtils.encryptPassword(password);

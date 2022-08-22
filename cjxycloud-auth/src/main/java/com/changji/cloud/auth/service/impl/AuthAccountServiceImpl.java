@@ -2,6 +2,8 @@ package com.changji.cloud.auth.service.impl;
 
 import com.changji.cloud.api.leaf.enums.LeafKeyEnum;
 import com.changji.cloud.api.leaf.feign.SegmentFeignClient;
+import com.changji.cloud.api.user.feign.UserFeignClient;
+import com.changji.cloud.api.user.feign.dto.UserDTO;
 import com.changji.cloud.api.website.feign.WebsiteFeignClient;
 import com.changji.cloud.api.website.vo.AuthAccountVO;
 import com.changji.cloud.auth.mapper.AuthAccountMapper;
@@ -31,6 +33,9 @@ public class AuthAccountServiceImpl implements AuthAccountService {
 
     @Autowired
     private WebsiteFeignClient websiteFeignClient;
+
+    @Autowired
+    private UserFeignClient userFeignClient;
 
     @Autowired
     private AuthAccountMapper authAccountMapper;
@@ -71,13 +76,27 @@ public class AuthAccountServiceImpl implements AuthAccountService {
         if (!uidResponseEntity.isSuccess() || !userIdResponseEntity.isSuccess()) {
             throw new ServiceException("leaf获取id失败");
         }
+        Long userId = userIdResponseEntity.getData();
         authAccount.setUid(uidResponseEntity.getData());
-        authAccount.setUserId(userIdResponseEntity.getData());
+        authAccount.setUserId(userId);
         authAccount.setCreateIp(IpUtils.getIpAddr(ServletUtils.getRequest()));
         //保存用户到auth数据库
         authAccountMapper.save(authAccount);
         //保存用户角色到数据库
         authAccountMapper.saveAuthRole(uidResponseEntity.getData(), AuthRoleEnum.COMMON_ROLE.value());
+
+        //同步到user模块
+        UserDTO userDTO = mapperFacade.map(authAccountVO, UserDTO.class);
+        userDTO.setUserId(userId);
+
+
+
+
+        ServerResponseEntity<Object> userResponseEntity = userFeignClient.saveUserInfo(userDTO);
+        if (!userResponseEntity.isSuccess()) {
+            throw new ServiceException("同步用户信息失败");
+        }
+
         //获取角色权限
         List<String> permission = authAccountMapper.queryUserMenuByUid(authAccount.getUid());
         return toLoginUser(authAccount,permission);

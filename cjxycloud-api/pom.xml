@@ -15,6 +15,7 @@
         <module>cjxycloud-api-website</module>
         <module>cjxycloud-api-auth</module>
         <module>cjxycloud-api-leaf</module>
+        <module>cjxycloud-api-user</module>
     </modules>
 
     <dependencies>

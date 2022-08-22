@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cjxycloud-auth</artifactId>
+    <artifactId>cjxycloud-user</artifactId>
 
     <dependencies>
         <!--注册中心客户端-->
@@ -35,24 +35,6 @@
         <dependency>
             <groupId>com.changji</groupId>
             <artifactId>cjxycloud-common-datasource</artifactId>
-            <version>1.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.changji</groupId>
-            <artifactId>cjxycloud-api-auth</artifactId>
-            <version>1.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.changji</groupId>
-            <artifactId>cjxycloud-api-website</artifactId>
-            <version>1.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.changji</groupId>
-            <artifactId>cjxycloud-api-leaf</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>

@@ -10,10 +10,12 @@
         <module name="cjxycloud-api-website" />
         <module name="cjxycloud-gateway" />
         <module name="test" />
-        <module name="cjxycloud-common-redis" />
         <module name="cjxycloud-common-datasource" />
         <module name="cjxycloud-common-security" />
         <module name="cjxycloud-leaf" />
+        <module name="cjxycloud-user" />
+        <module name="cjxycloud-api-user" />
+        <module name="cjxycloud-common-redis" />
         <module name="cjxycloud-auth" />
         <module name="cjxycloud-api-leaf" />
         <module name="cjxycloud-common-core" />

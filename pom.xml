@@ -13,6 +13,7 @@
         4231 auth
         4232 website
         4233 leaf
+        4234 user
     </description>
 
     <!-- 模块 -->
@@ -25,6 +26,7 @@
         <module>cjxycloud-api</module>
         <module>cjxycloud-website</module>
         <module>cjxycloud-leaf</module>
+        <module>cjxycloud-user</module>
     </modules>
     <!-- 依赖版本管理 -->
     <properties>

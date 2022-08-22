@@ -40,7 +40,7 @@ public class JsoupUtil {
         authAccountVO.setInstitute(institute);
         authAccountVO.setSpecialty(specialty);
         authAccountVO.setClasses(classes);
-        authAccountVO.setStudentName(name);
+        authAccountVO.setRealName(name);
         return authAccountVO;
     }
 
