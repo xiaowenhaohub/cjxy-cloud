@@ -46,4 +46,16 @@ public class WebsiteFeignController implements WebsiteFeignClient {
         authAccountVO.setPassword(encryptPassword);
         return ServerResponseEntity.success(authAccountVO);
     }
+
+    @Override
+    public ServerResponseEntity<Object> testFallback(String username) {
+
+        System.out.println(username);
+
+        if("1".equals(username)) {
+            throw new RuntimeException("fall back test");
+        }
+
+        return ServerResponseEntity.success(username);
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.util.LinkedCaseInsensitiveMap;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -18,6 +19,8 @@ import reactor.core.publisher.Mono;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Enumeration;
+import java.util.Map;
 
 /**
  * @ Author     ：小问号.
@@ -26,6 +29,11 @@ import java.net.URLDecoder;
  */
 public class ServletUtils {
 
+
+    /**
+     * 获取request
+     * @return
+     */
     public static HttpServletRequest getRequest() {
         try {
             return getRequestAttributes().getRequest();
@@ -43,13 +51,36 @@ public class ServletUtils {
         }
     }
 
-
+    /**
+     * 获取请求头一个值
+     * @param request
+     * @param name
+     * @return
+     */
     public static String getHeader(HttpServletRequest request, String name) {
         String value = request.getHeader(name);
         if (StringUtils.isEmpty(value)) {
             return StringUtils.EMPTY;
         }
         return urlDecode(value);
+    }
+
+    /**
+     * 获取请求头所有键值对
+     * @param request
+     * @return
+     */
+    public static Map<String, String> getHeaders(HttpServletRequest request) {
+        Map<String, String> map = new LinkedCaseInsensitiveMap<>();
+        Enumeration<String> headerNames = request.getHeaderNames();
+        if (headerNames != null) {
+            while (headerNames.hasMoreElements()) {
+                String key = headerNames.nextElement();
+                String value = request.getHeader(key);
+                map.put(key, value);
+            }
+        }
+        return map;
     }
 
     /**

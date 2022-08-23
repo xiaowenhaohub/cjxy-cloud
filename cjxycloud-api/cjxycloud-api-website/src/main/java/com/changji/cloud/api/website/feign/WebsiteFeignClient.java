@@ -1,5 +1,6 @@
 package com.changji.cloud.api.website.feign;
 
+import com.changji.cloud.api.website.factory.WebsiteFeignClientFallback;
 import com.changji.cloud.api.website.vo.AuthAccountVO;
 import com.changji.cloud.common.core.response.ServerResponseEntity;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @ Modified By：
  */
 
-@FeignClient(value = "cjxycloud-website",contextId = "websiteService")
+@FeignClient(value = "cjxycloud-website",contextId = "websiteService", fallbackFactory = WebsiteFeignClientFallback.class)
 public interface WebsiteFeignClient {
 
     /**
@@ -23,4 +24,6 @@ public interface WebsiteFeignClient {
     @PostMapping(value =  "/feign/website/getByUserNameAndPassword")
     ServerResponseEntity<AuthAccountVO> getByAccountAndPassword(@RequestParam("account") String account,@RequestParam("password") String password);
 
+    @PostMapping(value =  "/feign/website/test")
+    ServerResponseEntity<Object> testFallback(@RequestParam("username") String username);
 }

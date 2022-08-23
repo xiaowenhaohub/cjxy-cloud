@@ -13,6 +13,7 @@ import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * @author 小问号
@@ -27,7 +28,10 @@ public class HeaderInterceptor implements AsyncHandlerInterceptor {
             return true;
         }
 
-        SecurityContextHolder.setPassword(ServletUtils.getHeader(request, SecurityConstants.AUTH_PASSWORD));
+        Map<String, String> headers = ServletUtils.getHeaders(request);
+        String authPassword = headers.get(SecurityConstants.AUTH_PASSWORD);
+
+        SecurityContextHolder.setPassword(authPassword);
         //从当前线程获取 token
         String token = SecurityUtils.getToken();
         if (StringUtils.isNotEmpty(token)) {
