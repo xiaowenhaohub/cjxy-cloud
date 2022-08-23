@@ -108,7 +108,7 @@ public class HttpClientUtils {
         try {
             return httpClient.execute(httpPost, context);
         } catch (IOException e) {
-            throw new ServiceException("HTTP 请求异常", ResponseEnum.EXCEPTION);
+            throw new ServiceException("HTTP 请求异常");
         }
     }
 

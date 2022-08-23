@@ -2,6 +2,7 @@ package com.changji.cloud.website.feign;
 
 import com.changji.cloud.api.website.feign.WebsiteFeignClient;
 import com.changji.cloud.api.website.vo.AuthAccountVO;
+import com.changji.cloud.common.core.exception.ServiceException;
 import com.changji.cloud.common.core.response.ServerResponseEntity;
 import com.changji.cloud.common.security.utils.SecurityUtils;
 import com.changji.cloud.website.model.WebsiteUser;
@@ -53,7 +54,8 @@ public class WebsiteFeignController implements WebsiteFeignClient {
         System.out.println(username);
 
         if("1".equals(username)) {
-            throw new RuntimeException("fall back test");
+            System.out.println("抛出异常");
+            throw new ServiceException("fall back test");
         }
 
         return ServerResponseEntity.success(username);

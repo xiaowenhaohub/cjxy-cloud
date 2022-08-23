@@ -11,35 +11,68 @@ import io.netty.util.concurrent.ImmediateEventExecutor;
 
 public class ServiceException extends RuntimeException{
 
-    private ResponseEnum responseEnum;
+    private static final long serialVersionUID = 1L;
 
+    /**
+     * 错误码
+     */
+    private Integer code;
+
+    /**
+     * 错误提示
+     */
     private String message;
 
-    public ServiceException(){}
+    /**
+     * 错误明细，内部调试错误
+     *
+     * 一致的设计
+     */
+    private String detailMessage;
 
-    public ServiceException(String message) {
+    /**
+     * 空构造方法，避免反序列化问题
+     */
+    public ServiceException()
+    {
+    }
+
+    public ServiceException(String message)
+    {
         this.message = message;
     }
 
-    public ServiceException(String message, ResponseEnum responseEnum ) {
-        this.responseEnum = responseEnum;
+    public ServiceException(String message, Integer code)
+    {
         this.message = message;
+        this.code = code;
     }
 
-    public ResponseEnum getResponseEnum() {
-        return responseEnum;
-    }
-
-    public void setResponseEnum(ResponseEnum responseEnum) {
-        this.responseEnum = responseEnum;
+    public String getDetailMessage()
+    {
+        return detailMessage;
     }
 
     @Override
-    public String getMessage() {
+    public String getMessage()
+    {
         return message;
     }
 
-    public void setMessage(String message) {
+    public Integer getCode()
+    {
+        return code;
+    }
+
+    public ServiceException setMessage(String message)
+    {
         this.message = message;
+        return this;
+    }
+
+    public ServiceException setDetailMessage(String detailMessage)
+    {
+        this.detailMessage = detailMessage;
+        return this;
     }
 }

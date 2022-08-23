@@ -24,6 +24,7 @@ public class FeignRequestInterceptor implements RequestInterceptor {
         HttpServletRequest httpServletRequest = ServletUtils.getRequest();
         if (StringUtils.isNotNull(httpServletRequest)){
             Map<String, String> headers = ServletUtils.getHeaders(httpServletRequest);
+
             String authPassword = headers.get(SecurityConstants.AUTH_PASSWORD);
             if (StringUtils.isNotEmpty(authPassword)) {
                 requestTemplate.header(SecurityConstants.AUTH_PASSWORD, authPassword);

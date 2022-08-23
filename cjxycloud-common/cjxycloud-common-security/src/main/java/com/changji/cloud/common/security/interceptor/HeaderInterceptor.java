@@ -28,10 +28,7 @@ public class HeaderInterceptor implements AsyncHandlerInterceptor {
             return true;
         }
 
-        Map<String, String> headers = ServletUtils.getHeaders(request);
-        String authPassword = headers.get(SecurityConstants.AUTH_PASSWORD);
-
-        SecurityContextHolder.setPassword(authPassword);
+        SecurityContextHolder.setPassword(ServletUtils.getHeader(request, SecurityConstants.AUTH_PASSWORD));
         //从当前线程获取 token
         String token = SecurityUtils.getToken();
         if (StringUtils.isNotEmpty(token)) {

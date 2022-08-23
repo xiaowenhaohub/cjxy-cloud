@@ -37,7 +37,7 @@ public class CookieUtil {
         HttpClientContext context = new HttpClientContext();
         CloseableHttpResponse response = getResponse(context, url, user);
         if(response.getStatusLine().getStatusCode() != 302){
-            throw  new ServiceException("账号或密码错误", ResponseEnum.ACCOUNT_ERROR);
+            throw  new ServiceException("账号或密码错误");
         }
         return context.getCookieStore();
     }
