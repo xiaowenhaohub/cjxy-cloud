@@ -13,8 +13,10 @@ import com.changji.cloud.common.core.exception.ServiceException;
 import com.changji.cloud.common.core.response.ServerResponseEntity;
 import com.changji.cloud.common.core.utils.IpUtils;
 import com.changji.cloud.common.core.utils.ServletUtils;
+import com.changji.cloud.common.core.utils.StringUtils;
 import com.changji.cloud.common.security.enums.AuthRoleEnum;
 import com.changji.cloud.common.security.model.LoginUser;
+import com.changji.cloud.common.security.utils.SecurityUtils;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,7 +56,7 @@ public class AuthAccountServiceImpl implements AuthAccountService {
         //从数据库查询用户
         AuthAccount authAccount = authAccountMapper.queryByAccount(account);
 
-        if (authAccount != null) {
+        if (authAccount != null && SecurityUtils.matchesPassword(password, authAccount.getPassword())) {
             //查询用户权限列表
             List<String> permission = authAccountMapper.queryUserMenuByUid(authAccount.getUid());
             return toLoginUser(authAccount, permission);
@@ -65,10 +67,19 @@ public class AuthAccountServiceImpl implements AuthAccountService {
         if (!byUserNameAndPassword.isSuccess()) {
             throw new ServiceException(byUserNameAndPassword.getMsg());
         }
+
         AuthAccountVO authAccountVO = byUserNameAndPassword.getData();
 
         authAccount  = mapperFacade.map(authAccountVO, AuthAccount.class);
         authAccount.setStatus(1);
+        //更新密码
+        if (authAccount != null) {
+            authAccountMapper.edit(authAccount);
+            //获取角色权限
+            List<String> permission = authAccountMapper.queryUserMenuByUid(authAccount.getUid());
+            return toLoginUser(authAccount, permission);
+        }
+
 
         // 从leaf获取uid
         ServerResponseEntity<Long> uidResponseEntity = segmentFeignClient.getSegmentId(LeafKeyEnum.AUTH_UID_KEY.value());

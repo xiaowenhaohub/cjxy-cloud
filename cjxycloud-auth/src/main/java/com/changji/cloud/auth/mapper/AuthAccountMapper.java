@@ -27,6 +27,8 @@ public interface AuthAccountMapper {
     void save(@Param("authAccount") AuthAccount authAccount);
 
 
+    void  edit(@Param("authAccount") AuthAccount authAccount);
+
     /**
      * 根据uid查询 用户权限列表
      * @param uid

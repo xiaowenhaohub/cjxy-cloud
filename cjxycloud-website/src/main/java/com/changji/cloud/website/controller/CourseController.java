@@ -29,7 +29,7 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    @PostMapping("course/get")
+    @PostMapping("/course/get")
     @RequiresPermissions("system:course:query")
     @ApiOperation("查询我的")
     public ServerResponseEntity<List<List<Lesson>>> getAccountCourse(@Validated @RequestBody QueryCourseDTO queryCourseDTO) {
@@ -37,7 +37,7 @@ public class CourseController {
         return ServerResponseEntity.success(courseList);
     }
 
-    @PostMapping("course/query")
+    @PostMapping("/course/query")
     @RequiresPermissions("system:course:query")
     @ApiOperation("查询课表")
     public ServerResponseEntity<List<List<Lesson>>> queryCourseList(@Validated @RequestBody QueryCourseDTO queryCourseDTO) {

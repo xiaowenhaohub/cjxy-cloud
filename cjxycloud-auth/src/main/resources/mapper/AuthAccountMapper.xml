@@ -5,6 +5,9 @@
     <sql id="all_columns">
         uid, account, password , create_ip, status, user_id
     </sql>
+    <update id="edit">
+        update auth_account set password = #{authAccount.password} where account =#{authAccount.account}
+    </update>
 
     <select id="queryByAccount" resultType="com.changji.cloud.auth.model.AuthAccount">
         select <include refid="all_columns"></include> from auth_account where account =#{account}

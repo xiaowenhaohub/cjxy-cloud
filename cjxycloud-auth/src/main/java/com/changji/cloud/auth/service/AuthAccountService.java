@@ -23,7 +23,7 @@ public interface AuthAccountService {
 
     /**
      * 刷新用户信息
-     * @param request
+     * @param loginUser
      * @return
      */
     LoginUser refresh(LoginUser loginUser);
