@@ -15,4 +15,12 @@ public interface UsersMapper {
      * @param user
      */
     void save(@Param("user") User user);
+
+
+    /**
+     * 通过学号查询用户
+     * @param account
+     * @return
+     */
+    User queryUserByAccount(@Param("account") String account);
 }

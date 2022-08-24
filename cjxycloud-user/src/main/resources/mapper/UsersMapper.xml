@@ -11,4 +11,8 @@
         insert into users (user_id, account, institute, specialty, classes, real_name) values
         (#{user.userId}, #{user.account}, #{user.institute}, #{user.specialty}, #{user.classes}, #{user.realName})
     </insert>
+
+    <select id="queryUserByAccount" resultType="com.changji.cloud.user.model.User">
+        select <include refid="all_columns"></include> from users where account = #{account}
+    </select>
 </mapper>

@@ -1,6 +1,8 @@
 package com.changji.cloud.user.service.impl;
 
 import com.changji.cloud.api.user.feign.dto.UserDTO;
+import com.changji.cloud.common.security.model.LoginUser;
+import com.changji.cloud.common.security.utils.SecurityUtils;
 import com.changji.cloud.user.mapper.UsersMapper;
 import com.changji.cloud.user.model.User;
 import com.changji.cloud.user.service.UserService;
@@ -27,5 +29,12 @@ public class UserServiceImpl implements UserService {
         User user = mapperFacade.map(userDTO, User.class);
 
         usersMapper.save(user);
+    }
+
+    @Override
+    public User queryUserByAccount() {
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        User user = usersMapper.queryUserByAccount(loginUser.getAccount());
+        return user;
     }
 }

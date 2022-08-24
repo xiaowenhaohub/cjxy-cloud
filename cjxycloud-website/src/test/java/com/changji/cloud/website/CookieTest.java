@@ -1,5 +1,6 @@
 package com.changji.cloud.website;
 
+import com.changji.cloud.common.core.utils.DateUtils;
 import com.changji.cloud.common.core.utils.StringUtils;
 import com.changji.cloud.website.dto.QueryCourseDTO;
 import com.changji.cloud.website.mapper.CoursesMapper;
@@ -25,6 +26,18 @@ import java.util.List;
 
 @SpringBootTest
 public class CookieTest {
+
+    @Test
+    public void test03() {
+
+        Integer year = DateUtils.getCurrentYear();
+        Integer month = DateUtils.getCurrentMonth();
+
+
+        String currentYearSemester = DateUtils.getCurrentYearSemester(DateUtils.getCurrentYear(), DateUtils.getCurrentMonth(), DateUtils.SEMESTER);
+        System.out.println("year:" + year);
+        System.out.println("month:" + month);
+    }
 
     @Autowired
     private CookieService cookieService;

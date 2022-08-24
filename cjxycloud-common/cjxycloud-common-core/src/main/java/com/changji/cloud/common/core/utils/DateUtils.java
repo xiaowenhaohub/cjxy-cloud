@@ -3,9 +3,11 @@ package com.changji.cloud.common.core.utils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
 import java.lang.management.ManagementFactory;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -68,13 +70,11 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
         return parseDateToStr(YYYY_MM_DD, date);
     }
 
-    public static final String parseDateToStr(final String format, final Date date)
-    {
+    public static final String parseDateToStr(final String format, final Date date) {
         return new SimpleDateFormat(format).format(date);
     }
 
-    public static final Date dateTime(final String format, final String ts)
-    {
+    public static final Date dateTime(final String format, final String ts) {
         try
         {
             return new SimpleDateFormat(format).parse(ts);
@@ -88,8 +88,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
     /**
      * 日期路径 即年/月/日 如2018/08/08
      */
-    public static final String datePath()
-    {
+    public static final String datePath() {
         Date now = new Date();
         return DateFormatUtils.format(now, "yyyy/MM/dd");
     }
@@ -97,8 +96,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
     /**
      * 日期路径 即年/月/日 如20180808
      */
-    public static final String dateTime()
-    {
+    public static final String dateTime() {
         Date now = new Date();
         return DateFormatUtils.format(now, "yyyyMMdd");
     }
@@ -106,8 +104,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
     /**
      * 日期型字符串转化为日期 格式
      */
-    public static Date parseDate(Object str)
-    {
+    public static Date parseDate(Object str) {
         if (str == null)
         {
             return null;
@@ -171,4 +168,54 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
         ZonedDateTime zdt = localDateTime.atZone(ZoneId.systemDefault());
         return Date.from(zdt.toInstant());
     }
+
+
+
+    public static final String SCHOOL_YEAR = "学年";
+
+    public static final String YEAR = "year";
+
+    public static final String SEMESTER = "semester";
+
+    public static final String YYYY_年_MM_月_DD_日 = "yyyy年MM月dd日";
+
+    public static String getCurrentYearSemester(int currentYear, int currentMonth, String yearOrSemester) {
+        String year;
+        String semester;
+        if(currentMonth >= 1 && currentMonth <= 2) {
+//            year = currentYear - 1 + "-" + currentYear + SCHOOL_YEAR;
+            year = currentYear - 1 + "-" + currentYear ;
+            semester = "1";
+        } else if(currentMonth >= 3 && currentMonth <= 8) {
+            year = currentYear - 1 + "-" + (currentYear);
+            semester = "2";
+        } else {
+            year = currentYear + "-" + (currentYear + 1);
+            semester = "1";
+        }
+        if(StringUtils.equals(YEAR,yearOrSemester)){
+            return year;
+        }else {
+            return semester;
+        }
+    }
+
+    public static int getCurrentYear(){
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        return year;
+    }
+
+    public static int getCurrentMonth(){
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH ) + 1;
+        return month;
+    }
+
+    public static String dateToString(Date date){
+        DateFormat format = new SimpleDateFormat(YYYY_年_MM_月_DD_日);
+        String dateStr = format.format(date);
+        return dateStr;
+    }
+
 }
