@@ -13,18 +13,18 @@ import javax.validation.constraints.NotBlank;
 public class QueryCourseDTO {
 
     @ApiModelProperty("周次")
-    @NotBlank
+    @NotBlank(message = "周次不能为空")
     private String weekly;
 
-    @NotBlank
+    @NotBlank(message = "学期不能为空")
     @ApiModelProperty("学期")
     private String semester;
 
-    @NotBlank
+    @NotBlank(message = "院校不能为空")
     @ApiModelProperty("院校")
     private String institute;
 
-    @NotBlank
+    @NotBlank(message = "班级不能为空")
     @ApiModelProperty("班级")
     private String classes;
 
