@@ -1,7 +1,14 @@
 package com.changji.cloud.user.controller;
 
+import com.changji.cloud.common.core.response.ServerResponseEntity;
+import com.changji.cloud.common.security.annotation.RequiresPermissions;
+import com.changji.cloud.user.model.User;
 import com.changji.cloud.user.service.UserService;
+import com.changji.cloud.user.vo.UserVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -11,12 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
+@Api("用户")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-
-
+    @GetMapping("/userInfo")
+    @RequiresPermissions("common:user:query")
+    @ApiOperation("查询个人信息")
+    public ServerResponseEntity<UserVO> queryUserDetail() {
+        UserVO userVO = userService.queryUserByAccount();
+        return ServerResponseEntity.success(userVO);
+    }
 
 }
