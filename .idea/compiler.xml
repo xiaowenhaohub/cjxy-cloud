@@ -13,6 +13,7 @@
         <module name="cjxycloud-common-datasource" />
         <module name="cjxycloud-common-security" />
         <module name="cjxycloud-leaf" />
+        <module name="cjxycloud-file" />
         <module name="cjxycloud-user" />
         <module name="cjxycloud-api-user" />
         <module name="cjxycloud-common-redis" />

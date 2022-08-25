@@ -14,6 +14,7 @@
         4232 website
         4233 leaf
         4234 user
+        4235 file
     </description>
 
     <!-- 模块 -->
@@ -27,6 +28,7 @@
         <module>cjxycloud-website</module>
         <module>cjxycloud-leaf</module>
         <module>cjxycloud-user</module>
+        <module>cjxycloud-file</module>
     </modules>
     <!-- 依赖版本管理 -->
     <properties>
