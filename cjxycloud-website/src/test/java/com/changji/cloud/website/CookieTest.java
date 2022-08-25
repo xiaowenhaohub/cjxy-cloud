@@ -44,6 +44,7 @@ public class CookieTest {
 
     @Test
     public void test01() {
+
         WebsiteUser websiteUser = new WebsiteUser();
         websiteUser.setAccount("1945829064");
         websiteUser.setPassword("(jiang.4234)");
@@ -52,21 +53,5 @@ public class CookieTest {
         cookies.forEach(e -> System.out.println(e.getValue()));
     }
 
-    @Autowired
-    private CoursesMapper coursesMapper;
 
-    @Autowired
-    private MapperFacade mapperFacade;
-
-    @Test
-    public void test02() {
-        QueryCourseDTO queryCourseDTO = new QueryCourseDTO();
-        queryCourseDTO.setClasses("B1902");
-        queryCourseDTO.setInstitute("信息技术学院");
-        queryCourseDTO.setSemester("2021-2022-2");
-
-        Courses courses = mapperFacade.map(queryCourseDTO, Courses.class);
-        System.out.println(courses);
-
-    }
 }

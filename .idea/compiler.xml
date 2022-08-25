@@ -16,6 +16,7 @@
         <module name="cjxycloud-user" />
         <module name="cjxycloud-api-user" />
         <module name="cjxycloud-common-redis" />
+        <module name="cjxycloud-common-log" />
         <module name="cjxycloud-auth" />
         <module name="cjxycloud-api-leaf" />
         <module name="cjxycloud-common-core" />

@@ -1,6 +1,7 @@
 package com.changji.cloud.website.controller;
 
 import com.changji.cloud.common.core.response.ServerResponseEntity;
+import com.changji.cloud.common.log.annotation.Log;
 import com.changji.cloud.common.security.annotation.RequiresPermissions;
 import com.changji.cloud.website.dto.QueryCourseDTO;
 import com.changji.cloud.website.model.Lesson;
@@ -40,6 +41,7 @@ public class CourseController {
     @PostMapping("/course/query")
     @RequiresPermissions("system:course:query")
     @ApiOperation("查询课表")
+    @Log(title = "查询课表")
     public ServerResponseEntity<List<List<Lesson>>> queryCourseList(@Validated @RequestBody QueryCourseDTO queryCourseDTO) {
         List<List<Lesson>> courseList = courseService.queryCourseList(queryCourseDTO);
         return ServerResponseEntity.success(courseList);
