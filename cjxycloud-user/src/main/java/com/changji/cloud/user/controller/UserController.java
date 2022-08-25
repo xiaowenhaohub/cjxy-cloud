@@ -1,6 +1,7 @@
 package com.changji.cloud.user.controller;
 
 import com.changji.cloud.common.core.response.ServerResponseEntity;
+import com.changji.cloud.common.log.annotation.Log;
 import com.changji.cloud.common.security.annotation.RequiresPermissions;
 import com.changji.cloud.user.model.User;
 import com.changji.cloud.user.service.UserService;
@@ -27,6 +28,7 @@ public class UserController {
     @GetMapping("/userInfo")
     @RequiresPermissions("common:user:query")
     @ApiOperation("查询个人信息")
+    @Log(title = "用户模块")
     public ServerResponseEntity<UserVO> queryUserDetail() {
         UserVO userVO = userService.queryUserByAccount();
         return ServerResponseEntity.success(userVO);

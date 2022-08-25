@@ -33,6 +33,7 @@ public class CourseController {
     @PostMapping("/course/get")
     @RequiresPermissions("system:course:query")
     @ApiOperation("查询我的")
+    @Log(title = "查询我的课表")
     public ServerResponseEntity<List<List<Lesson>>> getAccountCourse(@Validated @RequestBody QueryCourseDTO queryCourseDTO) {
         List<List<Lesson>> courseList = courseService.getMyCourseList(queryCourseDTO);
         return ServerResponseEntity.success(courseList);

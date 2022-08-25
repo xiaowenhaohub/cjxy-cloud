@@ -7,6 +7,7 @@ import com.changji.cloud.auth.service.AuthAccountService;
 import com.changji.cloud.common.core.response.ServerResponseEntity;
 import com.changji.cloud.common.core.utils.ServletUtils;
 import com.changji.cloud.common.core.utils.StringUtils;
+import com.changji.cloud.common.log.annotation.Log;
 import com.changji.cloud.common.security.model.LoginUser;
 import com.changji.cloud.common.security.service.TokenService;
 import io.swagger.annotations.Api;
@@ -35,6 +36,7 @@ public class TokenController {
 
     @PostMapping("login")
     @ApiOperation(value = "登录", notes = "返回token")
+    @Log(title = "登录")
     public ServerResponseEntity<Map<String, Object>> login(@Validated @RequestBody AuthenticationDTO authenticationDTO) {
         LoginUser loginUser = authAccountService.login(authenticationDTO.getAccount(), authenticationDTO.getPassword());
         Map<String, Object> response = tokenService.createToken(loginUser);
@@ -45,6 +47,7 @@ public class TokenController {
 
     @PostMapping("refresh")
     @ApiOperation(value = "刷新token")
+    @Log(title = "刷新token")
     public ServerResponseEntity<Boolean> refresh(HttpServletRequest request) {
         LoginUser loginUser = tokenService.getLoginUser(request);
         if (StringUtils.isNotNull(loginUser)) {
@@ -57,6 +60,7 @@ public class TokenController {
 
     @DeleteMapping("logout")
     @ApiOperation("退出登录")
+    @Log(title = "退出登录")
     public ServerResponseEntity<Boolean> logout(HttpServletRequest request) {
         String token = ServletUtils.getToken(request);
         if (StringUtils.isNotEmpty(token)) {
