@@ -23,8 +23,8 @@ import java.util.Map;
  * @ Date       ：Created in 15:30 2022/8/21
  * @ Modified By：
  */
-@RestController()
 @Api("课表")
+@RestController()
 public class CourseController {
 
     @Autowired

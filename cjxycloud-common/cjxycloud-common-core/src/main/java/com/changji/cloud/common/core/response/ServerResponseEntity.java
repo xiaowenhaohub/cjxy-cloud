@@ -59,10 +59,6 @@ public class ServerResponseEntity<T> implements Serializable {
         return Objects.equals(ResponseEnum.OK.value(), this.code);
     }
 
-    @Override
-    public String toString() {
-        return "ServerResponseEntity{" + "code=" + code + ", msg='" + msg + '\'' + ", data=" + data + '}';
-    }
 
     public static <T> ServerResponseEntity<T> success(T data) {
         ServerResponseEntity<T> serverResponseEntity = new ServerResponseEntity<>();
@@ -123,5 +119,11 @@ public class ServerResponseEntity<T> implements Serializable {
         serverResponseEntity.setData(data);
         return serverResponseEntity;
     }
+
+    @Override
+    public String toString() {
+        return "ServerResponseEntity{" + "code=" + code + ", msg='" + msg + '\'' + ", data=" + data + '}';
+    }
+
 
 }
