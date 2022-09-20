@@ -7,7 +7,8 @@
         id, user_id, content, picture, location
     </sql>
     <insert id="save">
-
+        insert into friend_circle_message (user_id, content, picture) values
+        (#{friendCircleMessage.userId}, #{friendCircleMessage.content}, #{friendCircleMessage.picture})
     </insert>
 
 
