@@ -15,6 +15,7 @@
         4233 leaf
         4234 user
         4235 file
+        4236 social
     </description>
 
     <!-- 模块 -->
@@ -29,6 +30,7 @@
         <module>cjxycloud-leaf</module>
         <module>cjxycloud-user</module>
         <module>cjxycloud-file</module>
+        <module>cjxycloud-social</module>
     </modules>
     <!-- 依赖版本管理 -->
     <properties>

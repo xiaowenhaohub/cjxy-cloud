@@ -1,4 +1,4 @@
-package com.changji.cloud.user.config;
+package com.changji.cloud.social.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +25,7 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.changji.cloud.user.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.changji.cloud.social.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
