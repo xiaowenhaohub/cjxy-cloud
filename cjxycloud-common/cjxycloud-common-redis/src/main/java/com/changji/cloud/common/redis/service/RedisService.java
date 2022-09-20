@@ -1,5 +1,6 @@
 package com.changji.cloud.common.redis.service;
 
+import com.changji.cloud.common.redis.utils.RedisKeyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
@@ -20,6 +21,8 @@ import java.util.concurrent.TimeUnit;
 public class RedisService {
     @Autowired
     public RedisTemplate redisTemplate;
+
+
 
     /**
      * 缓存基本的对象，Integer、String、实体类等

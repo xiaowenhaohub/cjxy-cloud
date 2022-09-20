@@ -3,9 +3,14 @@ package com.changji.cloud.social.controller;
 import com.changji.cloud.common.core.response.ServerResponseEntity;
 import com.changji.cloud.common.log.annotation.Log;
 import com.changji.cloud.common.security.annotation.RequiresPermissions;
+import com.changji.cloud.social.dto.FriendCircleDTO;
+import com.changji.cloud.social.service.FriendCircleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -17,12 +22,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FriendCircleController {
 
+    @Autowired
+    private FriendCircleService friendCircleService;
+
     @PostMapping("/social/saveFriendCircle")
     @RequiresPermissions("common:social:friendCircle")
     @ApiOperation("保存朋友圈")
     @Log(title = "保存朋友圈")
-    public ServerResponseEntity<?> saveFriendCircleMessage() {
-
+    public ServerResponseEntity<Void> saveFriendCircleMessage(@Validated @RequestBody FriendCircleDTO friendCircleDTO) {
+        friendCircleService.saveFriendCircleMessage(friendCircleDTO);
         return ServerResponseEntity.success();
     }
 }
