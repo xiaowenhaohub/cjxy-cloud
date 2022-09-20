@@ -61,10 +61,19 @@
 
         <druid.version>1.2.11</druid.version>
         <dynamic-ds.version>3.5.1</dynamic-ds.version>
+        <pagehelper.version>1.4.3</pagehelper.version>
     </properties>
     <!-- 依赖管理 -->
     <dependencyManagement>
         <dependencies>
+            <!-- pagehelper -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+
+
             <!-- springboot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>

@@ -1,13 +1,18 @@
 package com.changji.cloud.social.service.impl;
 
+import com.changji.cloud.common.core.model.Page;
 import com.changji.cloud.common.security.utils.SecurityUtils;
 import com.changji.cloud.social.dto.FriendCircleDTO;
 import com.changji.cloud.social.mapper.FriendCircleMessageMapper;
 import com.changji.cloud.social.model.FriendCircleMessage;
 import com.changji.cloud.social.service.FriendCircleService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author 小问号
@@ -31,5 +36,15 @@ public class FriendCircleServiceImpl implements FriendCircleService {
         friendCircleMessage.setUserId(SecurityUtils.getLoginUser().getUserId());
 
         friendCircleMessageMapper.save(friendCircleMessage);
+    }
+
+    @Override
+    public List<FriendCircleMessage> getFriendCircleList(Page page) {
+
+        PageHelper.startPage(page.getPageNum(), page.getPageSize());
+        List<FriendCircleMessage> friendCircleMessageList = friendCircleMessageMapper.getFriendCircle();
+        PageInfo<FriendCircleMessage> pageInfo = new PageInfo<>(friendCircleMessageList);
+
+        return pageInfo.getList();
     }
 }
