@@ -17,33 +17,33 @@ public interface LikedRedisService {
      * @param likedFriendCircleId
      * @param userId
      */
-    void saveLiked2Redis(String likedFriendCircleId, String userId);
+    void saveLiked2Redis(Long likedFriendCircleId, Long userId);
 
     /**
      * 取消点赞。将状态改变为0
      * @param likedFriendCircleId
      * @param userId
      */
-    void unlikeFromRedis(String likedFriendCircleId, String userId);
+    void unlikeFromRedis(Long likedFriendCircleId, Long userId);
 
     /**
      * 从Redis中删除一条点赞数据
      * @param likedFriendCircleId
      * @param userId
      */
-    void deleteLikedFromRedis(String likedFriendCircleId, String userId);
+    void deleteLikedFromRedis(Long likedFriendCircleId, Long userId);
 
     /**
      * 该朋友圈的点赞数加1
      * @param likedFriendCircleId
      */
-    void incrementLikedCount(String likedFriendCircleId);
+    void incrementLikedCount(Long likedFriendCircleId);
 
     /**
      * 该朋友圈的点赞数减1
      * @param likedFriendCircleId
      */
-    void decrementLikedCount(String likedFriendCircleId);
+    void decrementLikedCount(Long likedFriendCircleId);
 
     /**
      * 获取Redis中存储的所有点赞数据

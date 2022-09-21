@@ -1,5 +1,6 @@
 package com.changji.cloud.social.service.impl;
 
+import com.changji.cloud.common.core.exception.ServiceException;
 import com.changji.cloud.common.core.model.Page;
 import com.changji.cloud.common.security.utils.SecurityUtils;
 import com.changji.cloud.social.dto.FriendCircleDTO;
@@ -7,6 +8,8 @@ import com.changji.cloud.social.mapper.FriendCircleMessageMapper;
 import com.changji.cloud.social.model.FriendCircleMessage;
 import com.changji.cloud.social.repository.FriendCircleMessageRepository;
 import com.changji.cloud.social.service.FriendCircleService;
+import com.changji.cloud.social.service.LikedRedisService;
+import com.changji.cloud.social.vo.FriendCircleMessageVO;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import ma.glasnost.orika.MapperFacade;
@@ -14,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author 小问号
@@ -26,6 +31,9 @@ public class FriendCircleServiceImpl implements FriendCircleService {
 
     @Autowired
     private FriendCircleMessageMapper friendCircleMessageMapper;
+
+    @Autowired
+    private LikedRedisService likedRedisService;
 
     @Autowired
     private FriendCircleMessageRepository friendCircleMessageRepository;
@@ -50,13 +58,38 @@ public class FriendCircleServiceImpl implements FriendCircleService {
     }
 
     @Override
-    public List<FriendCircleMessage> getFriendCircleList(Page page) {
+    public void likedFriendCircle(Long friendCircleId) {
+
+        FriendCircleMessage friendCircleMessageById = getFriendCircleMessageById(friendCircleId);
+
+        if (Objects.isNull(friendCircleMessageById)) {
+            throw new ServiceException("没有该朋友圈信息");
+        }
+        // 点赞信息缓存到redis
+        likedRedisService.saveLiked2Redis(friendCircleId, SecurityUtils.getLoginUser().getUserId());
+
+    }
+
+    @Override
+    public List<FriendCircleMessageVO> getFriendCircleList(Page page) {
 
         PageHelper.startPage(page.getPageNum(), page.getPageSize());
-        List<FriendCircleMessage> friendCircleMessageList = friendCircleMessageMapper.getFriendCircle();
-        PageInfo<FriendCircleMessage> pageInfo = new PageInfo<>(friendCircleMessageList);
+        List<FriendCircleMessage> list = friendCircleMessageMapper.getFriendCircle();
+        PageInfo<FriendCircleMessage> pageInfo = new PageInfo<>(list);
+        List<FriendCircleMessage> friendCircleMessageList = pageInfo.getList();
 
-        return pageInfo.getList();
+        List<FriendCircleMessageVO> friendCircleMessageVOList = new ArrayList<>();
+
+        for (FriendCircleMessage friendCircleMessage : friendCircleMessageList) {
+            FriendCircleMessageVO friendCircleVO = mapperFacade.map(friendCircleMessage, FriendCircleMessageVO.class);
+
+
+            friendCircleMessageVOList.add(friendCircleVO);
+        }
+
+
+
+        return friendCircleMessageVOList;
     }
 
     @Override

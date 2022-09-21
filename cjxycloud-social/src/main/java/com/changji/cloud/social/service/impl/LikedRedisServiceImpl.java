@@ -1,7 +1,6 @@
 package com.changji.cloud.social.service.impl;
 
 import com.changji.cloud.common.redis.service.RedisService;
-import com.changji.cloud.common.redis.utils.RedisKeyUtils;
 import com.changji.cloud.social.dto.LikedCountDTO;
 import com.changji.cloud.social.enums.LikedStatusEnum;
 import com.changji.cloud.social.model.FriendCircleLike;
@@ -32,30 +31,30 @@ public class LikedRedisServiceImpl implements LikedRedisService {
     private RedisTemplate redisTemplate;
 
     @Override
-    public void saveLiked2Redis(String likedFriendCircleId, String userId) {
-        String key = LikedUtils.getLikedKey(likedFriendCircleId, userId);
+    public void saveLiked2Redis(Long likedFriendCircleId, Long userId) {
+        String key = LikedUtils.getLikedKey(String.valueOf(likedFriendCircleId), String.valueOf(userId));
         redisTemplate.opsForHash().put(LikedUtils.MAP_KEY_USER_LIKED, key, LikedStatusEnum.LIKE.getCode());
     }
 
     @Override
-    public void unlikeFromRedis(String likedFriendCircleId, String userId) {
-        String key = LikedUtils.getLikedKey(likedFriendCircleId, userId);
+    public void unlikeFromRedis(Long likedFriendCircleId, Long userId) {
+        String key = LikedUtils.getLikedKey(String.valueOf(likedFriendCircleId), String.valueOf(userId));
         redisTemplate.opsForHash().put(LikedUtils.MAP_KEY_USER_LIKED, key, LikedStatusEnum.UNLIKE.getCode());
     }
 
     @Override
-    public void deleteLikedFromRedis(String likedFriendCircleId, String userId) {
-        String key = LikedUtils.getLikedKey(likedFriendCircleId, userId);
+    public void deleteLikedFromRedis(Long likedFriendCircleId, Long userId) {
+        String key = LikedUtils.getLikedKey(String.valueOf(likedFriendCircleId), String.valueOf(userId));
         redisTemplate.opsForHash().delete(LikedUtils.MAP_KEY_USER_LIKED, key);
     }
 
     @Override
-    public void incrementLikedCount(String likedFriendCircleId) {
+    public void incrementLikedCount(Long likedFriendCircleId) {
         redisTemplate.opsForHash().increment(LikedUtils.MAP_KEY_FRIEND_CIRCLE_COUNT, likedFriendCircleId, 1);
     }
 
     @Override
-    public void decrementLikedCount(String likedFriendCircleId) {
+    public void decrementLikedCount(Long likedFriendCircleId) {
         redisTemplate.opsForHash().increment(LikedUtils.MAP_KEY_FRIEND_CIRCLE_COUNT, likedFriendCircleId, -1);
     }
 

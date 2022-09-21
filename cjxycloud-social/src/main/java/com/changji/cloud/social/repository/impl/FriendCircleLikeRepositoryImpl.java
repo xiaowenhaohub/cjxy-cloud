@@ -66,6 +66,6 @@ public class FriendCircleLikeRepositoryImpl implements FriendCircleLikeRepositor
 
     @Override
     public FriendCircleLike findByLikedFriendCircleIdAndUserId(Long friendCircleId, Long userId) {
-        return  friendCircleLikeMapper.findByLikedFriendCircleIdAndUserId(friendCircleId, userId);
+        return friendCircleLikeMapper.findByLikedFriendCircleIdAndUserId(friendCircleId, userId);
     }
 }

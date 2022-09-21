@@ -3,6 +3,7 @@ package com.changji.cloud.social.service;
 import com.changji.cloud.common.core.model.Page;
 import com.changji.cloud.social.dto.FriendCircleDTO;
 import com.changji.cloud.social.model.FriendCircleMessage;
+import com.changji.cloud.social.vo.FriendCircleMessageVO;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public interface FriendCircleService {
      * @param page
      * @return
      */
-    List<FriendCircleMessage> getFriendCircleList(Page page);
+    List<FriendCircleMessageVO> getFriendCircleList(Page page);
 
     /**
      * 根据id获取朋友圈
@@ -40,5 +41,11 @@ public interface FriendCircleService {
      * @return
      */
     FriendCircleMessage updateFriendCircleMessage(FriendCircleMessage friendCircleMessage);
+
+    /**
+     * 朋友圈点赞
+     * @param friendCircleId
+     */
+    void likedFriendCircle(Long friendCircleId);
 
 }
