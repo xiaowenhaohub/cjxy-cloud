@@ -34,4 +34,11 @@ public interface FriendCircleService {
      */
     FriendCircleMessage getFriendCircleMessageById(Long id);
 
+    /**
+     * 更新朋友圈信息
+     * @param friendCircleMessage
+     * @return
+     */
+    FriendCircleMessage updateFriendCircleMessage(FriendCircleMessage friendCircleMessage);
+
 }

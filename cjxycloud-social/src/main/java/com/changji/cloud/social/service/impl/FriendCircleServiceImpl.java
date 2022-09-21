@@ -5,6 +5,7 @@ import com.changji.cloud.common.security.utils.SecurityUtils;
 import com.changji.cloud.social.dto.FriendCircleDTO;
 import com.changji.cloud.social.mapper.FriendCircleMessageMapper;
 import com.changji.cloud.social.model.FriendCircleMessage;
+import com.changji.cloud.social.repository.FriendCircleMessageRepository;
 import com.changji.cloud.social.service.FriendCircleService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -27,6 +28,9 @@ public class FriendCircleServiceImpl implements FriendCircleService {
     private FriendCircleMessageMapper friendCircleMessageMapper;
 
     @Autowired
+    private FriendCircleMessageRepository friendCircleMessageRepository;
+
+    @Autowired
     private MapperFacade mapperFacade;
 
 
@@ -38,6 +42,11 @@ public class FriendCircleServiceImpl implements FriendCircleService {
         friendCircleMessage.setUserId(SecurityUtils.getLoginUser().getUserId());
 
         friendCircleMessageMapper.save(friendCircleMessage);
+    }
+
+    @Override
+    public FriendCircleMessage updateFriendCircleMessage(FriendCircleMessage friendCircleMessage) {
+        return friendCircleMessageRepository.updateFriendCircleMessage(friendCircleMessage);
     }
 
     @Override

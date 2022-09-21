@@ -87,7 +87,7 @@ public class LikedServiceImpl implements LikedService {
                 Integer likeCount = friendCircleMessage.getLikedCount() + dto.getCount();
                 friendCircleMessage.setLikedCount(likeCount);
                 //更新点赞数量
-//                userService.updateInfo(user);
+                friendCircleService.updateFriendCircleMessage(friendCircleMessage);
             }
         }
     }

@@ -11,6 +11,10 @@
         (#{friendCircleMessage.userId}, #{friendCircleMessage.content}, #{friendCircleMessage.picture})
     </insert>
 
+    <update id="updateFriendCircleMessage">
+        update friend_circle_message set (liked_count = #{friendCircleMessage.likedCount}) WHERE id = #{friendCircleMessage.id}
+    </update>
+
     <select id="getFriendCircle" resultType="com.changji.cloud.social.model.FriendCircleMessage">
         select <include refid="all_columns"></include> from friend_circle_message
     </select>
