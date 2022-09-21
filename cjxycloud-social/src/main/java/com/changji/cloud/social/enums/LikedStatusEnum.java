@@ -20,4 +20,8 @@ public enum LikedStatusEnum {
         this.code = code;
         this.msg = msg;
     }
+
+    public Integer getCode() {
+        return code;
+    }
 }

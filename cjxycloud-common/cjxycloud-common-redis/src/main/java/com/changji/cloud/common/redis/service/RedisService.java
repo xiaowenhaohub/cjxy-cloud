@@ -2,10 +2,7 @@ package com.changji.cloud.common.redis.service;
 
 import com.changji.cloud.common.redis.utils.RedisKeyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.BoundSetOperations;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -229,6 +226,22 @@ public class RedisService {
         HashOperations<String, String, T> opsForHash = redisTemplate.opsForHash();
         return opsForHash.get(key, hKey);
     }
+
+    public Long deleteCacheMapValue(final String mapKey, final String key) {
+        return redisTemplate.opsForHash().delete(mapKey, key);
+    }
+
+    /**
+     * 匹配获取键值对
+     *
+     * @param key Redis键
+     * @param scanOptions
+     */
+    public Cursor<Map.Entry<Object, Object>> ScanCacheMapValue(final String key, final ScanOptions scanOptions)
+    {
+        return redisTemplate.opsForHash().scan(key, scanOptions);
+    }
+
 
     /**
      * 获取多个Hash中的数据
