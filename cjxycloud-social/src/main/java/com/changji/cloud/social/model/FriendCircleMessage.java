@@ -35,6 +35,11 @@ public class FriendCircleMessage extends BaseModel {
      */
     private String location;
 
+    /**
+     * 点赞数
+     */
+    private Integer likedCount;
+
     public Long getId() {
         return id;
     }
@@ -73,5 +78,13 @@ public class FriendCircleMessage extends BaseModel {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Integer getLikedCount() {
+        return likedCount;
+    }
+
+    public void setLikedCount(Integer likedCount) {
+        this.likedCount = likedCount;
     }
 }

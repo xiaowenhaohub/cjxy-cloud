@@ -74,4 +74,14 @@ public class FriendCircleLike extends BaseModel {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "FriendCircleLike{" +
+                "id=" + id +
+                ", friendCircleId=" + friendCircleId +
+                ", userId=" + userId +
+                ", status=" + status +
+                '}';
+    }
 }

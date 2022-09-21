@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changji.cloud.social.mapper.FriendCircleLikeMapper">
+
+
+    <sql id="all_columns">
+        id, friend_circle_id, user_id, status
+    </sql>
+
+    <insert id="save">
+        insert into friend_circle_like (friend_circle_id, user_id, status) values
+        (#{friendCircleLike.friendCircleId}, #{friendCircleLike.userId}, #{friendCircleLike.status})
+    </insert>
+
+    <insert id="saveAll" parameterType="java.util.List">
+        insert into friend_circle_like (friend_circle_id, user_id, status) values
+        <foreach collection="list" item="friendCircleLike" index="index" separator=",">
+            (#{friendCircleLike.friendCircleId}, #{friendCircleLike.userId}, #{friendCircleLike.status})
+        </foreach>
+    </insert>
+
+    <select id="findByLikedFriendCircleIdAndStatus"
+            resultType="com.changji.cloud.social.model.FriendCircleLike">
+        select <include refid="all_columns"></include> from friend_circle_like
+        where friend_circle_id = #{friendCircleId} and status = #{status}
+    </select>
+    <select id="findByUserIdAndStatus" resultType="com.changji.cloud.social.model.FriendCircleLike">
+        select <include refid="all_columns"></include> from friend_circle_like
+        where user_id = #{userId} and status = #{status}
+    </select>
+
+    <select id="findByLikedFriendCircleIdAndUserId"
+            resultType="com.changji.cloud.social.model.FriendCircleLike">
+        select <include refid="all_columns"></include> from friend_circle_like
+        where friend_circle_id = #{friendCircleId} and user_id = #{userId}
+    </select>
+
+
+</mapper>

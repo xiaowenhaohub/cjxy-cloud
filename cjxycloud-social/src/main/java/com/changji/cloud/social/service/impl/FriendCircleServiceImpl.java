@@ -11,6 +11,7 @@ import com.github.pagehelper.PageInfo;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class FriendCircleServiceImpl implements FriendCircleService {
 
 
     @Override
+    @Transactional
     public void saveFriendCircleMessage(FriendCircleDTO friendCircleDTO) {
         FriendCircleMessage friendCircleMessage = mapperFacade.map(friendCircleDTO, FriendCircleMessage.class);
 
@@ -46,5 +48,10 @@ public class FriendCircleServiceImpl implements FriendCircleService {
         PageInfo<FriendCircleMessage> pageInfo = new PageInfo<>(friendCircleMessageList);
 
         return pageInfo.getList();
+    }
+
+    @Override
+    public FriendCircleMessage getFriendCircleMessageById(Long id) {
+        return friendCircleMessageMapper.getFriendCircleMessageById(id);
     }
 }

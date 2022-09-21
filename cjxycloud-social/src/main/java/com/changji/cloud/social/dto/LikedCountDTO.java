@@ -10,13 +10,23 @@ public class LikedCountDTO {
 
     private String key;
 
-    private Integer value;
+    private Integer likedCount;
 
     public LikedCountDTO() {
     }
 
-    public LikedCountDTO(String key, Integer value) {
+    public LikedCountDTO(String key, Integer likedCount) {
         this.key = key;
-        this.value = value;
+        this.likedCount = likedCount;
+    }
+
+    public Long getId() {
+        String[] split = key.split("::");
+        return Long.valueOf(split[0]);
+//        Long userId = Long.valueOf(split[1]);
+    }
+
+    public Integer getCount() {
+        return likedCount;
     }
 }

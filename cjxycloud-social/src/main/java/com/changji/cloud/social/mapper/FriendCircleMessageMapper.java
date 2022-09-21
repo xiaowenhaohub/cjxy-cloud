@@ -24,4 +24,11 @@ public interface FriendCircleMessageMapper {
      * @return
      */
     List<FriendCircleMessage> getFriendCircle();
+
+    /**
+     * 根据id获取朋友圈
+     * @param id
+     * @return
+     */
+    FriendCircleMessage getFriendCircleMessageById(@Param("id") Long id);
 }
