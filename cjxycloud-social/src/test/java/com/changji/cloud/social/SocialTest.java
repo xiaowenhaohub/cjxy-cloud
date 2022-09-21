@@ -4,6 +4,7 @@ import com.changji.cloud.social.mapper.FriendCircleLikeMapper;
 import com.changji.cloud.social.mapper.FriendCircleMessageMapper;
 import com.changji.cloud.social.model.FriendCircleLike;
 import com.changji.cloud.social.model.FriendCircleMessage;
+import com.changji.cloud.social.service.LikedService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -51,5 +52,13 @@ public class SocialTest {
 //        list.add(friendCircleLike);
 //        int i = friendCircleLikeMapper.saveAll(list);
 //        System.out.println(i);
+    }
+
+    @Autowired
+    LikedService likedService;
+
+    @Test
+    public void test03() {
+        likedService.transLikedCountFromRedis2DB();
     }
 }

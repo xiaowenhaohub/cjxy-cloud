@@ -12,7 +12,7 @@
     </insert>
 
     <update id="updateFriendCircleMessage">
-        update friend_circle_message set (liked_count = #{friendCircleMessage.likedCount}) WHERE id = #{friendCircleMessage.id}
+        update friend_circle_message set liked_count = #{friendCircleMessage.likedCount} WHERE id = #{friendCircleMessage.id}
     </update>
 
     <select id="getFriendCircle" resultType="com.changji.cloud.social.model.FriendCircleMessage">

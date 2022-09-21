@@ -58,6 +58,7 @@ public class FriendCircleServiceImpl implements FriendCircleService {
     }
 
     @Override
+    @Transactional
     public void likedFriendCircle(Long friendCircleId) {
 
         FriendCircleMessage friendCircleMessageById = getFriendCircleMessageById(friendCircleId);
@@ -67,6 +68,7 @@ public class FriendCircleServiceImpl implements FriendCircleService {
         }
         // 点赞信息缓存到redis
         likedRedisService.saveLiked2Redis(friendCircleId, SecurityUtils.getLoginUser().getUserId());
+        likedRedisService.incrementLikedCount(friendCircleId);
 
     }
 

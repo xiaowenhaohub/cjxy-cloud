@@ -78,6 +78,7 @@ public class LikedServiceImpl implements LikedService {
 
 
     @Override
+    @Transactional
     public void transLikedCountFromRedis2DB() {
         List<LikedCountDTO> list = likedRedisService.getLikedCountFromRedis();
         for (LikedCountDTO dto : list) {

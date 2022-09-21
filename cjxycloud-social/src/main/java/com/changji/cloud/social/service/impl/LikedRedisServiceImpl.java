@@ -50,12 +50,12 @@ public class LikedRedisServiceImpl implements LikedRedisService {
 
     @Override
     public void incrementLikedCount(Long likedFriendCircleId) {
-        redisTemplate.opsForHash().increment(LikedUtils.MAP_KEY_FRIEND_CIRCLE_COUNT, likedFriendCircleId, 1);
+        redisTemplate.opsForHash().increment(LikedUtils.MAP_KEY_FRIEND_CIRCLE_COUNT, String.valueOf(likedFriendCircleId), 1);
     }
 
     @Override
     public void decrementLikedCount(Long likedFriendCircleId) {
-        redisTemplate.opsForHash().increment(LikedUtils.MAP_KEY_FRIEND_CIRCLE_COUNT, likedFriendCircleId, -1);
+        redisTemplate.opsForHash().increment(LikedUtils.MAP_KEY_FRIEND_CIRCLE_COUNT, String.valueOf(likedFriendCircleId), -1);
     }
 
     @Override
