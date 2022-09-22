@@ -40,6 +40,16 @@ public class FriendCircleController {
         return ServerResponseEntity.success();
     }
 
+    @DeleteMapping("/social/deleteFriendCircle/{friendCircleId}")
+    @RequiresPermissions("common:social:friendCircle")
+    @ApiOperation("删除朋友圈")
+    @Log(title = "删除朋友圈")
+    public ServerResponseEntity<Void> deleteFriendCircleMessage(@PathVariable("friendCircleId") Long friendCircleId) {
+
+        return ServerResponseEntity.success();
+    }
+
+
     @PostMapping("/social/getFriendCircle")
     @RequiresPermissions("common:social:friendCircle")
     @ApiOperation("获取朋友圈")

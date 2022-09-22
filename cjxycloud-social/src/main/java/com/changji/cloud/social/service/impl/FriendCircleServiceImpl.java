@@ -49,6 +49,7 @@ public class FriendCircleServiceImpl implements FriendCircleService {
     @Autowired
     private LikedService likedService;
 
+
     @Autowired
     private FriendCircleMessageRepository friendCircleMessageRepository;
 
@@ -64,6 +65,12 @@ public class FriendCircleServiceImpl implements FriendCircleService {
         friendCircleMessage.setUserId(SecurityUtils.getLoginUser().getUserId());
 
         friendCircleMessageMapper.save(friendCircleMessage);
+    }
+
+    @Override
+    @Transactional
+    public void deleteFriendCircleMessage(Long friendCircleId) {
+        friendCircleMessageRepository.deleteByFriendCircleIdAndUserId(friendCircleId, SecurityUtils.getLoginUser().getUserId());
     }
 
     @Override

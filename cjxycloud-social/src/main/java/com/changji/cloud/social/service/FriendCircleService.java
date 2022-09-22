@@ -20,6 +20,12 @@ public interface FriendCircleService {
      */
     void saveFriendCircleMessage(FriendCircleDTO friendCircleDTO);
 
+    /**
+     * 删除朋友圈
+     * @param friendCircleId
+     */
+    void deleteFriendCircleMessage(Long friendCircleId);
+
 
     /**
      * 获取朋友圈

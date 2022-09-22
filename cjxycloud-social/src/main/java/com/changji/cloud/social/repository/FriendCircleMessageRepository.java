@@ -16,4 +16,11 @@ public interface FriendCircleMessageRepository {
      */
     FriendCircleMessage updateFriendCircleMessage(FriendCircleMessage friendCircleMessage);
 
+    /**
+     * 根据用户id和朋友圈id删除指定朋友圈
+     * @param friendCircleId
+     * @param userId
+     */
+    FriendCircleMessage deleteByFriendCircleIdAndUserId(Long friendCircleId, Long userId);
+
 }

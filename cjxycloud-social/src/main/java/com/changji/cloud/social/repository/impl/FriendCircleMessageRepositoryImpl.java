@@ -25,4 +25,14 @@ public class FriendCircleMessageRepositoryImpl implements FriendCircleMessageRep
         int i = friendCircleMessageMapper.updateFriendCircleMessage(friendCircleMessage);
         return friendCircleMessage;
     }
+
+    @Override
+    public FriendCircleMessage deleteByFriendCircleIdAndUserId(Long friendCircleId, Long userId) {
+        FriendCircleMessage friendCircleMessageById = friendCircleMessageMapper.getFriendCircleMessageById(friendCircleId);
+        if (friendCircleMessageById == null || !userId.equals(friendCircleMessageById.getUserId())) {
+            throw new ServiceException("非法删除");
+        }
+        friendCircleMessageMapper.deleteByFriendCircleIdAndUserId(friendCircleId, userId);
+        return friendCircleMessageById;
+    }
 }

@@ -38,4 +38,11 @@ public interface FriendCircleMessageMapper {
      * @return
      */
     int updateFriendCircleMessage(@Param("friendCircleMessage") FriendCircleMessage friendCircleMessage);
+
+    /**
+     * 删除指定朋友圈
+     * @param friendCircleId
+     * @param userId
+     */
+    void deleteByFriendCircleIdAndUserId(@Param("friendCircleId") Long friendCircleId,@Param("userId") Long userId);
 }

@@ -92,4 +92,12 @@ public class FriendCircleMessage extends BaseModel {
     public void setLikedCount(Integer likedCount) {
         this.likedCount = likedCount;
     }
+
+    public Integer getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(Integer isDelete) {
+        this.isDelete = isDelete;
+    }
 }
