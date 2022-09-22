@@ -1,6 +1,7 @@
 package com.changji.cloud.social.service;
 
 import com.changji.cloud.social.dto.LikedCountDTO;
+import com.changji.cloud.social.dto.LikedDTO;
 import com.changji.cloud.social.model.FriendCircleLike;
 
 import java.util.List;
@@ -50,6 +51,12 @@ public interface LikedRedisService {
      * @return
      */
     List<FriendCircleLike> getLikedDataFromRedis();
+
+    /**
+     * 获取Redis中存储的一个点赞数据
+     * @return
+     */
+    LikedDTO getOneLikedDataFromRedis(String key);
 
     /**
      * 获取Redis中存储的所有点赞数量

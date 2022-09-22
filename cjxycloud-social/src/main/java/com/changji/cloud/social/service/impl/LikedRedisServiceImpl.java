@@ -2,6 +2,7 @@ package com.changji.cloud.social.service.impl;
 
 import com.changji.cloud.common.redis.service.RedisService;
 import com.changji.cloud.social.dto.LikedCountDTO;
+import com.changji.cloud.social.dto.LikedDTO;
 import com.changji.cloud.social.enums.LikedStatusEnum;
 import com.changji.cloud.social.model.FriendCircleLike;
 import com.changji.cloud.social.service.LikedRedisService;
@@ -56,6 +57,13 @@ public class LikedRedisServiceImpl implements LikedRedisService {
     @Override
     public void decrementLikedCount(Long likedFriendCircleId) {
         redisTemplate.opsForHash().increment(LikedUtils.MAP_KEY_FRIEND_CIRCLE_COUNT, String.valueOf(likedFriendCircleId), -1);
+    }
+
+
+    @Override
+    public LikedDTO getOneLikedDataFromRedis(String key) {
+        Integer value = (Integer) redisTemplate.opsForHash().get(LikedUtils.MAP_KEY_USER_LIKED, key);
+        return new LikedDTO(key, value);
     }
 
     @Override

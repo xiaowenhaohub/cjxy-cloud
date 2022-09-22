@@ -1,9 +1,12 @@
 package com.changji.cloud.social;
 
+import com.changji.cloud.common.core.exception.ServiceException;
+import com.changji.cloud.social.dto.LikedDTO;
 import com.changji.cloud.social.mapper.FriendCircleLikeMapper;
 import com.changji.cloud.social.mapper.FriendCircleMessageMapper;
 import com.changji.cloud.social.model.FriendCircleLike;
 import com.changji.cloud.social.model.FriendCircleMessage;
+import com.changji.cloud.social.service.LikedRedisService;
 import com.changji.cloud.social.service.LikedService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +63,22 @@ public class SocialTest {
     @Test
     public void test03() {
         likedService.transLikedCountFromRedis2DB();
+//        FriendCircleLike friendCircleLike = likedService.getByLikedFriendCircleIdAndUserId(34L, 110608L);
+//        if (friendCircleLike != null && friendCircleLike.getStatus() == 1) {
+//            throw new ServiceException("您已经点赞过该朋友圈");
+//        }
+//        System.out.println("success");
+
+    }
+
+    @Autowired
+    LikedRedisService likedRedisService;
+
+    @Test
+    public void test04() {
+        LikedDTO oneLikedDataFromRedis = likedRedisService.getOneLikedDataFromRedis("2::1106408");
+        System.out.println(oneLikedDataFromRedis.getValue());
+
+
     }
 }

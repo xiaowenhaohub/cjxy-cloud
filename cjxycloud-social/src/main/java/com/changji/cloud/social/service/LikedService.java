@@ -44,7 +44,7 @@ public interface LikedService {
     Page<FriendCircleLike> getLikedListByUserId(Long userId, Pageable pageable);
 
     /**
-     * 通过被点赞朋友圈和点赞人id查询是否存在点赞记录
+     * 通过被点赞朋友圈id和点赞人id查询是否存在点赞记录
      * @param likedFriendCircleId
      * @param userId
      * @return
