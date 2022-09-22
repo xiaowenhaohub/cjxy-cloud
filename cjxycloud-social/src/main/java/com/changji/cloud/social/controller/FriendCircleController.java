@@ -45,7 +45,7 @@ public class FriendCircleController {
     @ApiOperation("删除朋友圈")
     @Log(title = "删除朋友圈")
     public ServerResponseEntity<Void> deleteFriendCircleMessage(@PathVariable("friendCircleId") Long friendCircleId) {
-
+        friendCircleService.deleteFriendCircleMessage(friendCircleId);
         return ServerResponseEntity.success();
     }
 
