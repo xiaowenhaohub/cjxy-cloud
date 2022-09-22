@@ -1,7 +1,10 @@
 package com.changji.cloud.social.service.impl;
 
+import com.changji.cloud.api.user.feign.UserFeignClient;
+import com.changji.cloud.api.user.feign.vo.UserFriendCircleVO;
 import com.changji.cloud.common.core.exception.ServiceException;
 import com.changji.cloud.common.core.model.Page;
+import com.changji.cloud.common.core.response.ServerResponseEntity;
 import com.changji.cloud.common.security.utils.SecurityUtils;
 import com.changji.cloud.social.dto.FriendCircleDTO;
 import com.changji.cloud.social.dto.LikedDTO;
@@ -36,6 +39,9 @@ public class FriendCircleServiceImpl implements FriendCircleService {
 
     @Autowired
     private FriendCircleMessageMapper friendCircleMessageMapper;
+
+    @Autowired
+    private UserFeignClient userFeignClient;
 
     @Autowired
     private LikedRedisService likedRedisService;
@@ -101,13 +107,23 @@ public class FriendCircleServiceImpl implements FriendCircleService {
         PageInfo<FriendCircleMessage> pageInfo = new PageInfo<>(list);
         List<FriendCircleMessage> friendCircleMessageList = pageInfo.getList();
         List<FriendCircleMessageVO> friendCircleMessageVOList = new ArrayList<>();
-        //判定是否点赞过
+        //转换对象
         for (FriendCircleMessage friendCircleMessage : friendCircleMessageList) {
             FriendCircleMessageVO friendCircleVO = mapperFacade.map(friendCircleMessage, FriendCircleMessageVO.class);
-            //汇总点赞数
+            //汇总点赞数 redis + mysql
             friendCircleVO.setLikedCount(friendCircleVO.getLikedCount() + likedRedisService.getOneLikedCountFromRedis(friendCircleVO.getId()));
-
+            //判定是否点赞过
             friendCircleVO.setLiked(isLiked(friendCircleVO.getId(), userId));
+            //设置用户信息 feign 调用用户模块查询
+            ServerResponseEntity<UserFriendCircleVO> responseEntity = userFeignClient.queryUserDetailById(friendCircleMessage.getUserId());
+            if (!responseEntity.isSuccess()) {
+                throw new ServiceException("查询用户信息失败");
+            }
+            UserFriendCircleVO userFeignVO = responseEntity.getData();
+            //设置昵称
+            friendCircleVO.setNickName(userFeignVO.getNickName());
+            //设置头像
+            friendCircleVO.setAvatar(userFeignVO.getAvatar());
             friendCircleMessageVOList.add(friendCircleVO);
         }
         return friendCircleMessageVOList;

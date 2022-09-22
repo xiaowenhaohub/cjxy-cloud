@@ -1,6 +1,7 @@
 package com.changji.cloud.user.service;
 
 import com.changji.cloud.api.user.feign.dto.UserDTO;
+import com.changji.cloud.api.user.feign.vo.UserFriendCircleVO;
 import com.changji.cloud.user.model.User;
 import com.changji.cloud.user.vo.UserVO;
 
@@ -22,4 +23,11 @@ public interface UserService {
      * @return
      */
     UserVO queryUserByAccount();
+
+    /**
+     * 通过userId查询用户
+     * @param userId
+     * @return
+     */
+    User queryUserById(Long userId);
 }

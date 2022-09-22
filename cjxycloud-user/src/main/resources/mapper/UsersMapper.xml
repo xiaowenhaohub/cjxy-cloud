@@ -15,4 +15,7 @@
     <select id="queryUserByAccount" resultType="com.changji.cloud.user.model.User">
         select <include refid="all_columns"></include> from users where account = #{account}
     </select>
+    <select id="queryUserById" resultType="com.changji.cloud.user.model.User">
+        select <include refid="all_columns"></include> from users where user_id = #{userId}
+    </select>
 </mapper>

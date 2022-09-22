@@ -4,7 +4,7 @@
 
 
     <sql id="all_columns">
-        id, user_id, content, picture, location, liked_count
+        id, user_id, content, picture, location, liked_count, is_delete, create_time
     </sql>
     <insert id="save">
         insert into friend_circle_message (user_id, content, picture) values
@@ -16,7 +16,7 @@
     </update>
 
     <select id="getFriendCircle" resultType="com.changji.cloud.social.model.FriendCircleMessage">
-        select <include refid="all_columns"></include> from friend_circle_message
+        select <include refid="all_columns"></include> from friend_circle_message where is_delete = 1
     </select>
 
     <select id="getFriendCircleMessageById" resultType="com.changji.cloud.social.model.FriendCircleMessage">

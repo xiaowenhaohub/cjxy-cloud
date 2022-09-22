@@ -40,4 +40,9 @@ public class UserServiceImpl implements UserService {
         UserVO userVO = mapperFacade.map(user, UserVO.class);
         return userVO;
     }
+
+    @Override
+    public User queryUserById(Long userId) {
+        return usersMapper.queryUserById(userId);
+    }
 }

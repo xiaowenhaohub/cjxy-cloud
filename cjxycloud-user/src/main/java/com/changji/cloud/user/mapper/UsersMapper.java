@@ -23,4 +23,11 @@ public interface UsersMapper {
      * @return
      */
     User queryUserByAccount(@Param("account") String account);
+
+    /**
+     * 通过userid查询用户
+     * @param userId
+     * @return
+     */
+    User queryUserById(@Param("userId") Long userId);
 }

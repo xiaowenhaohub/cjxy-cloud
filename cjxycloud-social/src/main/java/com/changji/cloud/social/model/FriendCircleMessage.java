@@ -40,6 +40,11 @@ public class FriendCircleMessage extends BaseModel {
      */
     private Integer likedCount;
 
+    /**
+     * 是否删除
+     */
+    private Integer isDelete;
+
     public Long getId() {
         return id;
     }

@@ -1,5 +1,7 @@
 package com.changji.cloud.social.vo;
 
+import java.util.Date;
+
 /**
  * @author 小问号
  * @date 2022/9/21 14
@@ -14,9 +16,14 @@ public class FriendCircleMessageVO {
     private Long id;
 
     /**
-     * 用户id
+     * 用户昵称
      */
-    private Long userId;
+    private String nickName;
+
+    /**
+     * 用户头像
+     */
+    private String avatar;
 
     /**
      * 文本内容
@@ -43,6 +50,11 @@ public class FriendCircleMessageVO {
      */
     private boolean isLiked;
 
+    /**
+     * 时间
+     */
+    private Date createTime;
+
     public Long getId() {
         return id;
     }
@@ -51,12 +63,20 @@ public class FriendCircleMessageVO {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getContent() {
@@ -97,5 +117,13 @@ public class FriendCircleMessageVO {
 
     public void setLiked(boolean liked) {
         isLiked = liked;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }
