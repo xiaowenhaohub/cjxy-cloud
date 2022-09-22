@@ -59,8 +59,15 @@ public interface LikedRedisService {
     LikedDTO getOneLikedDataFromRedis(String key);
 
     /**
-     * 获取Redis中存储的所有点赞数量
+     * 获取Redis中存储的所有点赞对象节点
      * @return
      */
-    List<LikedCountDTO> getLikedCountFromRedis();
+    List<LikedCountDTO> getAllLikedCountFromRedis();
+
+    /**
+     * 获取一个朋友圈的点赞数
+     * @param friendCircleId
+     * @return
+     */
+    Integer getOneLikedCountFromRedis(Long friendCircleId);
 }

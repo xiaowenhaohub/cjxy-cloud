@@ -23,9 +23,6 @@ public class FriendCircleMessageRepositoryImpl implements FriendCircleMessageRep
     public FriendCircleMessage updateFriendCircleMessage(FriendCircleMessage friendCircleMessage) {
 
         int i = friendCircleMessageMapper.updateFriendCircleMessage(friendCircleMessage);
-        if (i != 1) {
-            throw new ServiceException("更新朋友圈失败");
-        }
         return friendCircleMessage;
     }
 }

@@ -5,6 +5,7 @@ import com.changji.cloud.common.core.model.Page;
 import com.changji.cloud.common.security.utils.SecurityUtils;
 import com.changji.cloud.social.dto.FriendCircleDTO;
 import com.changji.cloud.social.dto.LikedDTO;
+import com.changji.cloud.social.enums.LikedStatusEnum;
 import com.changji.cloud.social.mapper.FriendCircleMessageMapper;
 import com.changji.cloud.social.model.FriendCircleLike;
 import com.changji.cloud.social.model.FriendCircleMessage;
@@ -74,19 +75,16 @@ public class FriendCircleServiceImpl implements FriendCircleService {
         if (Objects.isNull(friendCircleMessageById)) {
             throw new ServiceException("没有该朋友圈信息");
         }
-        //判断是否已经点赞过
-        //redis
-        LikedDTO redisFriendCircleLike = likedRedisService.getOneLikedDataFromRedis(LikedUtils.getLikedKey(String.valueOf(friendCircleId), String.valueOf(userId)));
-        if (redisFriendCircleLike.getValue() != null && redisFriendCircleLike.getValue() == 1) {
-            throw new ServiceException("您已经点赞过该朋友圈");
-        }
-        //mysql
-        FriendCircleLike friendCircleLike = likedService.getByLikedFriendCircleIdAndUserId(friendCircleId, userId);
-        if (friendCircleLike != null && friendCircleLike.getStatus() == 1) {
-            throw new ServiceException("您已经点赞过该朋友圈");
+        //判断是否已经点赞过 已经点赞过则为取消点赞
+        if (isLiked(friendCircleId, userId)) {
+//            throw new ServiceException("您已点赞过该朋友圈");
+            likedRedisService.unlikeFromRedis(friendCircleId, userId);
+            likedRedisService.decrementLikedCount(friendCircleId);
+            return;
         }
 
-        // 点赞信息缓存到redis
+        // 点赞
+        //缓存到redis
         likedRedisService.saveLiked2Redis(friendCircleId, userId);
         likedRedisService.incrementLikedCount(friendCircleId);
 
@@ -95,27 +93,54 @@ public class FriendCircleServiceImpl implements FriendCircleService {
     @Override
     public List<FriendCircleMessageVO> getFriendCircleList(Page page) {
 
+        Long userId= SecurityUtils.getLoginUser().getUserId();
+
+        //分页
         PageHelper.startPage(page.getPageNum(), page.getPageSize());
         List<FriendCircleMessage> list = friendCircleMessageMapper.getFriendCircle();
         PageInfo<FriendCircleMessage> pageInfo = new PageInfo<>(list);
         List<FriendCircleMessage> friendCircleMessageList = pageInfo.getList();
-
         List<FriendCircleMessageVO> friendCircleMessageVOList = new ArrayList<>();
-
+        //判定是否点赞过
         for (FriendCircleMessage friendCircleMessage : friendCircleMessageList) {
             FriendCircleMessageVO friendCircleVO = mapperFacade.map(friendCircleMessage, FriendCircleMessageVO.class);
+            //汇总点赞数
+            friendCircleVO.setLikedCount(friendCircleVO.getLikedCount() + likedRedisService.getOneLikedCountFromRedis(friendCircleVO.getId()));
 
-
+            friendCircleVO.setLiked(isLiked(friendCircleVO.getId(), userId));
             friendCircleMessageVOList.add(friendCircleVO);
         }
-
-
-
         return friendCircleMessageVOList;
     }
 
     @Override
     public FriendCircleMessage getFriendCircleMessageById(Long id) {
         return friendCircleMessageMapper.getFriendCircleMessageById(id);
+    }
+
+    /**
+     * 判定是否点赞过
+     * @param friendCircleId
+     * @param userId
+     * @return
+     */
+    public boolean isLiked(Long friendCircleId, Long userId) {
+
+        //redis
+        LikedDTO redisFriendCircleLike = likedRedisService.getOneLikedDataFromRedis(LikedUtils.getLikedKey(String.valueOf(friendCircleId), String.valueOf(userId)));
+        if (redisFriendCircleLike.getValue() != null && redisFriendCircleLike.getValue() == LikedStatusEnum.LIKE.getCode()) {
+            return true;
+        }
+
+        if (redisFriendCircleLike.getValue() != null && redisFriendCircleLike.getValue() == LikedStatusEnum.UNLIKE.getCode()) {
+            return false;
+        }
+        //mysql
+        FriendCircleLike friendCircleLike = likedService.getByLikedFriendCircleIdAndUserId(friendCircleId, userId);
+        if (friendCircleLike != null && friendCircleLike.getStatus() == LikedStatusEnum.LIKE.getCode()) {
+            return true;
+        }
+
+        return false;
     }
 }

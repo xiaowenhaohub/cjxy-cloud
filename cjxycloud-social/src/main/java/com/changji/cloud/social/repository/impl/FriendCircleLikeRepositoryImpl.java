@@ -37,6 +37,12 @@ public class FriendCircleLikeRepositoryImpl implements FriendCircleLikeRepositor
     }
 
     @Override
+    public FriendCircleLike update(FriendCircleLike friendCircleLike) {
+        friendCircleLikeMapper.update(friendCircleLike);
+        return friendCircleLike;
+    }
+
+    @Override
     public List<FriendCircleLike> saveAll(List<FriendCircleLike> list) {
         int i = friendCircleLikeMapper.saveAll(list);
         if (i != list.size()) {

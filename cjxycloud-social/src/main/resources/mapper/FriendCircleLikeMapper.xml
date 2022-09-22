@@ -19,6 +19,10 @@
         </foreach>
     </insert>
 
+    <update id="update">
+        update friend_circle_like set status = #{friendCircleLike.status} where id = #{friendCircleLike.id}
+    </update>
+
     <select id="findByLikedFriendCircleIdAndStatus"
             resultType="com.changji.cloud.social.model.FriendCircleLike">
         select <include refid="all_columns"></include> from friend_circle_like

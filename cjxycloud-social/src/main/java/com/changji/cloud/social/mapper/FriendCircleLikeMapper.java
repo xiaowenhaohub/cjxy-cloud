@@ -23,6 +23,13 @@ public interface FriendCircleLikeMapper {
     int save(@Param("friendCircleLike") FriendCircleLike friendCircleLike);
 
     /**
+     * 更新点赞信息
+     * @param friendCircleLike
+     * @return
+     */
+    int update(@Param("friendCircleLike") FriendCircleLike friendCircleLike);
+
+    /**
      * 批量保存点赞数据
      * @param list
      * @return

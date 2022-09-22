@@ -40,6 +40,11 @@ public class LikedServiceImpl implements LikedService {
     }
 
     @Override
+    public FriendCircleLike update(FriendCircleLike friendCircleLike) {
+        return friendCircleLikeRepository.update(friendCircleLike);
+    }
+
+    @Override
     @Transactional
     public List<FriendCircleLike> saveAll(List<FriendCircleLike> list) {
         return friendCircleLikeRepository.saveAll(list);
@@ -71,7 +76,7 @@ public class LikedServiceImpl implements LikedService {
             } else {
                 //有记录，需要更新
                 friendCircleLike.setStatus(like.getStatus());
-                save(friendCircleLike);
+                update(friendCircleLike);
             }
         }
     }
@@ -80,7 +85,7 @@ public class LikedServiceImpl implements LikedService {
     @Override
     @Transactional
     public void transLikedCountFromRedis2DB() {
-        List<LikedCountDTO> list = likedRedisService.getLikedCountFromRedis();
+        List<LikedCountDTO> list = likedRedisService.getAllLikedCountFromRedis();
         for (LikedCountDTO dto : list) {
             FriendCircleMessage friendCircleMessage = friendCircleService.getFriendCircleMessageById(dto.getId());
             //点赞数量属于无关紧要的操作，出错无需抛异常

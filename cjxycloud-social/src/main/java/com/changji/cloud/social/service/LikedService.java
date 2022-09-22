@@ -21,6 +21,13 @@ public interface LikedService {
     FriendCircleLike save(FriendCircleLike friendCircleLike);
 
     /**
+     * 更新点赞信息
+     * @param friendCircleLike
+     * @return
+     */
+    FriendCircleLike update(FriendCircleLike friendCircleLike);
+
+    /**
      * 批量保存或修改
      * @param list
      */

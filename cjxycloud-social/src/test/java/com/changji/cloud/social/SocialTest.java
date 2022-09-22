@@ -62,6 +62,7 @@ public class SocialTest {
 
     @Test
     public void test03() {
+        likedService.transLikedFromRedis2DB();
         likedService.transLikedCountFromRedis2DB();
 //        FriendCircleLike friendCircleLike = likedService.getByLikedFriendCircleIdAndUserId(34L, 110608L);
 //        if (friendCircleLike != null && friendCircleLike.getStatus() == 1) {

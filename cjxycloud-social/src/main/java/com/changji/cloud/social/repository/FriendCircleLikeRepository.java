@@ -21,6 +21,13 @@ public interface FriendCircleLikeRepository {
     FriendCircleLike save(@Param("friendCircleLike") FriendCircleLike friendCircleLike);
 
     /**
+     * 更新点赞信息
+     * @param friendCircleLike
+     * @return
+     */
+    FriendCircleLike update(FriendCircleLike friendCircleLike);
+
+    /**
      * 批量保存点赞数据
      * @param list
      * @return

@@ -56,9 +56,7 @@ public class FriendCircleController {
     @ApiOperation("点赞朋友圈")
     @Log(title = "点赞朋友圈")
     public ServerResponseEntity<Void> likedFriendCircle(@PathVariable("friendCircleId") Long friendCircleId) {
-
         friendCircleService.likedFriendCircle(friendCircleId);
-
         return ServerResponseEntity.success();
     }
 }

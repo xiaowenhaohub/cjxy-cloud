@@ -92,7 +92,7 @@ public class LikedRedisServiceImpl implements LikedRedisService {
     }
 
     @Override
-    public List<LikedCountDTO> getLikedCountFromRedis() {
+    public List<LikedCountDTO> getAllLikedCountFromRedis() {
 
         Cursor<Map.Entry<Object, Object>> cursor = redisService.ScanCacheMapValue(LikedUtils.MAP_KEY_FRIEND_CIRCLE_COUNT, ScanOptions.NONE);
         List<LikedCountDTO> list = new ArrayList<>();
@@ -106,5 +106,14 @@ public class LikedRedisServiceImpl implements LikedRedisService {
             redisService.deleteCacheMapValue(LikedUtils.MAP_KEY_FRIEND_CIRCLE_COUNT, key);
         }
         return list;
+    }
+
+    @Override
+    public Integer getOneLikedCountFromRedis(Long friendCircleId) {
+        Integer value = (Integer) redisTemplate.opsForHash().get(LikedUtils.MAP_KEY_FRIEND_CIRCLE_COUNT, String.valueOf(friendCircleId));
+        if (value != null) {
+            return value;
+        }
+        return 0;
     }
 }
