@@ -31,7 +31,6 @@ public class FriendCircleController {
     @Autowired
     private FriendCircleService friendCircleService;
 
-
     @PostMapping("/social/saveFriendCircle")
     @RequiresPermissions("common:social:friendCircle")
     @ApiOperation("保存朋友圈")

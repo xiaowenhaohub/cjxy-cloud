@@ -272,6 +272,7 @@
                 <nacos.namespace/>
                 <!--   nacos 地址             -->
                 <nacos.addr>aliyun.xiaowenhao.ren</nacos.addr>
+                <nacos.password>jganggang@!123</nacos.password>
             </properties>
             <activation>
                 <!-- 默认环境 -->
