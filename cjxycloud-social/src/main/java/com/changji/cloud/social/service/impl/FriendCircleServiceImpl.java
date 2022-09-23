@@ -65,8 +65,6 @@ public class FriendCircleServiceImpl implements FriendCircleService {
     @Override
     @Transactional
     public void deleteFriendCircleMessage(Long friendCircleId) {
-//        friendCircleMessageRepository.deleteByFriendCircleIdAndUserId(friendCircleId, SecurityUtils.getLoginUser().getUserId());
-
         int i = friendCircleMessageMapper.deleteByFriendCircleIdAndUserId(friendCircleId, SecurityUtils.getLoginUser().getUserId());
         if (i == 0) {
             throw new ServiceException("非法删除");
@@ -105,13 +103,29 @@ public class FriendCircleServiceImpl implements FriendCircleService {
     }
 
     @Override
-    public List<FriendCircleMessageVO> getFriendCircleList(Page page) {
+    public List<FriendCircleMessageVO> getFriendCircleList(Long userId, Page page) {
 
-        Long userId= SecurityUtils.getLoginUser().getUserId();
-
+        Long myUserId= SecurityUtils.getLoginUser().getUserId();
+        if (userId == 0) {
+            userId = null;
+        }
+        //获取最新的朋友圈
+        Integer friendCount = friendCircleMessageMapper.getFriendCircleMessageCount();
+        Integer num = friendCount - page.getPageNum();
+        Integer startIndex;
+        Integer pageSize;
+        if (num >= page.getPageNum()) {
+            startIndex = friendCount - page.getPageNum() - page.getPageSize();
+            pageSize = page.getPageSize();
+        }else if (num < page.getPageSize() && num >= 0) {
+            startIndex = 0;
+            pageSize = page.getPageSize();
+        }else {
+            return null;
+        }
         //分页
-        PageHelper.startPage(page.getPageNum(), page.getPageSize());
-        List<FriendCircleMessage> list = friendCircleMessageMapper.getFriendCircle();
+        PageHelper.startPage(startIndex, pageSize);
+        List<FriendCircleMessage> list = friendCircleMessageMapper.getFriendCircle(userId);
         PageInfo<FriendCircleMessage> pageInfo = new PageInfo<>(list);
         List<FriendCircleMessage> friendCircleMessageList = pageInfo.getList();
         List<FriendCircleMessageVO> friendCircleMessageVOList = new ArrayList<>();
@@ -121,7 +135,7 @@ public class FriendCircleServiceImpl implements FriendCircleService {
             //汇总点赞数 redis + mysql
             friendCircleVO.setLikedCount(friendCircleVO.getLikedCount() + likedRedisService.getOneLikedCountFromRedis(friendCircleVO.getId()));
             //判定是否点赞过
-            friendCircleVO.setLiked(isLiked(friendCircleVO.getId(), userId));
+            friendCircleVO.setLiked(isLiked(friendCircleVO.getId(), myUserId));
             //设置用户信息 feign 调用用户模块查询
             ServerResponseEntity<UserFriendCircleVO> responseEntity = userFeignClient.queryUserDetailById(friendCircleMessage.getUserId());
             if (!responseEntity.isSuccess()) {

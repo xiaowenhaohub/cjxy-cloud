@@ -106,20 +106,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public <T> ServerResponseEntity<T>  handlerRuntimeException(RuntimeException e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
-        log.error("请求地址'{}',发生未知异常",requestURI,e);
-        return ServerResponseEntity.showFailMsg(e.getMessage());
+        String message = e.getMessage();
+        log.error("请求地址'{}',发生未知异常",requestURI);
+        return ServerResponseEntity.showFailMsg(message);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public <T> ServerResponseEntity<T>  handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
-
         // 所有参数异常信息
         List<ObjectError> allErrors = bindingResult.getAllErrors();
-
         String message = allErrors.get(0).getDefaultMessage();
         log.info(message);
-
         return ServerResponseEntity.showFailMsg(message);
     }
 

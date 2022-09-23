@@ -2,8 +2,10 @@ package com.changji.cloud.social;
 
 import com.changji.cloud.common.core.exception.ServiceException;
 import com.changji.cloud.social.dto.LikedDTO;
+import com.changji.cloud.social.mapper.FriendCircleCommentMapper;
 import com.changji.cloud.social.mapper.FriendCircleLikeMapper;
 import com.changji.cloud.social.mapper.FriendCircleMessageMapper;
+import com.changji.cloud.social.model.FriendCircleComment;
 import com.changji.cloud.social.model.FriendCircleLike;
 import com.changji.cloud.social.model.FriendCircleMessage;
 import com.changji.cloud.social.service.LikedRedisService;
@@ -24,6 +26,18 @@ import java.util.List;
 
 @SpringBootTest
 public class SocialTest {
+
+    @Autowired
+    private FriendCircleCommentMapper friendCircleCommentMapper;
+
+    @Test
+    public void test05() {
+        FriendCircleComment friendCircleComment = new FriendCircleComment();
+        friendCircleComment.setFriendCircleId(1L);
+        friendCircleComment.setUserId(2L);
+        friendCircleComment.setContent("test 9/23 11:02");
+        friendCircleCommentMapper.save(friendCircleComment);
+    }
 
     @Autowired
     private FriendCircleMessageMapper friendCircleMessageMapper;

@@ -3,6 +3,7 @@ package com.changji.cloud.social.mapper;
 import com.changji.cloud.common.core.model.Page;
 import com.changji.cloud.social.model.FriendCircleMessage;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,6 +17,13 @@ import java.util.List;
 public interface FriendCircleMessageMapper {
 
     /**
+     * 查询未删除朋友圈总数
+     * @return
+     */
+    @Select("select count(*) from  friend_circle_message where is_delete = 1")
+    Integer getFriendCircleMessageCount();
+
+    /**
      * 保存朋友圈
      * @param friendCircleMessage
      */
@@ -25,7 +33,7 @@ public interface FriendCircleMessageMapper {
      * 获取朋友圈动态
      * @return
      */
-    List<FriendCircleMessage> getFriendCircle();
+    List<FriendCircleMessage> getFriendCircle(@Param("userId") Long userId);
 
     /**
      * 根据id获取朋友圈

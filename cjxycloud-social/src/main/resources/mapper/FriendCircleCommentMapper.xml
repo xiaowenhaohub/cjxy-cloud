@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changji.cloud.social.mapper.FriendCircleCommentMapper">
+
+    <sql id="all_columns">
+        comment_id, friend_circle_id, user_id, content, like_count, root_comment_id, to_comment_id
+    </sql>
+
+    <insert id="save">
+        insert into friend_circle_comment (friend_circle_id, user_id, content, root_comment_id, to_comment_id )
+        values (#{friendCircleComment.friendCircleId}, #{friendCircleComment.userId},
+                #{friendCircleComment.content}, #{friendCircleComment.rootCommentId}, #{friendCircleComment.toCommentId})
+    </insert>
+</mapper>

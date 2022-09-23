@@ -1,22 +1,16 @@
 package com.changji.cloud.social.controller;
-
 import com.changji.cloud.common.core.model.Page;
 import com.changji.cloud.common.core.response.ServerResponseEntity;
 import com.changji.cloud.common.log.annotation.Log;
 import com.changji.cloud.common.security.annotation.RequiresPermissions;
-import com.changji.cloud.common.security.utils.SecurityUtils;
 import com.changji.cloud.social.dto.FriendCircleDTO;
-import com.changji.cloud.social.mapper.FriendCircleMessageMapper;
-import com.changji.cloud.social.model.FriendCircleMessage;
 import com.changji.cloud.social.service.FriendCircleService;
-import com.changji.cloud.social.service.LikedRedisService;
 import com.changji.cloud.social.vo.FriendCircleMessageVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 /**
@@ -49,14 +43,12 @@ public class FriendCircleController {
         return ServerResponseEntity.success();
     }
 
-
-    @PostMapping("/social/getFriendCircle")
+    @PostMapping("/social/getFriendCircle/{userId}")
     @RequiresPermissions("common:social:friendCircle")
     @ApiOperation("获取朋友圈")
     @Log(title = "获取朋友圈")
-    public ServerResponseEntity<List<FriendCircleMessageVO>> getFriendCircleMessageMapper(@Validated @RequestBody Page page){
-        List<FriendCircleMessageVO> friendCircleMessageList = friendCircleService.getFriendCircleList(page);
-
+    public ServerResponseEntity<List<FriendCircleMessageVO>> getFriendCircleMessageMapper(@PathVariable("userId") Long userId, @Validated @RequestBody Page page){
+        List<FriendCircleMessageVO> friendCircleMessageList = friendCircleService.getFriendCircleList(userId, page);
         return ServerResponseEntity.success(friendCircleMessageList);
     }
 

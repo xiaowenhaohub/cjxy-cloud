@@ -15,6 +15,7 @@
         update friend_circle_message set liked_count = #{friendCircleMessage.likedCount}
         WHERE id = #{friendCircleMessage.id}
     </update>
+
     <update id="deleteByFriendCircleIdAndUserId">
         update friend_circle_message set is_delete = 0
         where id = #{friendCircleId} and user_id = #{userId}
@@ -22,7 +23,13 @@
 
 
     <select id="getFriendCircle" resultType="com.changji.cloud.social.model.FriendCircleMessage">
-        select <include refid="all_columns"></include> from friend_circle_message where is_delete = 1
+        select <include refid="all_columns"></include> from friend_circle_message
+        <where>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId} and
+            </if>
+            is_delete = 1
+        </where> order by id desc
     </select>
 
     <select id="getFriendCircleMessageById" resultType="com.changji.cloud.social.model.FriendCircleMessage">

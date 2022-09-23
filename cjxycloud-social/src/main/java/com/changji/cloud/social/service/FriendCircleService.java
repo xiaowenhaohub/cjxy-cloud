@@ -26,13 +26,12 @@ public interface FriendCircleService {
      */
     void deleteFriendCircleMessage(Long friendCircleId);
 
-
     /**
      * 获取朋友圈
      * @param page
      * @return
      */
-    List<FriendCircleMessageVO> getFriendCircleList(Page page);
+    List<FriendCircleMessageVO> getFriendCircleList(Long userId, Page page);
 
     /**
      * 根据id获取朋友圈
