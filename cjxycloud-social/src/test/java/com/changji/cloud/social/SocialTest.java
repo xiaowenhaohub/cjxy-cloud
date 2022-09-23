@@ -27,6 +27,7 @@ import java.util.List;
 @SpringBootTest
 public class SocialTest {
 
+
     @Autowired
     private FriendCircleCommentMapper friendCircleCommentMapper;
 
