@@ -12,7 +12,7 @@ sshkey() {
 send() {
 
   echo "发送docker到$1:/app/cjxycloud......"
-  scp -r ../docker root@$1:/app/cjxycloud/
+  scp -r ../docker root@$1:~/app/cjxycloud/
 }
 
 base(){
@@ -20,7 +20,7 @@ base(){
 }
 
 modules() {
-  docker-compose up -d cjxycloud-gateway cjxycloud-leaf
+  docker-compose up -d cjxycloud-gateway cjxycloud-leaf cjxycloud-auth cjxycloud-user cjxycloud-website cjxycloud-social
 }
 
 case "$1" in

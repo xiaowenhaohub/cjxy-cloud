@@ -1,0 +1,14 @@
+# 基础镜像  website
+FROM  openjdk:8-jre
+# author
+MAINTAINER xiaowenhao
+# 挂载目录
+VOLUME /home/changji
+# 创建目录
+RUN mkdir -p /home/changji
+# 指定路径
+WORKDIR /home/changji
+# 复制jar文件到路径
+COPY ./jar/cjxycloud-website.jar /home/changji/cjxycloud-website.jar
+# 启动认证服务
+ENTRYPOINT ["java","-jar","cjxycloud-website.jar"]
