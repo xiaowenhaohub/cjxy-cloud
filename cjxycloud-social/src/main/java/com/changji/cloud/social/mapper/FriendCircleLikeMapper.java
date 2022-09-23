@@ -4,6 +4,7 @@ import com.changji.cloud.social.model.FriendCircleLike;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  * @date 2022/9/21 10
  * description
  */
-
+@Repository
 public interface FriendCircleLikeMapper {
 
     /**

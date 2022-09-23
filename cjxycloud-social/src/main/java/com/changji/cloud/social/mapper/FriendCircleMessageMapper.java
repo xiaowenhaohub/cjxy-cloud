@@ -3,6 +3,7 @@ package com.changji.cloud.social.mapper;
 import com.changji.cloud.common.core.model.Page;
 import com.changji.cloud.social.model.FriendCircleMessage;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @date 2022/9/20 11
  * description
  */
+@Repository
 public interface FriendCircleMessageMapper {
 
     /**
@@ -44,5 +46,5 @@ public interface FriendCircleMessageMapper {
      * @param friendCircleId
      * @param userId
      */
-    void deleteByFriendCircleIdAndUserId(@Param("friendCircleId") Long friendCircleId,@Param("userId") Long userId);
+    int deleteByFriendCircleIdAndUserId(@Param("friendCircleId") Long friendCircleId,@Param("userId") Long userId);
 }

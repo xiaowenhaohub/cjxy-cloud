@@ -1,20 +1,26 @@
 package com.changji.cloud.social.service.impl;
 
+import com.changji.cloud.common.core.exception.ServiceException;
 import com.changji.cloud.social.dto.LikedCountDTO;
 import com.changji.cloud.social.enums.LikedStatusEnum;
+import com.changji.cloud.social.mapper.FriendCircleLikeMapper;
 import com.changji.cloud.social.model.FriendCircleLike;
 import com.changji.cloud.social.model.FriendCircleMessage;
-import com.changji.cloud.social.repository.FriendCircleLikeRepository;
 import com.changji.cloud.social.service.FriendCircleService;
 import com.changji.cloud.social.service.LikedRedisService;
 import com.changji.cloud.social.service.LikedService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.google.common.base.CaseFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author 小问号
@@ -31,41 +37,57 @@ public class LikedServiceImpl implements LikedService {
     private FriendCircleService friendCircleService;
 
     @Autowired
-    private FriendCircleLikeRepository friendCircleLikeRepository;
+    private FriendCircleLikeMapper friendCircleLikeMapper;
 
     @Override
     @Transactional
     public FriendCircleLike save(FriendCircleLike friendCircleLike) {
-        return friendCircleLikeRepository.save(friendCircleLike);
+        int i = friendCircleLikeMapper.save(friendCircleLike);
+        if (i != 1) {
+            throw new ServiceException("保存点赞失败");
+        }
+        return friendCircleLike;
     }
 
     @Override
     public FriendCircleLike update(FriendCircleLike friendCircleLike) {
-        return friendCircleLikeRepository.update(friendCircleLike);
+        friendCircleLikeMapper.update(friendCircleLike);
+        return friendCircleLike;
     }
 
     @Override
     @Transactional
     public List<FriendCircleLike> saveAll(List<FriendCircleLike> list) {
-        return friendCircleLikeRepository.saveAll(list);
+        int i = friendCircleLikeMapper.saveAll(list);
+        if (i != list.size()) {
+            throw new ServiceException("保存点赞失败");
+        }
+        return list;
     }
 
     @Override
-    public Page<FriendCircleLike> getLikedListByLikedFriendCircleId(Long likedFriendCircleId, Pageable pageable) {
-        return friendCircleLikeRepository.findByLikedFriendCircleIdAndStatus(likedFriendCircleId, LikedStatusEnum.LIKE.getCode(), pageable);
+    public Page<FriendCircleLike> getLikedListByFriendCircleId(Long friendCircleId, Pageable pageable) {
+        PageHelper.startPage(pageable.getPageNumber(), pageable.getPageSize(),
+                pageable.getSort().stream().map(liked -> CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, liked.getProperty()) + " " + liked.getDirection()).collect(Collectors.joining(",")));
+        PageInfo<FriendCircleLike> friendCircleLikePageInfo = new PageInfo<>(friendCircleLikeMapper.findByLikedFriendCircleIdAndStatus(friendCircleId, LikedStatusEnum.LIKE.getCode()));
+        return new PageImpl(friendCircleLikePageInfo.getList());
     }
 
     @Override
     public Page<FriendCircleLike> getLikedListByUserId(Long userId, Pageable pageable) {
-        return friendCircleLikeRepository.findByUserIdAndStatus(userId, LikedStatusEnum.LIKE.getCode(), pageable);
+        PageHelper.startPage(pageable.getPageNumber(), pageable.getPageSize(),
+                pageable.getSort().stream().map(liked -> CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, liked.getProperty()) + " " + liked.getDirection()).collect(Collectors.joining(",")));
+        PageInfo<FriendCircleLike> friendCircleLikePageInfo = new PageInfo<>(friendCircleLikeMapper.findByUserIdAndStatus(userId, LikedStatusEnum.LIKE.getCode()));
+        return new PageImpl(friendCircleLikePageInfo.getList());
     }
 
     @Override
-    public FriendCircleLike getByLikedFriendCircleIdAndUserId(Long likedFriendCircleId, Long userId) {
-        return friendCircleLikeRepository.findByLikedFriendCircleIdAndUserId(likedFriendCircleId, userId);
+    public FriendCircleLike getByLikedFriendCircleIdAndUserId(Long friendCircleId, Long userId) {
+        return friendCircleLikeMapper.findByLikedFriendCircleIdAndUserId(friendCircleId, userId);
     }
 
     @Override
+    @Transactional
     public void transLikedFromRedis2DB() {
         List<FriendCircleLike> list = likedRedisService.getLikedDataFromRedis();
         for (FriendCircleLike like : list) {
@@ -80,7 +102,6 @@ public class LikedServiceImpl implements LikedService {
             }
         }
     }
-
 
     @Override
     @Transactional

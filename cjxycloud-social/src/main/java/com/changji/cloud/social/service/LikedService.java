@@ -40,7 +40,7 @@ public interface LikedService {
      * @param pageable
      * @return
      */
-    Page<FriendCircleLike> getLikedListByLikedFriendCircleId(Long likedFriendCircleId, Pageable pageable);
+    Page<FriendCircleLike> getLikedListByFriendCircleId(Long likedFriendCircleId, Pageable pageable);
 
     /**
      * 根据点赞人的id查询点赞列表（即查询这个人都给谁点赞过）

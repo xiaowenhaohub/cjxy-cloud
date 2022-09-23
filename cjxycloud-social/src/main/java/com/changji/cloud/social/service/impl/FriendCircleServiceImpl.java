@@ -12,7 +12,6 @@ import com.changji.cloud.social.enums.LikedStatusEnum;
 import com.changji.cloud.social.mapper.FriendCircleMessageMapper;
 import com.changji.cloud.social.model.FriendCircleLike;
 import com.changji.cloud.social.model.FriendCircleMessage;
-import com.changji.cloud.social.repository.FriendCircleMessageRepository;
 import com.changji.cloud.social.service.FriendCircleService;
 import com.changji.cloud.social.service.LikedRedisService;
 import com.changji.cloud.social.service.LikedService;
@@ -49,10 +48,6 @@ public class FriendCircleServiceImpl implements FriendCircleService {
     @Autowired
     private LikedService likedService;
 
-
-    @Autowired
-    private FriendCircleMessageRepository friendCircleMessageRepository;
-
     @Autowired
     private MapperFacade mapperFacade;
 
@@ -70,12 +65,18 @@ public class FriendCircleServiceImpl implements FriendCircleService {
     @Override
     @Transactional
     public void deleteFriendCircleMessage(Long friendCircleId) {
-        friendCircleMessageRepository.deleteByFriendCircleIdAndUserId(friendCircleId, SecurityUtils.getLoginUser().getUserId());
+//        friendCircleMessageRepository.deleteByFriendCircleIdAndUserId(friendCircleId, SecurityUtils.getLoginUser().getUserId());
+
+        int i = friendCircleMessageMapper.deleteByFriendCircleIdAndUserId(friendCircleId, SecurityUtils.getLoginUser().getUserId());
+        if (i == 0) {
+            throw new ServiceException("非法删除");
+        }
     }
 
     @Override
     public FriendCircleMessage updateFriendCircleMessage(FriendCircleMessage friendCircleMessage) {
-        return friendCircleMessageRepository.updateFriendCircleMessage(friendCircleMessage);
+        int i = friendCircleMessageMapper.updateFriendCircleMessage(friendCircleMessage);
+        return friendCircleMessage;
     }
 
     @Override
