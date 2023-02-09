@@ -32,7 +32,7 @@ CREATE TABLE `auth_account`  (
   `user_id` bigint(0) NOT NULL COMMENT '用户id',
   PRIMARY KEY (`uid`) USING BTREE,
   UNIQUE INDEX `uk_user_id`(`user_id`) USING BTREE,
-  INDEX `idx_username`(`username`) USING BTREE
+  INDEX `idx_account`(`account`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '统一账户信息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -114,4 +114,4 @@ INSERT INTO `sys_role_menu` VALUES (1, 1);
 INSERT INTO `sys_role_menu` VALUES (1, 2);
 INSERT INTO `sys_role_menu` VALUES (2, 3);
 
-SET FOREIGN_KEY_CHECKS = 1;
+-- SET FOREIGN_KEY_CHECKS = 1;

@@ -69,17 +69,16 @@ public class AuthAccountServiceImpl implements AuthAccountService {
         }
 
         AuthAccountVO authAccountVO = byUserNameAndPassword.getData();
-
         authAccount  = mapperFacade.map(authAccountVO, AuthAccount.class);
         authAccount.setStatus(1);
+
         //更新密码
-        if (authAccount != null) {
+        if (authAccount.getUid() != null) {
             authAccountMapper.edit(authAccount);
             //获取角色权限
             List<String> permission = authAccountMapper.queryUserMenuByUid(authAccount.getUid());
             return toLoginUser(authAccount, permission);
         }
-
 
         // 从leaf获取uid
         ServerResponseEntity<Long> uidResponseEntity = segmentFeignClient.getSegmentId(LeafKeyEnum.AUTH_UID_KEY.value());
