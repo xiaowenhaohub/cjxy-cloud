@@ -58,7 +58,7 @@ public class CourseServiceImpl implements CourseService {
     public List<List<Lesson>> getMyCourseList(QueryCourseDTO queryCourseDTO) {
 
 
-        /**
+        /*
          * 先从从本地数据库查询课程信息
          */
         List<Courses> coursesList = coursesMapper.queryByInstituteAndClasses(queryCourseDTO);

@@ -3,6 +3,7 @@ package com.changji.cloud.website.mapper;
 import com.changji.cloud.website.dto.QueryCourseDTO;
 import com.changji.cloud.website.model.Courses;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @ Date       ：Created in 21:53 2022/8/22
  * @ Modified By：
  */
+@Repository
 public interface CoursesMapper {
 
     /**
