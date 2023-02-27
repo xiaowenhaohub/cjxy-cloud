@@ -19,8 +19,6 @@ public class RedisService {
     @Autowired
     public RedisTemplate redisTemplate;
 
-
-
     /**
      * 缓存基本的对象，Integer、String、实体类等
      *

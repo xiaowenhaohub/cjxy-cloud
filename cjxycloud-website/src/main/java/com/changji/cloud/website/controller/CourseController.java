@@ -48,6 +48,4 @@ public class CourseController {
         return ServerResponseEntity.success(courseList);
     }
 
-
-
 }
