@@ -28,7 +28,6 @@ import java.util.List;
 @Slf4j
 public class GlobalExceptionHandler {
 
-
     /**
      * token异常
      * @param e

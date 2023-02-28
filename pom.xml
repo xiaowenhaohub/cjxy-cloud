@@ -20,7 +20,6 @@
 
     <!-- 模块 -->
     <modules>
-
         <module>cjxycloud-common</module>
         <module>cjxycloud-gateway</module>
         <module>cjxycloud-auth</module>

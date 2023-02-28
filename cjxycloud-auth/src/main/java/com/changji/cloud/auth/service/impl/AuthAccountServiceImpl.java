@@ -51,27 +51,21 @@ public class AuthAccountServiceImpl implements AuthAccountService {
     @Override
     @Transactional
     public LoginUser login(String account, String password) {
-
-
         //从数据库查询用户
         AuthAccount authAccount = authAccountMapper.queryByAccount(account);
-
         if (authAccount != null && SecurityUtils.matchesPassword(password, authAccount.getPassword())) {
             //查询用户权限列表
             List<String> permission = authAccountMapper.queryUserMenuByUid(authAccount.getUid());
             return toLoginUser(authAccount, permission);
         }
-
         //从教务管理系统查询用户 远程调用website模块
         ServerResponseEntity<AuthAccountVO> byUserNameAndPassword = websiteFeignClient.getByAccountAndPassword(account, password);
         if (!byUserNameAndPassword.isSuccess()) {
             throw new ServiceException(byUserNameAndPassword.getMsg());
         }
-
         AuthAccountVO authAccountVO = byUserNameAndPassword.getData();
         authAccount  = mapperFacade.map(authAccountVO, AuthAccount.class);
         authAccount.setStatus(1);
-
         //更新密码
         if (authAccount.getUid() != null) {
             authAccountMapper.edit(authAccount);
@@ -79,7 +73,6 @@ public class AuthAccountServiceImpl implements AuthAccountService {
             List<String> permission = authAccountMapper.queryUserMenuByUid(authAccount.getUid());
             return toLoginUser(authAccount, permission);
         }
-
         // 从leaf获取uid
         ServerResponseEntity<Long> uidResponseEntity = segmentFeignClient.getSegmentId(LeafKeyEnum.AUTH_UID_KEY.value());
         ServerResponseEntity<Long> userIdResponseEntity = segmentFeignClient.getSegmentId(LeafKeyEnum.USER_ID_KEY.value());
