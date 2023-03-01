@@ -56,8 +56,6 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<List<Lesson>> getMyCourseList(QueryCourseDTO queryCourseDTO) {
-
-
         /*
          * 先从从本地数据库查询课程信息
          */
@@ -65,8 +63,6 @@ public class CourseServiceImpl implements CourseService {
         if (StringUtils.isNotEmpty(coursesList)) {
             return JsonToCourseList(coursesList.get(0).getCourseInfo());
         }
-
-
         //从thread_local获取用户名和密码
         LoginUser loginUser = AuthUtil.getLoginUser();
         WebsiteUser user = new WebsiteUser();

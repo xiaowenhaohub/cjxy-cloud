@@ -56,9 +56,7 @@ public class FriendCircleServiceImpl implements FriendCircleService {
     @Transactional
     public void saveFriendCircleMessage(FriendCircleDTO friendCircleDTO) {
         FriendCircleMessage friendCircleMessage = mapperFacade.map(friendCircleDTO, FriendCircleMessage.class);
-
         friendCircleMessage.setUserId(SecurityUtils.getLoginUser().getUserId());
-
         friendCircleMessageMapper.save(friendCircleMessage);
     }
 
