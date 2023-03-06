@@ -1,4 +1,4 @@
-package com.changji.cloud.social.vo;
+package com.changji.cloud.social.model.vo;
 
 import java.util.Date;
 

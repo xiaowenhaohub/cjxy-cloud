@@ -1,9 +1,9 @@
 package com.changji.cloud.social.service;
 
 import com.changji.cloud.common.core.model.Page;
-import com.changji.cloud.social.dto.FriendCircleDTO;
+import com.changji.cloud.social.model.dto.FriendCircleDTO;
 import com.changji.cloud.social.model.FriendCircleMessage;
-import com.changji.cloud.social.vo.FriendCircleMessageVO;
+import com.changji.cloud.social.model.vo.FriendCircleMessageVO;
 
 import java.util.List;
 

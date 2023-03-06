@@ -1,8 +1,8 @@
 package com.changji.cloud.social.service.impl;
 
 import com.changji.cloud.common.redis.service.RedisService;
-import com.changji.cloud.social.dto.LikedCountDTO;
-import com.changji.cloud.social.dto.LikedDTO;
+import com.changji.cloud.social.model.dto.LikedCountDTO;
+import com.changji.cloud.social.model.dto.LikedDTO;
 import com.changji.cloud.social.enums.LikedStatusEnum;
 import com.changji.cloud.social.model.FriendCircleLike;
 import com.changji.cloud.social.service.LikedRedisService;

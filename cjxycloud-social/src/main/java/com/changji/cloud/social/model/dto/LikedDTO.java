@@ -1,4 +1,4 @@
-package com.changji.cloud.social.dto;
+package com.changji.cloud.social.model.dto;
 
 /**
  * @author 小问号

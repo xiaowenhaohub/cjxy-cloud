@@ -1,7 +1,6 @@
 package com.changji.cloud.social;
 
-import com.changji.cloud.common.core.exception.ServiceException;
-import com.changji.cloud.social.dto.LikedDTO;
+import com.changji.cloud.social.model.dto.LikedDTO;
 import com.changji.cloud.social.mapper.FriendCircleCommentMapper;
 import com.changji.cloud.social.mapper.FriendCircleLikeMapper;
 import com.changji.cloud.social.mapper.FriendCircleMessageMapper;
@@ -13,9 +12,7 @@ import com.changji.cloud.social.service.LikedService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

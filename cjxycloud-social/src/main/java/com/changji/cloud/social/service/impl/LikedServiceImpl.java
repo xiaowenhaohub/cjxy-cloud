@@ -1,7 +1,7 @@
 package com.changji.cloud.social.service.impl;
 
 import com.changji.cloud.common.core.exception.ServiceException;
-import com.changji.cloud.social.dto.LikedCountDTO;
+import com.changji.cloud.social.model.dto.LikedCountDTO;
 import com.changji.cloud.social.enums.LikedStatusEnum;
 import com.changji.cloud.social.mapper.FriendCircleLikeMapper;
 import com.changji.cloud.social.model.FriendCircleLike;
