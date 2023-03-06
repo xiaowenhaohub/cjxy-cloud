@@ -6,7 +6,11 @@ import com.changji.cloud.common.core.utils.SpringUtils;
 import com.changji.cloud.common.core.utils.StringUtils;
 import com.changji.cloud.common.security.auth.AuthUtil;
 import com.changji.cloud.common.security.model.LoginUser;
+import com.changji.cloud.common.security.utils.SecurityUtils;
+import com.changji.cloud.social.model.ChatMessages;
 import com.changji.cloud.social.service.ChatService;
+import com.changji.cloud.social.utils.ChatUtils;
+import com.changji.cloud.social.utils.SessionUtils;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,23 +52,27 @@ public class WebSocketController {
         if(chatService == null){
             this.chatService = SpringUtils.getBean(ChatService.class);
         }
-        chatService.addUserToSessionMap(session);
+        SessionUtils.saveSession(session);
+        log.info("用户连接:{}",SessionUtils.getAccount());
     }
 
     @OnMessage
     public void onMessage(String message) throws IOException {
-        chatService.sendMessageById(message);
+        ChatMessages chatMessages = ChatUtils.parseMessage(message);
+        chatService.sendMessageById(chatMessages);
     }
 
     @OnClose
     public void onClose() {
-       chatService.onClose();
-
+        log.info("用户断开连接：{}",SessionUtils.getAccount());
+        SessionUtils.removeLocal();
     }
 
     @OnError
     public void onError(Throwable throwable) {
-        chatService.onError(throwable);
+        SessionUtils.removeLocal();
+        log.info("用户断开连接：{}",SessionUtils.getAccount());
+        log.info("发生错误:",throwable);
     }
 
 }

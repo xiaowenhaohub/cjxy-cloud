@@ -6,7 +6,8 @@
         id, from_user_account, to_user_account, content, state, create_time, update_time
     </sql>
     <insert id="insertMessage">
-        insert into
+        insert into chat_messages (from_user_account, to_user_account, content)
+         values (#{chatMessages.fromUserAccount}, #{chatMessages.toUserAccount}, #{chatMessages.content})
     </insert>
 
 

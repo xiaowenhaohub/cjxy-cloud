@@ -1,5 +1,6 @@
 package com.changji.cloud.social.service;
 
+import com.changji.cloud.social.model.ChatMessages;
 import org.springframework.stereotype.Service;
 import javax.websocket.Session;
 
@@ -12,23 +13,9 @@ public interface ChatService {
 
     /**
      * 发送信息
-     * @param message
      */
-    void sendMessageById(String message);
+    void sendMessageById(ChatMessages chatMessages);
 
-    /**
-     * 用户连接
-     * @param session
-     */
-    void addUserToSessionMap(Session session);
 
-    /**
-     * 断开连接
-     */
-    void onClose();
 
-    /**
-     * 错误
-     */
-    void onError(Throwable throwable);
 }

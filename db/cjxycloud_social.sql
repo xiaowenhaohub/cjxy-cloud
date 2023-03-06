@@ -1,21 +1,42 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : aliyun.xiaowenhao.ren
+ Source Server         : www.xiaowenhao.ren
  Source Server Type    : MySQL
- Source Server Version : 80030 (8.0.30)
- Source Host           : aliyun.xiaowenhao.ren:3306
+ Source Server Version : 80032 (8.0.32)
+ Source Host           : www.xiaowenhao.ren:3306
  Source Schema         : cjxycloud_social
 
  Target Server Type    : MySQL
- Target Server Version : 80030 (8.0.30)
+ Target Server Version : 80032 (8.0.32)
  File Encoding         : 65001
 
- Date: 23/09/2022 10:39:12
+ Date: 06/03/2023 13:53:28
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for chat_messages
+-- ----------------------------
+DROP TABLE IF EXISTS `chat_messages`;
+CREATE TABLE `chat_messages` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `from_user_account` varchar(30) DEFAULT NULL COMMENT '发送用户学号',
+  `to_user_account` bigint NOT NULL COMMENT '接收用户学号',
+  `content` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '消息正文',
+  `state` tinyint DEFAULT '0' COMMENT '消息状态: 0 未读,1 已读',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='聊天记录表';
+
+-- ----------------------------
+-- Records of chat_messages
+-- ----------------------------
+BEGIN;
+COMMIT;
 
 -- ----------------------------
 -- Table structure for friend_circle_comment
@@ -89,6 +110,29 @@ BEGIN;
 INSERT INTO `friend_circle_message` (`id`, `user_id`, `content`, `picture`, `location`, `liked_count`, `is_delete`, `create_time`, `update_time`) VALUES (3, 110608, 'xiaowenhao', 'xxxx', '', 0, 0, '2022-09-20 14:22:25', '2022-09-23 09:06:46');
 INSERT INTO `friend_circle_message` (`id`, `user_id`, `content`, `picture`, `location`, `liked_count`, `is_delete`, `create_time`, `update_time`) VALUES (4, 110608, 'test', 'xxxx', '', 0, 1, '2022-09-21 17:39:52', '2022-09-21 17:39:52');
 INSERT INTO `friend_circle_message` (`id`, `user_id`, `content`, `picture`, `location`, `liked_count`, `is_delete`, `create_time`, `update_time`) VALUES (5, 110608, 'xiaowenhao 9/23 09:30', 'http://localhost', '', 0, 1, '2022-09-23 09:30:37', '2022-09-23 09:30:37');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for user_relationship
+-- ----------------------------
+DROP TABLE IF EXISTS `user_relationship`;
+CREATE TABLE `user_relationship` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_account` varchar(30) DEFAULT NULL COMMENT '用户id',
+  `friend_account` bigint NOT NULL COMMENT '朋友id',
+  `rel_state` tinyint DEFAULT '0' COMMENT '是否好友(1:是 0:不是)(双向好友)',
+  `alias_user` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '好友备注(USER_ID对FRIEND_ID的备注)',
+  `alias_friend` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '好友备注(FRIEND_ID对USER_ID的备注)',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `idx_user_account` (`user_account`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='好友表';
+
+-- ----------------------------
+-- Records of user_relationship
+-- ----------------------------
+BEGIN;
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

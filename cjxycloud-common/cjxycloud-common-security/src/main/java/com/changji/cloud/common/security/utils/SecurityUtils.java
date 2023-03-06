@@ -18,6 +18,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SecurityUtils
 {
+
+    public static String getAccount() {
+        return getLoginUser().getAccount();
+    }
     /**
      * 获取用户ID
      */
