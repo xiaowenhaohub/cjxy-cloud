@@ -1,8 +1,6 @@
-
 import 'package:flutter/cupertino.dart';
 
 class UserInfo extends ChangeNotifier {
-
   /// 学号
   String? account;
 
@@ -22,11 +20,16 @@ class UserInfo extends ChangeNotifier {
   String? realName;
 
   /// 1 登录 0 未登录
-  String? isLogin;
+  bool? isLogin;
 
-  UserInfo({this.account, this.password, this.institute, this.specialty,
-      this.classes, this.realName, this.isLogin});
-
+  UserInfo(
+      {this.account,
+      this.password,
+      this.institute,
+      this.specialty,
+      this.classes,
+      this.realName,
+      this.isLogin});
 
   UserInfo.fromJson(Map<String, dynamic> json) {
     account = json['account'];
@@ -35,7 +38,6 @@ class UserInfo extends ChangeNotifier {
     specialty = json['specialty'];
     classes = json['classes'];
     realName = json['realName'];
-    isLogin = json['isLogin'];
   }
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -49,11 +51,8 @@ class UserInfo extends ChangeNotifier {
     return data;
   }
 
-
-  void changLoginStatus({required String isLogin}){
+  void changLoginStatus({required bool isLogin}) {
     this.isLogin = isLogin;
     notifyListeners();
   }
-
-
 }

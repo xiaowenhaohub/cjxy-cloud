@@ -32,10 +32,7 @@ import '../../component/ui_view/title_view.dart';
 import '../../fitness_app/fitness_app_theme.dart';
 import 'package:http/http.dart' as http;
 
-
-
 class HomePage extends StatefulWidget {
-
   AnimationController animationController;
 
   HomePage(this.animationController, {Key? key}) : super(key: key);
@@ -44,9 +41,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with TickerProviderStateMixin {
-
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   ScrollController? scrollController = ScrollController();
 
   Animation<double>? topBarAnimation;
@@ -55,7 +50,9 @@ class _HomePageState extends State<HomePage>
   double topBarOpacity = 0.0;
   @override
   void initState() {
-    topBarAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(parent: widget.animationController, curve: const Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
+    topBarAnimation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+        parent: widget.animationController,
+        curve: const Interval(0, 0.5, curve: Curves.fastOutSlowIn)));
     addAllListData();
     scrollController!.addListener(() {
       if (scrollController!.offset >= 24) {
@@ -70,7 +67,6 @@ class _HomePageState extends State<HomePage>
           setState(() {
             topBarOpacity = scrollController!.offset / 24;
           });
-
         }
       } else if (scrollController!.offset <= 0) {
         if (topBarOpacity != 0.0) {
@@ -84,13 +80,13 @@ class _HomePageState extends State<HomePage>
     super.initState();
   }
 
-  Future<bool> getData() async{
+  Future<bool> getData() async {
     await Future<dynamic>.delayed(const Duration(milliseconds: 50));
     return true;
   }
 
   void addAllListData() {
-    int count =9;
+    int count = 9;
     listViews.add(
       TitleView(
         titleTxt: '我的课表',
@@ -98,7 +94,7 @@ class _HomePageState extends State<HomePage>
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController,
             curve:
-            Interval((1 / count) * 0, 1.0, curve: Curves.fastOutSlowIn))),
+                Interval((1 / count) * 0, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController,
       ),
     );
@@ -108,11 +104,10 @@ class _HomePageState extends State<HomePage>
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController,
             curve:
-            Interval((1 / count) * 1, 1.0, curve: Curves.fastOutSlowIn))),
+                Interval((1 / count) * 1, 1.0, curve: Curves.fastOutSlowIn))),
         animationController: widget.animationController,
       ),
     );
-
   }
 
   @override
@@ -123,7 +118,6 @@ class _HomePageState extends State<HomePage>
         backgroundColor: Colors.transparent,
         body: Stack(
           children: <Widget>[
-
             getMainListViewUI(),
             getAppBarUI(),
             SizedBox(
@@ -135,10 +129,10 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Widget getMainListViewUI(){
+  Widget getMainListViewUI() {
     return FutureBuilder(
         future: getData(),
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot){
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (!snapshot.hasData) {
             return const SizedBox();
           }
@@ -155,10 +149,8 @@ class _HomePageState extends State<HomePage>
               itemBuilder: (context, index) {
                 widget.animationController.forward();
                 return listViews[index];
-              }
-          );
-        }
-    );
+              });
+        });
   }
 
   Widget getAppBarUI() {
@@ -170,7 +162,8 @@ class _HomePageState extends State<HomePage>
               return FadeTransition(
                 opacity: topBarAnimation!,
                 child: Transform(
-                  transform: Matrix4.translationValues(0.0,  30 * (1.0 - topBarAnimation!.value), 0.0),
+                  transform: Matrix4.translationValues(
+                      0.0, 30 * (1.0 - topBarAnimation!.value), 0.0),
                   child: Container(
                     decoration: BoxDecoration(
                       color: AppTheme.white.withOpacity(topBarOpacity),
@@ -179,8 +172,8 @@ class _HomePageState extends State<HomePage>
                       // ),
                       boxShadow: <BoxShadow>[
                         BoxShadow(
-                            color: AppTheme.grey
-                                .withOpacity(0.4 * topBarOpacity),
+                            color:
+                                AppTheme.grey.withOpacity(0.4 * topBarOpacity),
                             offset: const Offset(1.1, 1.1),
                             blurRadius: 10.0),
                       ],
@@ -201,7 +194,8 @@ class _HomePageState extends State<HomePage>
                             children: <Widget>[
                               Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsets.only(top: 8,right: 8,bottom: 8,left: 50),
+                                  padding: const EdgeInsets.only(
+                                      top: 8, right: 8, bottom: 8, left: 50),
                                   child: Text(
                                     '昌吉学院',
                                     textAlign: TextAlign.left,
@@ -223,7 +217,7 @@ class _HomePageState extends State<HomePage>
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(32.0)),
                                   onTap: () {},
-                                  child: Center(
+                                  child: const Center(
                                     child: Icon(
                                       Icons.keyboard_arrow_left,
                                       color: FitnessAppTheme.grey,
@@ -282,10 +276,9 @@ class _HomePageState extends State<HomePage>
                       ],
                     ),
                   ),
-                ) ,
+                ),
               );
-            }
-        ),
+            }),
       ],
     );
   }

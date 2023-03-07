@@ -23,10 +23,11 @@ void main() async {
   ];
   LogUtil.init(isDebug: true);
   WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations(orientations).then((value) => runApp(MyApp()));
+  await SystemChrome.setPreferredOrientations(orientations)
+      .then((value) => runApp(MyApp()));
 }
 
-class MyApp extends StatelessWidget  {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -34,71 +35,67 @@ class MyApp extends StatelessWidget  {
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
       statusBarBrightness:
-      !kIsWeb && Platform.isAndroid ? Brightness.dark : Brightness.light,
+          !kIsWeb && Platform.isAndroid ? Brightness.dark : Brightness.light,
       systemNavigationBarColor: Colors.white,
       systemNavigationBarDividerColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.dark,
     ));
     return FutureBuilder(
-      future: UserService.getUserInfoByLocal(),
-      builder: (BuildContext context, AsyncSnapshot<UserInfo> snapshot){
-        if (!snapshot.hasData) {
-          return const Center(child: CircularProgressIndicator(
-            color: AppTheme.white,
-          ));
-        }
-        return ChangeNotifierProvider<UserInfo>(
-          create: (BuildContext context) {
-            return snapshot.data!;
-          },
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Flutter Demo',
-            theme: ThemeData(
-                primarySwatch: Colors.blue,
-                textTheme: AppTheme.textTheme,
-                platform: TargetPlatform.iOS,
-
-                elevatedButtonTheme: ElevatedButtonThemeData(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    primary: Constant.kPrimaryColor,
-                    shape: const StadiumBorder(),
-                    maximumSize: const Size(double.infinity, 56),
-                    minimumSize: const Size(double.infinity, 56),
+        future: UserService.getUserInfoByLocal(),
+        builder: (BuildContext context, AsyncSnapshot<UserInfo> snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+                child: CircularProgressIndicator(
+              color: AppTheme.white,
+            ));
+          }
+          return ChangeNotifierProvider<UserInfo>(
+            create: (BuildContext context) {
+              return snapshot.data!;
+            },
+            child: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Flutter Demo',
+              theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                  textTheme: AppTheme.textTheme,
+                  platform: TargetPlatform.iOS,
+                  elevatedButtonTheme: ElevatedButtonThemeData(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      primary: Constant.kPrimaryColor,
+                      shape: const StadiumBorder(),
+                      maximumSize: const Size(double.infinity, 56),
+                      minimumSize: const Size(double.infinity, 56),
+                    ),
                   ),
-                ),
-                inputDecorationTheme: InputDecorationTheme(
-                  filled: true,
-                  fillColor: Constant.kPrimaryLightColor,
-                  iconColor: Constant.kPrimaryColor,
-                  prefixIconColor: Constant.kPrimaryColor,
-                  contentPadding: EdgeInsets.symmetric(
-                      horizontal: Constant.defaultPadding, vertical: Constant.defaultPadding),
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                    borderSide: BorderSide.none,
-                  ),
-                )
-
-
+                  inputDecorationTheme: InputDecorationTheme(
+                    filled: true,
+                    fillColor: Constant.kPrimaryLightColor,
+                    iconColor: Constant.kPrimaryColor,
+                    prefixIconColor: Constant.kPrimaryColor,
+                    contentPadding: EdgeInsets.symmetric(
+                        horizontal: Constant.defaultPadding,
+                        vertical: Constant.defaultPadding),
+                    border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(30)),
+                      borderSide: BorderSide.none,
+                    ),
+                  )),
+              // home:  ,
+              home: Consumer<UserInfo>(
+                builder: (context, userInfo, child) {
+                  if (!userInfo.isLogin!) {
+                    return const LoginScreen();
+                  } else {
+                    return const NavigationHomeScreen();
+                  }
+                },
+              ),
+              builder: EasyLoading.init(),
             ),
-            // home:  ,
-            home: Consumer<UserInfo>(
-              builder: (context, userInfo, child) {
-                if (userInfo.isLogin == '0') {
-                  return const LoginScreen();
-                }else {
-                  return  const NavigationHomeScreen();
-                }
-              },
-            ),
-            builder: EasyLoading.init(),
-
-          ),
-        );
-      }
-    );
+          );
+        });
   }
 }
 
@@ -113,5 +110,3 @@ class HexColor extends Color {
     return int.parse(hexColor, radix: 16);
   }
 }
-
-

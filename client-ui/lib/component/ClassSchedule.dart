@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:my_fist_flutter/api/CourseApi.dart';
 import 'package:my_fist_flutter/service/CourseService.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
@@ -12,72 +13,68 @@ class ClassSchedule extends StatefulWidget {
   final AnimationController? animationController;
   final Animation<double>? animation;
 
-  const ClassSchedule(
-      {Key? key, this.animationController, this.animation})
+  const ClassSchedule({Key? key, this.animationController, this.animation})
       : super(key: key);
 
   @override
   State<ClassSchedule> createState() => _ClassScheduleState();
 }
 
-class _ClassScheduleState extends State<ClassSchedule> with SingleTickerProviderStateMixin{
-
+class _ClassScheduleState extends State<ClassSchedule>
+    with SingleTickerProviderStateMixin {
   AnimationController? classDetailAnimationController;
 
   Lesson? lessonDetail;
 
   @override
   void initState() {
-
-
-    classDetailAnimationController = AnimationController(
-        duration: const Duration(seconds: 1), vsync: this);
+    classDetailAnimationController =
+        AnimationController(duration: const Duration(seconds: 1), vsync: this);
     lessonDetail = Lesson("", "", "", "", 0);
 
     super.initState();
   }
 
   Future<List<List<Lesson>>> getData() async {
-    return  CourseService.getMyCourseList();
+    return CourseApi.getCourseList();
   }
-
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getData(),
-        builder: (BuildContext context, AsyncSnapshot<List<List<Lesson>>> snapshot) {
-
+        future: getData(),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<List<Lesson>>> snapshot) {
           // courseRow("一二节", courseList[0]),
           // courseRow("三四节", courseList[1]),
           // courseRow("五六节", courseList[2]),
           // courseRow("七八节", courseList[3]),
           // courseRow("九十节", courseList[4]),
-        List<Widget> _list = [
-          myWeekDayRow(),
-          courseRow("一二节"),
-          courseRow("三四节"),
-          courseRow("五六节"),
-          courseRow("七八节"),
-          courseRow("九十节"),
-          Container(height: 10,)
-        ];
-
-        if (snapshot.hasData) {
-          List<List<Lesson>> courseList =  snapshot.data!;
-          _list = [
+          List<Widget> _list = [
             myWeekDayRow(),
-            courseRow("一二节", lessonRow: courseList[0]),
-            courseRow("三四节", lessonRow: courseList[1]),
-            courseRow("五六节", lessonRow: courseList[2]),
-            courseRow("七八节", lessonRow: courseList[3]),
-            courseRow("九十节", lessonRow: courseList[4]),
+            courseRow("一二节"),
+            courseRow("三四节"),
+            courseRow("五六节"),
+            courseRow("七八节"),
+            courseRow("九十节"),
+            Container(
+              height: 10,
+            )
           ];
-        }
 
+          if (snapshot.hasData) {
+            List<List<Lesson>> courseList = snapshot.data!;
+            _list = [
+              myWeekDayRow(),
+              courseRow("一二节", lessonRow: courseList[0]),
+              courseRow("三四节", lessonRow: courseList[1]),
+              courseRow("五六节", lessonRow: courseList[2]),
+              courseRow("七八节", lessonRow: courseList[3]),
+              courseRow("九十节", lessonRow: courseList[4]),
+            ];
+          }
 
-
-           return AnimatedBuilder(
+          return AnimatedBuilder(
             animation: widget.animationController!,
             builder: (BuildContext context, Widget? child) {
               return FadeTransition(
@@ -103,27 +100,24 @@ class _ClassScheduleState extends State<ClassSchedule> with SingleTickerProvider
                               blurRadius: 10.0),
                         ],
                       ),
-                      child: Stack(
-                          children: [
-                            Column(
-                              children: _list,
-                            ),
-                            Center(child: ClassDatail(classDetailAnimationController!,lessonDetail!))
-                          ]
-                      ),
+                      child: Stack(children: [
+                        Column(
+                          children: _list,
+                        ),
+                        Center(
+                            child: ClassDatail(
+                                classDetailAnimationController!, lessonDetail!))
+                      ]),
                     ),
                   ),
                 ),
               );
             },
           );
-        }
-    );
+        });
   }
 
   Widget courseRow(String text, {List<Lesson>? lessonRow}) {
-
-
     List<Color> listColor = [
       HexColor('#6c7197').withOpacity(0.2),
       HexColor('#4f8a83').withOpacity(0.2),
@@ -140,78 +134,68 @@ class _ClassScheduleState extends State<ClassSchedule> with SingleTickerProvider
       HexColor('#fff5f7').withOpacity(0.2),
       HexColor('#097168').withOpacity(0.2),
       HexColor('#d9ef8b').withOpacity(0.2),
-
     ];
 
     List<Widget> _lessonRow = [];
 
-    for (int i =0; i < 7; i ++) {
+    for (int i = 0; i < 7; i++) {
       if (lessonRow != null && lessonRow[i].courseName != "") {
-        _lessonRow.add(
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  lessonDetail = lessonRow[i];
-                });
-                showAboutDialog(
-                    context: context,
-                    applicationIcon: Container(
-                      width: 200,
-                      height: 100,
-                      color: Colors.red,
-                    )
-                );
+        _lessonRow.add(GestureDetector(
+          onTap: () {
+            setState(() {
+              lessonDetail = lessonRow[i];
+            });
+            showAboutDialog(
+                context: context,
+                applicationIcon: Container(
+                  width: 200,
+                  height: 100,
+                  color: Colors.red,
+                ));
 
-                // classDetailAnimationController!.forward();
-
-              },
-              child: Padding(
-                padding:const EdgeInsets.only(left:2),
-                child: Container(
-                  width: 37,
-                  height: 37,
-                  decoration: BoxDecoration(
-                    color: listColor[lessonRow[i].colorIndex!],
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(8.0),
-                        bottomLeft: Radius.circular(8.0),
-                        bottomRight: Radius.circular(8.0),
-                        topRight: Radius.circular(8.0)),
-
-                  ),
-                  padding: const EdgeInsets.all(2),
-                  child: Text(
-                    lessonRow[i].courseName!,
-                    style: const TextStyle(
-                        fontSize: 8,
-                        fontFamily: AppTheme.fontName,
-                        letterSpacing: -0.2,
-                        color: AppTheme.grey
-                    ),
-                  ),
-                ),
+            // classDetailAnimationController!.forward();
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(left: 2),
+            child: Container(
+              width: 37,
+              height: 37,
+              decoration: BoxDecoration(
+                color: listColor[lessonRow[i].colorIndex!],
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(8.0),
+                    bottomLeft: Radius.circular(8.0),
+                    bottomRight: Radius.circular(8.0),
+                    topRight: Radius.circular(8.0)),
               ),
-            )
-        );
-      }else {
-        _lessonRow.add(
-            Padding(
-              padding:const EdgeInsets.only(left:2),
-              child: Container(
-                width: 35,
-                height: 35,
-                decoration: BoxDecoration(
-                  // color: Colors.blue
-                ),
+              padding: const EdgeInsets.all(2),
+              child: Text(
+                lessonRow[i].courseName!,
+                style: const TextStyle(
+                    fontSize: 8,
+                    fontFamily: AppTheme.fontName,
+                    letterSpacing: -0.2,
+                    color: AppTheme.grey),
               ),
-            )
-        );
+            ),
+          ),
+        ));
+      } else {
+        _lessonRow.add(Padding(
+          padding: const EdgeInsets.only(left: 2),
+          child: Container(
+            width: 35,
+            height: 35,
+            decoration: BoxDecoration(
+                // color: Colors.blue
+                ),
+          ),
+        ));
       }
     }
 
-
     return Padding(
-        padding: EdgeInsets.only(left: 5.0,right: 5.0,top: 10.0),
+        padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 10.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -219,14 +203,12 @@ class _ClassScheduleState extends State<ClassSchedule> with SingleTickerProvider
               height: 20 * widget.animation!.value,
               width: 2,
               decoration: BoxDecoration(
-                color: HexColor('#87A0E5')
-                    .withOpacity(0.5),
-                borderRadius: BorderRadius.all(
-                    Radius.circular(4.0)),
+                color: HexColor('#87A0E5').withOpacity(0.5),
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
               ),
             ),
             Padding(
-              padding:const EdgeInsets.only(left: 4, bottom: 3),
+              padding: const EdgeInsets.only(left: 4, bottom: 3),
               child: Text(
                 text,
                 textAlign: TextAlign.center,
@@ -239,22 +221,19 @@ class _ClassScheduleState extends State<ClassSchedule> with SingleTickerProvider
                 ),
               ),
             ),
-
             ..._lessonRow
           ],
-        )
-    );
+        ));
   }
 
   Widget myWeekDayRow() {
-
-
     List<Widget> _list = [];
-    List<String> weekDay = [ "一", "二", "三", "四", "五", "六", "日"];
+    List<String> weekDay = ["一", "二", "三", "四", "五", "六", "日"];
 
     for (int i = 0; i < 7; i++) {
-      _list.add(Padding(
-          padding:const EdgeInsets.only(left: 2),
+      _list.add(
+        Padding(
+          padding: const EdgeInsets.only(left: 2),
           child: Container(
             width: 35,
             child: Text(
@@ -274,7 +253,7 @@ class _ClassScheduleState extends State<ClassSchedule> with SingleTickerProvider
     }
 
     return Padding(
-        padding: EdgeInsets.only(left: 5.0,right: 5.0,top: 10.0),
+        padding: EdgeInsets.only(left: 5.0, right: 5.0, top: 10.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -282,14 +261,12 @@ class _ClassScheduleState extends State<ClassSchedule> with SingleTickerProvider
               height: 20 * widget.animation!.value,
               width: 2,
               decoration: BoxDecoration(
-                color: HexColor('#f88aaf')
-                    .withOpacity(0.5),
-                borderRadius: BorderRadius.all(
-                    Radius.circular(4.0)),
+                color: HexColor('#f88aaf').withOpacity(0.5),
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
               ),
             ),
             Padding(
-              padding:const EdgeInsets.only(left: 4, bottom: 3,right: 10),
+              padding: const EdgeInsets.only(left: 4, bottom: 3, right: 10),
               child: Text(
                 "星期",
                 textAlign: TextAlign.center,
@@ -302,15 +279,11 @@ class _ClassScheduleState extends State<ClassSchedule> with SingleTickerProvider
                 ),
               ),
             ),
-
             ..._list
           ],
-        )
-    );
+        ));
   }
 }
-
-
 
 class ClassDatail extends StatefulWidget {
   AnimationController animationController;
@@ -323,15 +296,12 @@ class ClassDatail extends StatefulWidget {
 }
 
 class _ClassDatailState extends State<ClassDatail> {
-
   Animation? animation;
   @override
   void initState() {
-    animation = Tween(begin: 0.0, end: 1.0)
-        .animate(CurvedAnimation(
+    animation = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
         parent: widget.animationController,
-        curve: const Interval(0, 0.5, curve: Curves.easeInSine))
-    );
+        curve: const Interval(0, 0.5, curve: Curves.easeInSine)));
   }
 
   @override
@@ -341,7 +311,11 @@ class _ClassDatailState extends State<ClassDatail> {
           animation: animation!,
           builder: (context, child) {
             return Transform(
-                transform: Matrix4.translationValues(MediaQuery.of(context).size.width - MediaQuery.of(context).size.width * animation!.value, 0.0, 0.0),
+              transform: Matrix4.translationValues(
+                  MediaQuery.of(context).size.width -
+                      MediaQuery.of(context).size.width * animation!.value,
+                  0.0,
+                  0.0),
               child: Container(
                 width: 250,
                 height: 140,
@@ -353,7 +327,6 @@ class _ClassDatailState extends State<ClassDatail> {
                       bottomLeft: Radius.circular(8.0),
                       bottomRight: Radius.circular(8.0),
                       topRight: Radius.circular(8.0)),
-
                   boxShadow: <BoxShadow>[
                     BoxShadow(
                         color: AppTheme.grey.withOpacity(0.2),
@@ -364,13 +337,12 @@ class _ClassDatailState extends State<ClassDatail> {
                 child: Column(
                   children: [
                     Expanded(
-                      flex: 3,
+                        flex: 3,
                         child: Container(
                           child: Center(
                             child: Text("${widget.lesson.courseName}"),
                           ),
-                        )
-                    ),
+                        )),
                     Expanded(
                       flex: 1,
                       child: MaterialButton(
@@ -380,7 +352,11 @@ class _ClassDatailState extends State<ClassDatail> {
                         child: Container(
                           width: 250,
                           color: HexColor("#6666CC"),
-                          child: Center(child: Text("确认",style: TextStyle(color: AppTheme.white),)),
+                          child: Center(
+                              child: Text(
+                            "确认",
+                            style: TextStyle(color: AppTheme.white),
+                          )),
                         ),
                       ),
                     ),
@@ -388,16 +364,12 @@ class _ClassDatailState extends State<ClassDatail> {
                 ),
               ),
             );
-          }
-      ),
+          }),
     );
   }
 }
 
-
-class Lesson{
-
-
+class Lesson {
   ///课程名称
   String? courseName;
 
@@ -410,10 +382,10 @@ class Lesson{
   ///课程教室
   String? courseRoom;
 
-
   int? colorIndex;
 
-  Lesson(this.courseName, this.teacherName, this.weekly, this.courseRoom, this.colorIndex);
+  Lesson(this.courseName, this.teacherName, this.weekly, this.courseRoom,
+      this.colorIndex);
 
   Lesson.fromJson(Map<String, dynamic> json) {
     courseName = json['courseName'];

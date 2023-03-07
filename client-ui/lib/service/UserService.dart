@@ -11,46 +11,46 @@ class UserService {
     var userInfo = await SharedPreferencesUtils.getStorage(
         SharedPreferencesUtils.USER_KEY);
     if (userInfo == null) {
-      return UserInfo(isLogin: '0');
+      return UserInfo(isLogin: false);
     }
     return UserInfo.fromJson(userInfo);
   }
 
-  //用户登录
-  static Future<UserInfo> login(String account, String password) async {
-    Map<String, String> map = {};
-    map['account'] = account;
-    map['password'] = password;
-    var response = await UserApi.login(map);
+  // //用户登录
+  // static Future<UserInfo> login(String account, String password) async {
+  //   Map<String, String> map = {};
+  //   map['account'] = account;
+  //   map['password'] = password;
+  //   var response = await UserApi.login(map);
 
-    if (response['code'] != 200) {
-      return UserInfo(isLogin: '0');
-    }
+  //   if (response['code'] != 200) {
+  //     return UserInfo(isLogin: '0');
+  //   }
 
-    var data = response['data'];
-    String token = data['access_token'];
-    String authPassword = data['auth_password'];
-    SharedPreferencesUtils.setStorage(SharedPreferencesUtils.TOKEN_KEY, token);
-    SharedPreferencesUtils.setStorage(
-        SharedPreferencesUtils.PASSWORD_KEY, authPassword);
+  //   var data = response['data'];
+  //   String token = data['access_token'];
+  //   String authPassword = data['auth_password'];
+  //   SharedPreferencesUtils.setStorage(SharedPreferencesUtils.TOKEN_KEY, token);
+  //   SharedPreferencesUtils.setStorage(
+  //       SharedPreferencesUtils.PASSWORD_KEY, authPassword);
 
-    Map<String, dynamic> headers = await HttpUtils.createHeaders();
+  //   Map<String, dynamic> headers = await HttpUtils.createHeaders();
 
-    var userResponse = await UserApi.queryUserInfo(headers);
-    UserInfo userInfo = UserInfo.fromJson(userResponse['data']);
-    userInfo.isLogin = '1';
-    SharedPreferencesUtils.setStorage(
-        SharedPreferencesUtils.USER_KEY, userInfo.toJson());
+  //   var userResponse = await UserApi.queryUserInfo();
+  //   UserInfo userInfo = UserInfo.fromJson(userResponse['data']);
+  //   userInfo.isLogin = '1';
+  //   SharedPreferencesUtils.setStorage(
+  //       SharedPreferencesUtils.USER_KEY, userInfo.toJson());
 
-    return userInfo;
-  }
+  //   return userInfo;
+  // }
 
   static void saveToken(String token) {
     SharedPreferencesUtils.setStorage(SharedPreferencesUtils.TOKEN_KEY, token);
   }
 
   static void logout(UserInfo userInfo) {
-    userInfo.changLoginStatus(isLogin: '0');
+    userInfo.changLoginStatus(isLogin: false);
     SharedPreferencesUtils.clear();
   }
 }

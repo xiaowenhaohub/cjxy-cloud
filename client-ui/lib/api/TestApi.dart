@@ -1,4 +1,4 @@
-import '../utils/http/HttpRequest.dart';
+import '../utils/HttpRequest.dart';
 
 class TestApi {
   static test(data) {

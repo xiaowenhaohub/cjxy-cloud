@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:my_fist_flutter/AppTheme.dart';
+import 'package:my_fist_flutter/api/AuthApi.dart';
+import 'package:my_fist_flutter/api/UserApi.dart';
 import 'package:my_fist_flutter/constant.dart';
 import 'package:my_fist_flutter/model/UserInfo.dart';
 import 'package:my_fist_flutter/service/UserService.dart';
 import 'package:provider/provider.dart';
-
 
 class LoginForm extends StatefulWidget {
   const LoginForm({
@@ -16,12 +17,10 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-
   String loading = '1';
 
   @override
   Widget build(BuildContext context) {
-
     return Form(
       child: Column(
         children: [
@@ -33,13 +32,13 @@ class _LoginFormState extends State<LoginForm> {
             decoration: InputDecoration(
               hintText: "学号",
               prefixIcon: Padding(
-                padding:  EdgeInsets.all(Constant.defaultPadding),
+                padding: EdgeInsets.all(Constant.defaultPadding),
                 child: Icon(Icons.person),
               ),
             ),
           ),
           Padding(
-            padding:  EdgeInsets.symmetric(vertical: Constant.defaultPadding),
+            padding: EdgeInsets.symmetric(vertical: Constant.defaultPadding),
             child: TextFormField(
               textInputAction: TextInputAction.done,
               obscureText: true,
@@ -47,7 +46,7 @@ class _LoginFormState extends State<LoginForm> {
               decoration: InputDecoration(
                 hintText: "密码",
                 prefixIcon: Padding(
-                  padding:  EdgeInsets.all(Constant.defaultPadding),
+                  padding: EdgeInsets.all(Constant.defaultPadding),
                   child: Icon(Icons.lock),
                 ),
               ),
@@ -57,18 +56,22 @@ class _LoginFormState extends State<LoginForm> {
           Hero(
             tag: "login_btn",
             child: Consumer<UserInfo>(
-              builder: (context ,userInfo, child) {
+              builder: (context, userInfo, child) {
                 return ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     setState(() {
                       loading = '0';
                     });
-                    UserService.login("1945829064", "(jiang.4234)").then((value){
-                      userInfo.changLoginStatus(isLogin: value.isLogin!);
-                      setState(() {
-                        loading = '1';
-                      });
+                    bool isSuccess =
+                        await AuthApi.login("1945829064", "(jiang.4234)");
+                    setState(() {
+                      loading = '1';
                     });
+                    isSuccess = await UserApi.queryUserInfo();
+                    if (!isSuccess) {
+                      return;
+                    }
+                    userInfo.changLoginStatus(isLogin: true);
                   },
                   child: buttonStatus(),
                 );
@@ -91,17 +94,15 @@ class _LoginFormState extends State<LoginForm> {
         ],
       ),
     );
-
   }
 
   Widget buttonStatus() {
-
     if (loading == '1') {
       return Text("登录");
     }
-    return const Center(child: CircularProgressIndicator(
+    return const Center(
+        child: CircularProgressIndicator(
       color: AppTheme.white,
     ));
-
   }
 }
