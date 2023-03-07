@@ -9,3 +9,5 @@
 *.tar.gz
 *.pid
 *.orig
+
+client-ui/build/
