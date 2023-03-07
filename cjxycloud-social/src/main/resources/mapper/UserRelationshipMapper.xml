@@ -5,13 +5,32 @@
     <sql id="all_columns">
         id, user_account, friend_account, rel_state, alias_user,alias_friend, create_time, update_time
     </sql>
-    <select id="selectRelationship" resultType="com.changji.cloud.social.model.UserRelationship">
+    <insert id="insertOneRelationShip">
+        insert into user_relationship(user_account,friend_account,alias_user)
+        VALUES (#{userRelationship.userAccount}, #{userRelationship.friendAccount}, #{userRelationship.aliasUser})
+    </insert>
+    <update id="agreeRelationShip">
+        update user_relationship set rel_state=1, alias_friend=#{aliaFriend} WHERE user_account=#{userAccount} and friend_account=#{friendAccount}
+    </update>
+    <update id="updateAlia">
+        update user_relationship set alias_user=#{alia} where user_account=#{userAccount} and friend_account=‘#{friendAccount}
+        or
+        update user_relationship set alias_friend=#{alia} where user_account=#{friendAccount} and friend_account=‘#{userAccount}
+    </update>
+    <select id="selectToWayRelationship" resultType="com.changji.cloud.social.model.UserRelationship">
         select * from user_relationship where rel_state= 1 and (user_account= #{userAccount} and friend_account=#{friendAccount})
+                                           or (user_account = #{friendAccount} and friend_account = #{userAccount})
     </select>
 
-    <select id="selectFriends" resultType="com.changji.cloud.social.model.UserRelationship">
-        select * from user_relationship where user_account=#{userAccount} and status=1
+    <select id="selectFriends" resultType="com.changji.cloud.social.model.vo.UserRelationshipVO">
+        select friend_account as user_account,alias_user as alias  from user_relationship where user_account=#{userAccount} and rel_state=1
+        UNION
+        select user_account as user_account, alias_friend as alias  from user_relationship where friend_account=#{userAccount} and rel_state=1
     </select>
-
-
+    <select id="queryOtherToMeFriendRequest" resultType="com.changji.cloud.social.model.UserRelationship">
+        select * from user_relationship where friend_account=#{userAccount} and rel_state=0
+    </select>
+    <select id="selectFriendRequest" resultType="com.changji.cloud.social.model.UserRelationship">
+        select * from user_relationship where rel_state= 0 and user_account= #{userAccount} and friend_account=#{friendAccount}
+    </select>
 </mapper>

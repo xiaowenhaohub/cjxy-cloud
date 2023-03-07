@@ -60,6 +60,12 @@
             <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.changji</groupId>
+            <artifactId>cjxycloud-api-user</artifactId>
+            <version>1.0</version>
+        </dependency>
+
 
     </dependencies>
 

@@ -4,6 +4,8 @@ import com.changji.cloud.api.user.feign.dto.UserDTO;
 import com.changji.cloud.api.user.feign.vo.UserFriendCircleVO;
 import com.changji.cloud.common.core.response.ServerResponseEntity;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -21,4 +23,8 @@ public interface UserFeignClient {
 
     @PostMapping("feign/user/queryUserDetailById")
     public ServerResponseEntity<UserFriendCircleVO> queryUserDetailById(@RequestBody Long userId);
+
+    @GetMapping("feign/user/queryUserDetailById/{userAccount}")
+    public ServerResponseEntity<UserFriendCircleVO> queryUserDetailByAccount(@PathVariable("userAccount") String userAccount);
+
 }

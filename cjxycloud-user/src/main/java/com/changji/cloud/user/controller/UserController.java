@@ -30,7 +30,7 @@ public class UserController {
     @ApiOperation("查询个人信息")
     @Log(title = "用户模块")
     public ServerResponseEntity<UserVO> queryUserDetail() {
-        UserVO userVO = userService.queryUserByAccount();
+        UserVO userVO = userService.queryMeDetails();
         return ServerResponseEntity.success(userVO);
     }
 

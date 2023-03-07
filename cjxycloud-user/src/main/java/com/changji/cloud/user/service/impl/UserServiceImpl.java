@@ -34,12 +34,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserVO queryUserByAccount() {
+    public UserVO queryUserByAccount(String account) {
+        User user = usersMapper.queryUserByAccount(account);
+        return mapperFacade.map(user, UserVO.class);
+    }
+
+    @Override
+    public UserVO queryMeDetails() {
         LoginUser loginUser = SecurityUtils.getLoginUser();
         User user = usersMapper.queryUserByAccount(loginUser.getAccount());
         UserVO userVO = mapperFacade.map(user, UserVO.class);
         return userVO;
     }
+
 
     @Override
     public User queryUserById(Long userId) {

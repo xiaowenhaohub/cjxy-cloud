@@ -22,7 +22,15 @@ public interface UserService {
      * 通过学号查询账号
      * @return
      */
-    UserVO queryUserByAccount();
+    UserVO queryUserByAccount(String account);
+
+
+    /**
+     *
+     * @return
+     */
+    UserVO queryMeDetails();
+
 
     /**
      * 通过userId查询用户

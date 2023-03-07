@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  * @ Date       ：Created in 3:08 2022/8/23
  * @ Modified By：
  */
-
+@Repository
 public interface UsersMapper {
 
     /**

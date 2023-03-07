@@ -43,7 +43,7 @@ public class ChatServiceImpl implements ChatService {
         String account = SessionUtils.getAccount();
 
         // 验证是否为好友
-        UserRelationship userRelationship = userRelationshipMapper.selectRelationship(account, chatMessages.getToUserAccount());
+        UserRelationship userRelationship = userRelationshipMapper.selectToWayRelationship(account, chatMessages.getToUserAccount());
         if (StringUtils.isNull(userRelationship)) {
             log.error("不是好友关系");
             Result.sendLocal(4040,"不是好友关系",null);
