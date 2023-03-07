@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Api("好友管理")
 @RestController
-@RequestMapping("/social/relationship")
+@RequestMapping("/relationship")
 public class UserRelationshipController {
 
     @Autowired
