@@ -17,5 +17,19 @@
             <artifactId>cjxycloud-common-security</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.changji</groupId>
+            <artifactId>cjxycloud-common-datasource</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.smallbun.screw</groupId>
+            <artifactId>screw-core</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+        </dependency>
     </dependencies>
 </project>
