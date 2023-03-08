@@ -19,6 +19,9 @@ class UserInfo extends ChangeNotifier {
   /// 学生姓名
   String? realName;
 
+  /// 头像
+  String? picture;
+
   /// 1 登录 0 未登录
   bool? isLogin;
 
@@ -29,6 +32,7 @@ class UserInfo extends ChangeNotifier {
       this.specialty,
       this.classes,
       this.realName,
+      this.picture,
       this.isLogin});
 
   UserInfo.fromJson(Map<String, dynamic> json) {
@@ -37,6 +41,7 @@ class UserInfo extends ChangeNotifier {
     institute = json['institute'];
     specialty = json['specialty'];
     classes = json['classes'];
+    picture = json['picture'];
     realName = json['realName'];
   }
   Map<String, dynamic> toJson() {
@@ -47,6 +52,7 @@ class UserInfo extends ChangeNotifier {
     data['specialty'] = specialty;
     data['classes'] = classes;
     data['realName'] = realName;
+    data['picture'] = picture;
     data['isLogin'] = isLogin;
     return data;
   }

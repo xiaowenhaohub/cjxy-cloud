@@ -16,8 +16,6 @@ class HttpRequest {
   static final BaseOptions _options = BaseOptions(
     // baseUrl: 'http://192.168.31.61:4230',192.168.101.2
     baseUrl: 'http://192.168.101.2:4230',
-    connectTimeout: 5000,
-    receiveTimeout: 3000,
   );
 
   // 创建 Dio 实例

@@ -9,6 +9,14 @@
         insert into chat_messages (from_user_account, to_user_account, content)
          values (#{chatMessages.fromUserAccount}, #{chatMessages.toUserAccount}, #{chatMessages.content})
     </insert>
+    <select id="selectMessageByFromAndToAccount" resultType="com.changji.cloud.social.model.ChatMessages">
+        select * from  chat_messages where(from_user_account = #{fromAccount} and to_user_account = #{toAccount})
+        or (from_user_account = #{toAccount} and to_user_account = #{fromAccount})
+    </select>
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from chat_messages where(from_user_account = #{fromAccount} and to_user_account = #{toAccount})
+            or (from_user_account = #{toAccount} and to_user_account = #{fromAccount})
+    </select>
 
 
 </mapper>

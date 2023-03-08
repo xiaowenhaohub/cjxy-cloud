@@ -7,16 +7,20 @@ import com.changji.cloud.social.mapper.ChatMessagesMapper;
 import com.changji.cloud.social.mapper.UserRelationshipMapper;
 import com.changji.cloud.social.model.ChatMessages;
 import com.changji.cloud.social.model.UserRelationship;
+import com.changji.cloud.social.model.dto.QueryMessageDTO;
 import com.changji.cloud.social.service.ChatService;
 import com.changji.cloud.social.utils.ChatUtils;
 import com.changji.cloud.social.utils.Result;
 import com.changji.cloud.social.utils.SessionUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.websocket.Session;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -39,6 +43,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public void sendMessageById(ChatMessages chatMessages) {
+
         log.info("发送消息给:"+chatMessages.getToUserAccount());
         String account = SessionUtils.getAccount();
 
@@ -54,6 +59,36 @@ public class ChatServiceImpl implements ChatService {
         chatMessagesMapper.insertMessage(chatMessages);
         Result.success("发送消息",chatMessages.getContent(),chatMessages.getToUserAccount());
     }
+
+    @Override
+    public List<ChatMessages> getChatMessage(QueryMessageDTO queryMessageDTO) {
+        if(StringUtils.isEmpty(queryMessageDTO.getAccount())) {
+            throw new ServiceException("对方学号不能为空");
+        }
+
+        String account = SecurityUtils.getAccount();
+        if(queryMessageDTO.getStartIndex() == null || queryMessageDTO.getPageSize() == null) {
+            queryMessageDTO.setPageSize(10);
+            queryMessageDTO.setStartIndex(0);
+        }
+
+        int count = chatMessagesMapper.count(account,queryMessageDTO.getAccount());
+        int num = count - queryMessageDTO.getStartIndex();
+        if (num >= queryMessageDTO.getPageSize()){
+            int startIndex = count - queryMessageDTO.getStartIndex() -queryMessageDTO.getPageSize();
+            queryMessageDTO.setStartIndex(startIndex);
+        }else if (num < queryMessageDTO.getPageSize() && num >= 0) {
+            queryMessageDTO.setStartIndex(0);
+            queryMessageDTO.setPageSize(num);
+        }else{
+            return null;
+        }
+
+        PageHelper.startPage(queryMessageDTO.getStartIndex(),queryMessageDTO.getPageSize());
+        PageInfo<ChatMessages> pageInfo = new PageInfo<>(chatMessagesMapper.selectMessageByFromAndToAccount(account,queryMessageDTO.getAccount()));
+        return  pageInfo.getList();
+    }
+
 
 
 }
