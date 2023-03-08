@@ -11,7 +11,7 @@
  Target Server Version : 80032 (8.0.32)
  File Encoding         : 65001
 
- Date: 06/03/2023 13:53:28
+ Date: 08/03/2023 17:58:18
 */
 
 SET NAMES utf8mb4;
@@ -30,12 +30,18 @@ CREATE TABLE `chat_messages` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='聊天记录表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='聊天记录表';
 
 -- ----------------------------
 -- Records of chat_messages
 -- ----------------------------
 BEGIN;
+INSERT INTO `chat_messages` (`id`, `from_user_account`, `to_user_account`, `content`, `state`, `create_time`, `update_time`) VALUES (1, '1945829064', 1945829064, '1', 0, '2023-03-06 14:12:15', '2023-03-08 15:32:41');
+INSERT INTO `chat_messages` (`id`, `from_user_account`, `to_user_account`, `content`, `state`, `create_time`, `update_time`) VALUES (2, '1945829064', 1945829065, '2', 0, '2023-03-06 15:50:18', '2023-03-08 15:32:44');
+INSERT INTO `chat_messages` (`id`, `from_user_account`, `to_user_account`, `content`, `state`, `create_time`, `update_time`) VALUES (3, '1945829065', 1945829064, '3111', 0, '2023-03-06 15:58:04', '2023-03-08 15:32:47');
+INSERT INTO `chat_messages` (`id`, `from_user_account`, `to_user_account`, `content`, `state`, `create_time`, `update_time`) VALUES (4, '1945829064', 1945829064, '4111', 0, '2023-03-06 16:00:37', '2023-03-08 15:32:48');
+INSERT INTO `chat_messages` (`id`, `from_user_account`, `to_user_account`, `content`, `state`, `create_time`, `update_time`) VALUES (5, '1945829064', 1945829065, '5111', 0, '2023-03-06 16:03:38', '2023-03-08 15:32:51');
+INSERT INTO `chat_messages` (`id`, `from_user_account`, `to_user_account`, `content`, `state`, `create_time`, `update_time`) VALUES (6, '1945829065', 1945829064, '1116', 0, '2023-03-06 16:12:46', '2023-03-08 15:32:54');
 COMMIT;
 
 -- ----------------------------
@@ -127,12 +133,14 @@ CREATE TABLE `user_relationship` (
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_user_account` (`user_account`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='好友表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC COMMENT='好友表';
 
 -- ----------------------------
 -- Records of user_relationship
 -- ----------------------------
 BEGIN;
+INSERT INTO `user_relationship` (`id`, `user_account`, `friend_account`, `rel_state`, `alias_user`, `alias_friend`, `create_time`, `update_time`) VALUES (2, '1945829064', 1945829065, 1, '小句号', NULL, '2023-03-07 11:01:02', '2023-03-08 11:27:30');
+INSERT INTO `user_relationship` (`id`, `user_account`, `friend_account`, `rel_state`, `alias_user`, `alias_friend`, `create_time`, `update_time`) VALUES (3, '1945829064', 1945829064, 1, '小问号', '小问号', '2023-03-07 11:02:34', '2023-03-07 11:13:32');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
