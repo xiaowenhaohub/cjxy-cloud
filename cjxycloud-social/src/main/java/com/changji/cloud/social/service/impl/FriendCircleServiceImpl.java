@@ -143,7 +143,7 @@ public class FriendCircleServiceImpl implements FriendCircleService {
             //设置昵称
             friendCircleVO.setNickName(userFeignVO.getNickName());
             //设置头像
-            friendCircleVO.setAvatar(userFeignVO.getAvatar());
+            friendCircleVO.setAvatar(userFeignVO.getPicture());
             friendCircleMessageVOList.add(friendCircleVO);
         }
         return friendCircleMessageVOList;

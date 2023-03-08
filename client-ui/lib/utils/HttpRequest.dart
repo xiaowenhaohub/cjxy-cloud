@@ -14,7 +14,8 @@ typedef RequestCallBack = void Function(Map data);
 class HttpRequest {
   // 配置 Dio 实例
   static final BaseOptions _options = BaseOptions(
-    baseUrl: 'http://192.168.31.61:4230',
+    // baseUrl: 'http://192.168.31.61:4230',192.168.101.2
+    baseUrl: 'http://192.168.101.2:4230',
     connectTimeout: 5000,
     receiveTimeout: 3000,
   );
@@ -88,22 +89,16 @@ class HttpRequest {
     switch (error.type) {
       case DioErrorType.connectTimeout:
         return "网络连接超时，请检查网络设置";
-        break;
       case DioErrorType.receiveTimeout:
         return "服务器异常，请稍后重试！";
-        break;
       case DioErrorType.sendTimeout:
         return "网络连接超时，请检查网络设置";
-        break;
       case DioErrorType.response:
         return "服务器异常，请稍后重试！";
-        break;
       case DioErrorType.cancel:
         return "请求已被取消，请重新请求";
-        break;
       case DioErrorType.other:
         return "网络异常，请稍后重试！";
-        break;
       default:
         return "Dio异常";
     }

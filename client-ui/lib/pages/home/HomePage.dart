@@ -1,30 +1,3 @@
-//
-// import 'package:flutter/material.dart';
-// import 'package:my_fist_flutter/component/ClassSchedule.dart';
-// import 'package:my_fist_flutter/component/chart.dart';
-// import 'package:my_fist_flutter/constant.dart';
-//
-// class HomePaeg extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       width: MediaQuery.of(context).size.width,
-//       height: MediaQuery.of(context).size.height,
-//       child: Container(
-//         color: Constant.bgColor,
-//
-//         child:Padding(
-//           padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 50, left: 10,right: 10),
-//           child: Column(
-//             children: [
-//               ClassSchedule()
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-//
 import 'package:flutter/material.dart';
 import 'package:my_fist_flutter/AppTheme.dart';
 import '../../component/ClassSchedule.dart';

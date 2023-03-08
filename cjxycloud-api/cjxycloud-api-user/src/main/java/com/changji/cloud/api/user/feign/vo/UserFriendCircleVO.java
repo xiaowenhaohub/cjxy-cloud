@@ -10,14 +10,14 @@ public class UserFriendCircleVO {
 
     private String nickName;
 
-    private String avatar;
+    private String picture;
 
     public UserFriendCircleVO() {
     }
 
-    public UserFriendCircleVO(String nickName, String avatar) {
+    public UserFriendCircleVO(String nickName, String picture) {
         this.nickName = nickName;
-        this.avatar = avatar;
+        this.picture = picture;
     }
 
     public String getNickName() {
@@ -28,11 +28,19 @@ public class UserFriendCircleVO {
         this.nickName = nickName;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getPicture() {
+        return picture;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    @Override
+    public String toString() {
+        return "UserFriendCircleVO{" +
+                "nickName='" + nickName + '\'' +
+                ", picture='" + picture + '\'' +
+                '}';
     }
 }

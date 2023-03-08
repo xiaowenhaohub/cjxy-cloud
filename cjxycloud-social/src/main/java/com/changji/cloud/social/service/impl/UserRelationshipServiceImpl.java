@@ -39,7 +39,12 @@ public class UserRelationshipServiceImpl implements UserRelationshipService {
     @Override
     public List<UserRelationshipVO> queryAllFriends() {
         String account = SecurityUtils.getAccount();
-        return userRelationshipMapper.selectFriends(account);
+        List<UserRelationshipVO> userRelationshipVOS = userRelationshipMapper.selectFriends(account);
+        userRelationshipVOS.forEach(item -> {
+            ServerResponseEntity<UserFriendCircleVO> responseEntity = userFeignClient.queryUserDetailByAccount(item.getUserAccount());
+            item.setAvatar(responseEntity.getData().getPicture());
+        });
+        return userRelationshipVOS;
     }
 
     @Override

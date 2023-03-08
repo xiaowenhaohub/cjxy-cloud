@@ -59,19 +59,22 @@ class _LoginFormState extends State<LoginForm> {
               builder: (context, userInfo, child) {
                 return ElevatedButton(
                   onPressed: () async {
-                    setState(() {
-                      loading = '0';
-                    });
-                    bool isSuccess =
-                        await AuthApi.login("1945829064", "(jiang.4234)");
-                    setState(() {
-                      loading = '1';
-                    });
-                    isSuccess = await UserApi.queryUserInfo();
-                    if (!isSuccess) {
-                      return;
+                    try {
+                      setState(() {
+                        loading = '0';
+                      });
+                      bool isSuccess =
+                          await AuthApi.login("1945829064", "(jiang.4234)");
+                      isSuccess = await UserApi.queryUserInfo();
+                      if (!isSuccess) {
+                        return;
+                      }
+                      userInfo.changLoginStatus(isLogin: true);
+                    } finally {
+                      setState(() {
+                        loading = '1';
+                      });
                     }
-                    userInfo.changLoginStatus(isLogin: true);
                   },
                   child: buttonStatus(),
                 );
