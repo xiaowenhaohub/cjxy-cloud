@@ -7,6 +7,8 @@ class UserInfo extends ChangeNotifier {
   /// 密码
   String? password;
 
+  String? nickName;
+
   /// 院校
   String? institute;
 
@@ -33,7 +35,8 @@ class UserInfo extends ChangeNotifier {
       this.classes,
       this.realName,
       this.picture,
-      this.isLogin});
+      this.isLogin,
+      this.nickName});
 
   UserInfo.fromJson(Map<String, dynamic> json) {
     account = json['account'];
@@ -43,6 +46,7 @@ class UserInfo extends ChangeNotifier {
     classes = json['classes'];
     picture = json['picture'];
     realName = json['realName'];
+    nickName = json['nickName'];
   }
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -54,6 +58,7 @@ class UserInfo extends ChangeNotifier {
     data['realName'] = realName;
     data['picture'] = picture;
     data['isLogin'] = isLogin;
+    data['nickName'] = nickName;
     return data;
   }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   AppTheme._();
-
+  static const Color green = Color(0xFF72FA93);
   static const Color notWhite = Color(0xFFEDF0F2);
   static const Color nearlyWhite = Color(0x00E8EAED);
   static const Color white = Color(0xFFFFFFFF);

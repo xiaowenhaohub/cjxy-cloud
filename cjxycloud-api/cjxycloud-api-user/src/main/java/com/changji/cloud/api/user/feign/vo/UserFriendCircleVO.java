@@ -12,7 +12,17 @@ public class UserFriendCircleVO {
 
     private String picture;
 
+    private String account;
+
     public UserFriendCircleVO() {
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public UserFriendCircleVO(String nickName, String picture) {

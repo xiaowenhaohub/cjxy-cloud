@@ -4,6 +4,7 @@ import 'package:my_fist_flutter/api/SocialApi.dart';
 import 'package:my_fist_flutter/api/UserApi.dart';
 import 'package:my_fist_flutter/main.dart';
 import 'package:my_fist_flutter/pages/chat/ChatPage.dart';
+import 'package:my_fist_flutter/pages/friendsPage/components/SearchPage.dart';
 
 import '../../model/FriendModel.dart';
 import '../../model/UserInfo.dart';
@@ -41,12 +42,23 @@ class _FriendPageState extends State<FriendPage> {
         color: HexColor("#3C4F6D"), //修改颜色
       ),
       backgroundColor: AppTheme.white,
-      title: Text(
+      title: const Text(
         "我的好友",
         style: TextStyle(color: Colors.black),
       ),
       shadowColor: AppTheme.white,
       elevation: 5,
+      actions: [
+        IconButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SearchPage()),
+            );
+          },
+          icon: Icon(Icons.add),
+        ),
+      ],
     );
   }
   // Widget getAppBar() {

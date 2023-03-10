@@ -10,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -33,5 +34,17 @@ public class UserController {
         UserVO userVO = userService.queryMeDetails();
         return ServerResponseEntity.success(userVO);
     }
+
+    @GetMapping("/search/{account}")
+    @RequiresPermissions("common:user:query")
+    @ApiOperation("搜索用户")
+    @Log(title = "用户模块")
+    public ServerResponseEntity<UserVO> searchUser(@PathVariable("account") String account) {
+        UserVO userVO = userService.queryUserByAccount(account);
+        return ServerResponseEntity.success("搜索成功",userVO);
+    }
+
+
+
 
 }

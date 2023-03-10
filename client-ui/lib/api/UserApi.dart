@@ -1,9 +1,21 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:my_fist_flutter/utils/HttpRequest.dart';
 
 import '../model/UserInfo.dart';
 import '../utils/SharedPreferencesUtils.dart';
 
 class UserApi {
+/*
+  * 搜索用户
+  */
+  static Future<UserInfo> searchUser(String account) async {
+    var userResponse = await HttpRequest.get("/user/search/$account");
+    if (userResponse['code'] != 200 || userResponse['data'] == null) {
+      return UserInfo();
+    }
+    return UserInfo.fromJson(userResponse['data']);
+  }
+
   /*
   * 查询个人用户信息 从服务器
   */
