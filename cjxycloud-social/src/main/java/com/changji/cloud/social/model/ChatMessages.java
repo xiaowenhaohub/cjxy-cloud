@@ -12,6 +12,8 @@ public class ChatMessages extends BaseModel {
 
     private Long id;
 
+    private int code;
+
     //消息类型
     private String type;
 
@@ -23,6 +25,13 @@ public class ChatMessages extends BaseModel {
 
     private Integer state;
 
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
 
     public Long getId() {
         return id;

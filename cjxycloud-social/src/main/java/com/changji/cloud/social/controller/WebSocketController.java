@@ -7,6 +7,7 @@ import com.changji.cloud.common.core.utils.StringUtils;
 import com.changji.cloud.common.security.auth.AuthUtil;
 import com.changji.cloud.common.security.model.LoginUser;
 import com.changji.cloud.common.security.utils.SecurityUtils;
+import com.changji.cloud.social.context.SessionContext;
 import com.changji.cloud.social.model.ChatMessages;
 import com.changji.cloud.social.service.ChatService;
 import com.changji.cloud.social.utils.ChatUtils;
@@ -34,6 +35,8 @@ public class WebSocketController {
     @Autowired
     private ChatService chatService;
 
+    private String account;
+
     @OnOpen
     public void onOpen(Session session, @PathParam("token") String token, EndpointConfig config){
         if (StringUtils.isEmpty(token)) {
@@ -42,6 +45,12 @@ public class WebSocketController {
         //从redis获取用户信息
         LoginUser loginUser = AuthUtil.getLoginUser(token);
         if (StringUtils.isNull(loginUser)) {
+            try {
+                session.getBasicRemote().sendText("{code:400, message: 用户未登录}");
+                session.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             log.info("websocket用户未登录");
            return;
         }
@@ -52,14 +61,20 @@ public class WebSocketController {
         if(chatService == null){
             this.chatService = SpringUtils.getBean(ChatService.class);
         }
-        SessionUtils.saveSession(session);
-        log.info("用户连接:{}",SessionUtils.getAccount());
+        account = loginUser.getAccount();
+        chatService.saveSession(session, loginUser.getAccount());
+
     }
 
     @OnMessage
     public void onMessage(String message) throws IOException {
+        SessionContext.setAccount(account);
         ChatMessages chatMessages = ChatUtils.parseMessage(message);
-        chatService.sendMessageById(chatMessages);
+        if (chatMessages.getCode() == 9999) {
+            chatService.heartPacket(chatMessages);
+        }else {
+            chatService.sendMessageById(chatMessages);
+        }
     }
 
     @OnClose

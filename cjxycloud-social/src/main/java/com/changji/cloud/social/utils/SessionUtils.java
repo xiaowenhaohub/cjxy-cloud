@@ -43,8 +43,8 @@ public class SessionUtils {
     /**
      * 保存当前用户Session
      */
-    public static void saveSession(Session session) {
-        SessionContext.setAccount(SecurityUtils.getAccount());
+    public static void saveSession(Session session, String account) {
+        SessionContext.setAccount(account);
         SessionContext.AddSession(getAccount(),session);
     }
 

@@ -51,6 +51,7 @@ public class Result {
     }
 
 
+
     public static boolean send(Integer code, String message, Object data, String fromAccount, String toAccount) {
         String result = JSON.toJSONString(new Result(code,fromAccount,toAccount,message,data));
         return SessionUtils.sendMessage(result, toAccount);

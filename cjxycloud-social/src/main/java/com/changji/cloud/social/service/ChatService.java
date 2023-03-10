@@ -13,10 +13,23 @@ import java.util.List;
  */
 public interface ChatService {
 
+
+    /**
+     * 用户连接
+     * @param session
+     */
+    void saveSession(Session session,String account);
+
     /**
      * 发送信息
      */
     void sendMessageById(ChatMessages chatMessages);
+
+    /**
+     * 心跳
+     * @param chatMessages
+     */
+    void heartPacket(ChatMessages chatMessages);
 
 
     /**

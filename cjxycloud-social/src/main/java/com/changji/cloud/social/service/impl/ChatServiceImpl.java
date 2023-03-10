@@ -42,10 +42,17 @@ public class ChatServiceImpl implements ChatService {
     private static Map<String, Session> sessionMap = new ConcurrentHashMap<>();
 
     @Override
+    public void saveSession(Session session, String account) {
+        SessionUtils.saveSession(session, account);
+        log.info("用户连接:{}",SessionUtils.getAccount());
+        Result.sendLocal(200,"连接成功", "null");
+    }
+
+    @Override
     public void sendMessageById(ChatMessages chatMessages) {
 
-        log.info("发送消息给:"+chatMessages.getToUserAccount());
         String account = SessionUtils.getAccount();
+        log.info(account + "发送消息给:"+chatMessages.getToUserAccount());
 
         // 验证是否为好友
         UserRelationship userRelationship = userRelationshipMapper.selectToWayRelationship(account, chatMessages.getToUserAccount());
@@ -61,6 +68,12 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
+    public void heartPacket(ChatMessages chatMessages) {
+        Result.send(chatMessages.getCode(), chatMessages.getContent(),null, SessionUtils.getAccount(),SessionUtils.getAccount());
+        log.info("心跳检测{}",SessionUtils.getAccount());
+    }
+
+    @Override
     public List<ChatMessages> getChatMessage(QueryMessageDTO queryMessageDTO) {
         if(StringUtils.isEmpty(queryMessageDTO.getAccount())) {
             throw new ServiceException("对方学号不能为空");
@@ -68,25 +81,26 @@ public class ChatServiceImpl implements ChatService {
 
         String account = SecurityUtils.getAccount();
         if(queryMessageDTO.getStartIndex() == null || queryMessageDTO.getPageSize() == null) {
-            queryMessageDTO.setPageSize(10);
+            queryMessageDTO.setPageSize(14);
             queryMessageDTO.setStartIndex(0);
         }
 
-        int count = chatMessagesMapper.count(account,queryMessageDTO.getAccount());
-        int num = count - queryMessageDTO.getStartIndex();
-        if (num >= queryMessageDTO.getPageSize()){
-            int startIndex = count - queryMessageDTO.getStartIndex() -queryMessageDTO.getPageSize();
-            queryMessageDTO.setStartIndex(startIndex);
-        }else if (num < queryMessageDTO.getPageSize() && num >= 0) {
-            queryMessageDTO.setStartIndex(0);
-            queryMessageDTO.setPageSize(num);
-        }else{
-            return null;
-        }
+//        int count = chatMessagesMapper.count(account,queryMessageDTO.getAccount());
+//        int num = count - queryMessageDTO.getStartIndex();
+//        if (num >= queryMessageDTO.getPageSize()){
+//            int startIndex = count - queryMessageDTO.getStartIndex() -queryMessageDTO.getPageSize();
+//            queryMessageDTO.setStartIndex(startIndex);
+//        }else if (num < queryMessageDTO.getPageSize() && num >= 0) {
+//            queryMessageDTO.setStartIndex(0);
+//            queryMessageDTO.setPageSize(num);
+//        }else{
+//            return null;
+//        }
+//        PageHelper.startPage(queryMessageDTO.getStartIndex(),queryMessageDTO.getPageSize());
+//        PageInfo<ChatMessages> pageInfo = new PageInfo<>(chatMessagesMapper.selectMessageByFromAndToAccount(account,queryMessageDTO.getAccount()));
+        List<ChatMessages> chatMessages = chatMessagesMapper.selectMessageByFromAndToAccount(account, queryMessageDTO.getAccount(), queryMessageDTO.getStartIndex(), queryMessageDTO.getPageSize());
 
-        PageHelper.startPage(queryMessageDTO.getStartIndex(),queryMessageDTO.getPageSize());
-        PageInfo<ChatMessages> pageInfo = new PageInfo<>(chatMessagesMapper.selectMessageByFromAndToAccount(account,queryMessageDTO.getAccount()));
-        return  pageInfo.getList();
+        return  chatMessages;
     }
 
 

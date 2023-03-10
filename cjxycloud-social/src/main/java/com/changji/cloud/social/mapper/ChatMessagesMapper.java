@@ -28,7 +28,7 @@ public interface ChatMessagesMapper {
      * @param toAccount
      * @return
      */
-    List<ChatMessages> selectMessageByFromAndToAccount(@Param("fromAccount") String fromAccount,@Param("toAccount") String toAccount);
+    List<ChatMessages> selectMessageByFromAndToAccount(@Param("fromAccount") String fromAccount,@Param("toAccount") String toAccount, @Param("startIndex")Integer startIndex, @Param("pageSize") Integer pageSize);
 
     /**
      * 总数

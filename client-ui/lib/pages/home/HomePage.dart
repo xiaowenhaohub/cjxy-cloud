@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_fist_flutter/AppTheme.dart';
+import 'package:my_fist_flutter/api/WebSocketApi.dart';
 import '../../component/ClassSchedule.dart';
 import '../../component/ui_view/title_view.dart';
 import '../../fitness_app/fitness_app_theme.dart';
@@ -108,6 +109,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (!snapshot.hasData) {
             return const SizedBox();
+          }
+          if (!WebSocketApi.state.socketStatus) {
+            WebSocketApi.connectSocket();
           }
           return ListView.builder(
               controller: scrollController,

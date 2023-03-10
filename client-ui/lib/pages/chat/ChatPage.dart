@@ -2,12 +2,16 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:my_fist_flutter/AppTheme.dart';
 import 'package:my_fist_flutter/api/MessageApi.dart';
+import 'package:my_fist_flutter/api/WebSocketApi.dart';
 import 'package:my_fist_flutter/component/TextInput/CustomTextInput.dart';
 import 'package:my_fist_flutter/model/FriendModel.dart';
 import 'package:my_fist_flutter/model/MessageModel.dart';
 import 'package:my_fist_flutter/model/UserInfo.dart';
+import 'package:my_fist_flutter/model/WebSocketResult.dart';
+import 'package:my_fist_flutter/utils/ListUtils.dart';
 
 import '../../main.dart';
+import '../../utils/EventStreamController.dart';
 
 class ChatPage extends StatefulWidget {
   FriendModel friendModel;
@@ -23,6 +27,7 @@ class _ChatPageState extends State<ChatPage> {
   late TextEditingController textEditingController;
   ScrollController _scrollController = ScrollController();
   List<Widget> messageList = [];
+
   late String message;
   @override
   void initState() {
@@ -47,6 +52,7 @@ class _ChatPageState extends State<ChatPage> {
           body: Column(children: [
             Expanded(
               child: ListView(
+                controller: _scrollController,
                 padding: EdgeInsets.all(15.0),
                 children: messageList,
               ),
@@ -56,6 +62,18 @@ class _ChatPageState extends State<ChatPage> {
         ),
       ),
     );
+  }
+
+  void addMessage(WebSocketResult webSocketResult) {
+    MessageModel message = MessageModel(
+        fromUserAccount: webSocketResult.fromAccount,
+        toUserAccount: webSocketResult.toAccount,
+        content: webSocketResult.data);
+    List<Widget> list = messageList;
+    list.add(messageWindows(message));
+    setState(() {
+      messageList = list;
+    });
   }
 
   AppBar getAppBar() {
@@ -74,7 +92,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void messageWindowsList() {
-    MessageApi.getMessageList(widget.friendModel.userAccount, 0, 10)
+    MessageApi.getMessageList(widget.friendModel.userAccount, 0, 12)
         .then((data) {
       List<Widget> list = [];
       data.forEach((item) {
@@ -83,6 +101,27 @@ class _ChatPageState extends State<ChatPage> {
       setState(() {
         messageList = list;
       });
+
+      toButton();
+    });
+
+    EventStreamController.noticeStream.listen((webSocketResult) {
+      LogUtil.v("webSocketResult");
+      LogUtil.v(webSocketResult);
+      if (webSocketResult.code == 200 &&
+          webSocketResult.fromAccount == widget.friendModel.userAccount) {
+        MessageModel message = MessageModel(
+            fromUserAccount: webSocketResult.fromAccount,
+            toUserAccount: webSocketResult.toAccount,
+            content: webSocketResult.data);
+        List<Widget> list = ListUtils.copyWithList(messageList);
+        list.add(messageWindows(message));
+        setState(() {
+          messageList = list;
+        });
+
+        toButton();
+      }
     });
     // return FutureBuilder(
     //     future:
@@ -146,7 +185,6 @@ class _ChatPageState extends State<ChatPage> {
             Flexible(
               child: Container(
                   padding: const EdgeInsets.all(5),
-                  height: 40,
                   decoration: BoxDecoration(
                     color: color,
                     borderRadius: BorderRadius.circular(10),
@@ -237,6 +275,26 @@ class _ChatPageState extends State<ChatPage> {
 
   void sendMessage() {
     print(textEditingController.text);
+    WebSocketApi.sendMessage(
+        widget.friendModel.userAccount, textEditingController.text);
+    MessageModel message = MessageModel(
+        fromUserAccount: widget.userInfo.account.toString(),
+        toUserAccount: widget.friendModel.userAccount,
+        content: textEditingController.text);
+    List<Widget> list = ListUtils.copyWithList(messageList);
+    list.add(messageWindows(message));
+    setState(() {
+      messageList = list;
+    });
+
     textEditingController.clear();
+    toButton();
+  }
+
+  void toButton() {
+    /// 延迟500毫秒，再进行滑动
+    Future.delayed(Duration(milliseconds: 50), () {
+      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    });
   }
 }

@@ -7,24 +7,24 @@ String messageModelToJson(MessageModel data) => json.encode(data.toJson());
 
 class MessageModel {
   MessageModel({
-    required this.createTime,
-    required this.updateTime,
-    required this.id,
+    this.createTime,
+    this.updateTime,
+    this.id,
     this.type,
     required this.fromUserAccount,
     required this.toUserAccount,
     required this.content,
-    required this.state,
+    this.state,
   });
 
-  DateTime createTime;
-  DateTime updateTime;
-  int id;
+  DateTime? createTime;
+  DateTime? updateTime;
+  int? id;
   dynamic type;
   String fromUserAccount;
   String toUserAccount;
   String content;
-  int state;
+  int? state;
 
   factory MessageModel.fromJson(Map<String, dynamic> json) => MessageModel(
         createTime: DateTime.parse(json["createTime"]),
@@ -38,8 +38,8 @@ class MessageModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "createTime": createTime.toIso8601String(),
-        "updateTime": updateTime.toIso8601String(),
+        "createTime": createTime!.toIso8601String(),
+        "updateTime": updateTime!.toIso8601String(),
         "id": id,
         "type": type,
         "fromUserAccount": fromUserAccount,
