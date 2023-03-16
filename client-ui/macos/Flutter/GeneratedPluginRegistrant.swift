@@ -5,8 +5,12 @@
 import FlutterMacOS
 import Foundation
 
+import path_provider_foundation
+import photo_manager
 import shared_preferences_macos
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
+  PathProviderPlugin.register(with: registry.registrar(forPlugin: "PathProviderPlugin"))
+  ImageScannerPlugin.register(with: registry.registrar(forPlugin: "ImageScannerPlugin"))
   SharedPreferencesPlugin.register(with: registry.registrar(forPlugin: "SharedPreferencesPlugin"))
 }

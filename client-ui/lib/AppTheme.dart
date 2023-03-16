@@ -4,7 +4,7 @@ class AppTheme {
   AppTheme._();
   static const Color red = Color(0xffE45F2B);
 
-  static const Color green = Color(0xFF72FA93);
+  static const Color green = Color(0xff3FB564);
   static const Color notWhite = Color(0xFFEDF0F2);
   static const Color nearlyWhite = Color(0x00E8EAED);
   static const Color white = Color(0xFFFFFFFF);

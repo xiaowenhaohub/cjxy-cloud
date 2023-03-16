@@ -18,6 +18,7 @@ class CustomTextInput extends StatefulWidget {
       this.onTextChanged,
       this.hint,
       this.label,
+      this.inputBorder,
       this.isObscured = false,
       this.onSubmitted})
       : super(key: key);
@@ -25,6 +26,7 @@ class CustomTextInput extends StatefulWidget {
   final TextChanged? onTextChanged;
   final String? hint;
   final String? label;
+  final InputBorder? inputBorder;
   final TextEditingController? textEditingController;
   final bool? isObscured;
   final OnSubmitted? onSubmitted; //键盘回车监听
@@ -68,19 +70,20 @@ class _CustomTextInput extends State<CustomTextInput> {
         hintText: widget.hint,
         labelText: widget.label,
         fillColor: AppTheme.nearlyWhite,
-        border: const OutlineInputBorder(
-          ///设置边框四个角的弧度
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+        border: widget.inputBorder ??
+            const OutlineInputBorder(
+              ///设置边框四个角的弧度
+              borderRadius: BorderRadius.all(Radius.circular(20)),
 
-          ///用来配置边框的样式
-          borderSide: BorderSide(
-            ///设置边框的颜色
-            color: AppTheme.notWhite,
+              ///用来配置边框的样式
+              borderSide: BorderSide(
+                ///设置边框的颜色
+                color: AppTheme.notWhite,
 
-            ///设置边框的粗细
-            width: 2,
-          ),
-        ),
+                ///设置边框的粗细
+                width: 2,
+              ),
+            ),
 
         ///设置输入框可编辑时的边框样式
         enabledBorder: const OutlineInputBorder(

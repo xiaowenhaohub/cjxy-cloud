@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_fist_flutter/api/SocialApi.dart';
 import 'package:my_fist_flutter/model/MomentModel.dart';
+import 'package:my_fist_flutter/pages/moments/components/AddMomentPage.dart';
 import 'package:my_fist_flutter/pages/moments/components/MomentCard.dart';
 
 import '../../AppTheme.dart';
@@ -87,10 +88,10 @@ class _MomentsPageState extends State<MomentsPage> {
       actions: [
         IconButton(
           onPressed: () {
-            // Navigator.push(
-            //   context,
-            //    MaterialPageRoute(builder: (context) => SearchPage()),
-            // );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddMomentPage()),
+            );
           },
           icon: Icon(Icons.add),
         ),
