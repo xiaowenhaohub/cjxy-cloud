@@ -53,4 +53,10 @@ public interface FriendCircleService {
      */
     void likedFriendCircle(Long friendCircleId);
 
+    /**
+     * 获取校园圈
+     * @return
+     */
+    List<FriendCircleMessageVO> getMoments(Page page);
+
 }

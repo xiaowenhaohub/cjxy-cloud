@@ -21,6 +21,11 @@ public class FriendCircleMessage extends BaseModel {
     private Long userId;
 
     /**
+     * 用户学号
+     */
+    private String account;
+
+    /**
      * 文本内容
      */
     private String content;
@@ -44,6 +49,14 @@ public class FriendCircleMessage extends BaseModel {
      * 是否删除
      */
     private Integer isDelete;
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
 
     public Long getId() {
         return id;
@@ -99,5 +112,19 @@ public class FriendCircleMessage extends BaseModel {
 
     public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
+    }
+
+    @Override
+    public String toString() {
+        return "FriendCircleMessage{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", account='" + account + '\'' +
+                ", content='" + content + '\'' +
+                ", picture='" + picture + '\'' +
+                ", location='" + location + '\'' +
+                ", likedCount=" + likedCount +
+                ", isDelete=" + isDelete +
+                '}';
     }
 }

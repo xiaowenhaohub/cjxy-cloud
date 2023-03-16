@@ -6,6 +6,7 @@ import 'package:my_fist_flutter/main.dart';
 import 'package:my_fist_flutter/pages/friendsPage/FriendsPage.dart';
 
 import 'package:my_fist_flutter/pages/home/HomePage.dart';
+import 'package:my_fist_flutter/pages/moments/MomentsPage.dart';
 
 import 'component/HomeDrawer.dart';
 import 'fitness_app/fitness_app_home_screen.dart';
@@ -27,7 +28,7 @@ class _MyHomePageState extends State<MyHomePageController>
   //bottom未选择时颜色
   final _inactiveColor = Constant.nearlyDarkBlue;
   //bottom
-  List titles = ["首页", "好友", "排名", "直播"];
+  List titles = ["首页", "好友", "校园圈", "直播"];
   AnimationController? animationController;
   List<TabIconData> tabIconsList = TabIconData.tabIconsList;
 
@@ -47,11 +48,8 @@ class _MyHomePageState extends State<MyHomePageController>
       HomePage(animationController!),
       // FitnessAppHomeScreen(),
       FriendPage(animationController!),
-      Container(
-        color: Colors.blue,
-      ),
-      Container(
-        color: Colors.yellow,
+      MomentsPage(
+        animationController: animationController!,
       )
     ];
 
@@ -114,28 +112,21 @@ class _MyHomePageState extends State<MyHomePageController>
           textAlign: TextAlign.center,
         ),
         MyBottomNavigationBarItem(
-          icon: const Icon(Icons.apps),
+          icon: const Icon(Icons.message),
           title: Text(titles[1]),
-          activeColor: HexColor("#3C979F"),
+          activeColor: HexColor("#9297C8"),
           inactiveColor: _inactiveColor,
           textAlign: TextAlign.center,
         ),
         MyBottomNavigationBarItem(
-          icon: const Icon(Icons.abc),
+          icon: const Icon(Icons.looks),
           title: Text(
             titles[2],
           ),
-          activeColor: const Color(0xff006600),
+          activeColor: HexColor("#B6C796"),
           inactiveColor: _inactiveColor,
           textAlign: TextAlign.center,
         ),
-        MyBottomNavigationBarItem(
-          icon: const Icon(Icons.video_camera_front),
-          title: Text(titles[3]),
-          activeColor: const Color(0xff078392),
-          inactiveColor: _inactiveColor,
-          textAlign: TextAlign.center,
-        )
       ],
     );
   }

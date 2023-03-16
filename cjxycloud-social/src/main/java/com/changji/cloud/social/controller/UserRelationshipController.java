@@ -1,5 +1,6 @@
 package com.changji.cloud.social.controller;
 
+import com.changji.cloud.api.user.feign.vo.UserFriendCircleVO;
 import com.changji.cloud.common.core.response.ServerResponseEntity;
 import com.changji.cloud.common.log.annotation.Log;
 import com.changji.cloud.common.security.annotation.RequiresPermissions;
@@ -43,8 +44,8 @@ public class UserRelationshipController {
     @RequiresPermissions("common:social:relationship")
     @ApiOperation("查询好友申请列表")
     @Log(title = "查询好友申请列表")
-    public ServerResponseEntity<List<UserRelationship>> queryAllFriendRequest() {
-        List<UserRelationship> userRelationships = userRelationshipService.queryFriendRequest();
+    public ServerResponseEntity<List<UserFriendCircleVO>> queryAllFriendRequest() {
+        List<UserFriendCircleVO> userRelationships = userRelationshipService.queryFriendRequest();
         return ServerResponseEntity.success("查询成功", userRelationships);
 
     }

@@ -36,6 +36,9 @@
         select <include refid="all_columns"></include> from friend_circle_message
         where id = #{id} and is_delete = 1
     </select>
+    <select id="getMoments" resultType="com.changji.cloud.social.model.FriendCircleMessage">
+        select * from  friend_circle_message  order by create_time desc LIMIT #{page.pageSize} OFFSET #{page.pageNum}
+    </select>
 
 
 </mapper>

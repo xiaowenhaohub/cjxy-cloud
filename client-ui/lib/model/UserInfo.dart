@@ -2,27 +2,27 @@ import 'package:flutter/cupertino.dart';
 
 class UserInfo extends ChangeNotifier {
   /// 学号
-  String? account;
+  dynamic account;
 
   /// 密码
-  String? password;
+  dynamic password;
 
-  String? nickName;
+  dynamic nickName;
 
   /// 院校
-  String? institute;
+  dynamic institute;
 
   /// 专业
-  String? specialty;
+  dynamic specialty;
 
   /// 学生班级
-  String? classes;
+  dynamic classes;
 
   /// 学生姓名
-  String? realName;
+  dynamic realName;
 
   /// 头像
-  String? picture;
+  dynamic picture;
 
   /// 1 登录 0 未登录
   bool? isLogin;

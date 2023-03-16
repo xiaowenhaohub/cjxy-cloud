@@ -60,4 +60,13 @@ public class FriendCircleController {
         friendCircleService.likedFriendCircle(friendCircleId);
         return ServerResponseEntity.success();
     }
+
+    @PostMapping("/moments/get")
+    @RequiresPermissions("common:social:friendCircle")
+    @ApiOperation("获取校园圈")
+    @Log(title = "获取校园圈")
+    public ServerResponseEntity<List<FriendCircleMessageVO>> getMoments(@RequestBody Page page) {
+        List<FriendCircleMessageVO> moments = friendCircleService.getMoments(page);
+        return ServerResponseEntity.success("查询成功",moments);
+    }
 }

@@ -55,4 +55,13 @@ public interface FriendCircleMessageMapper {
      * @param userId
      */
     int deleteByFriendCircleIdAndUserId(@Param("friendCircleId") Long friendCircleId,@Param("userId") Long userId);
+
+
+    /**
+     * 获取校园圈
+     * @param page
+     * @return
+     */
+    List<FriendCircleMessage> getMoments(@Param("page") Page page);
+
 }

@@ -101,6 +101,38 @@ public class FriendCircleServiceImpl implements FriendCircleService {
     }
 
     @Override
+    public List<FriendCircleMessageVO> getMoments(Page page) {
+        Long myUserId= SecurityUtils.getLoginUser().getUserId();
+
+        if (page.getPageSize() == null) {
+            page.setPageNum(0);
+            page.setPageSize(10);
+        }
+        List<FriendCircleMessage> moments = friendCircleMessageMapper.getMoments(page);
+        List<FriendCircleMessageVO> friendCircleMessageVOList = new ArrayList<>();
+        //转换对象
+        for (FriendCircleMessage friendCircleMessage : moments) {
+            FriendCircleMessageVO friendCircleVO = mapperFacade.map(friendCircleMessage, FriendCircleMessageVO.class);
+            //汇总点赞数 redis + mysql
+            friendCircleVO.setLikedCount(friendCircleVO.getLikedCount() + likedRedisService.getOneLikedCountFromRedis(friendCircleVO.getId()));
+            //判定是否点赞过
+            friendCircleVO.setLiked(isLiked(friendCircleVO.getId(), myUserId));
+            //设置用户信息 feign 调用用户模块查询
+            ServerResponseEntity<UserFriendCircleVO> responseEntity = userFeignClient.queryUserDetailByAccount(friendCircleMessage.getAccount());
+            if (!responseEntity.isSuccess()) {
+                throw new ServiceException("查询用户信息失败");
+            }
+            UserFriendCircleVO userFeignVO = responseEntity.getData();
+            //设置昵称
+            friendCircleVO.setNickName(userFeignVO.getNickName());
+            //设置头像
+            friendCircleVO.setAvatar(userFeignVO.getPicture());
+            friendCircleMessageVOList.add(friendCircleVO);
+        }
+        return friendCircleMessageVOList;
+    }
+
+    @Override
     public List<FriendCircleMessageVO> getFriendCircleList(Long userId, Page page) {
 
         Long myUserId= SecurityUtils.getLoginUser().getUserId();

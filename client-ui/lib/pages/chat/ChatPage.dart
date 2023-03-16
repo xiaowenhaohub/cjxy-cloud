@@ -274,7 +274,6 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void sendMessage() {
-    print(textEditingController.text);
     WebSocketApi.sendMessage(
         widget.friendModel.userAccount, textEditingController.text);
     MessageModel message = MessageModel(
@@ -286,7 +285,6 @@ class _ChatPageState extends State<ChatPage> {
     setState(() {
       messageList = list;
     });
-
     textEditingController.clear();
     toButton();
   }

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,9 +49,18 @@ public class UserRelationshipServiceImpl implements UserRelationshipService {
     }
 
     @Override
-    public List<UserRelationship> queryFriendRequest() {
+    public List<UserFriendCircleVO> queryFriendRequest() {
         String account = SecurityUtils.getAccount();
-        return userRelationshipMapper.queryOtherToMeFriendRequest(account);
+        List<UserFriendCircleVO> requestList = new ArrayList();
+        List<UserRelationship> userRelationships = userRelationshipMapper.queryOtherToMeFriendRequest(account);
+        userRelationships.forEach(userRelationship -> {
+            ServerResponseEntity<UserFriendCircleVO> responseEntity = userFeignClient.queryUserDetailByAccount(userRelationship.getFriendAccount());
+            if (!responseEntity.isSuccess()) {
+                throw new ServiceException(responseEntity.getMsg());
+            }
+            requestList.add(responseEntity.getData());
+        });
+        return requestList;
     }
 
     @Override

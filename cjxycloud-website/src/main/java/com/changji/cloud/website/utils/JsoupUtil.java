@@ -155,6 +155,7 @@ public class JsoupUtil {
         Elements trs = tbody.select("tr");
         for (int i = 1; i < 6; i ++) {
             List<Lesson> lessonRow = getCourseRow(trs.get(i));
+
             courseList.add(lessonRow);
         }
         return courseList;
@@ -182,19 +183,37 @@ public class JsoupUtil {
     public static Lesson getLesson(Element td) {
 
         Lesson lesson = new Lesson();
-        Element div = td.select("div").get(1);
-        String[] split = div.text().split(" ");
-        if(split.length == 1){
+
+//        System.out.println(td.select("font"));
+
+        Elements font = td.select("font");
+        if (font.size() <4) {
             lesson.setCourseName("");
             lesson.setTeacherName("");
             lesson.setWeekly("");
             lesson.setCourseRoom("");
-        }else {
-            lesson.setCourseName(split[0]);
-            lesson.setTeacherName(split[1]);
-            lesson.setWeekly(split[2]);
-            lesson.setCourseRoom(split[3]);
+            return lesson;
         }
+
+        lesson.setCourseName(font.get(4).text());
+        lesson.setTeacherName(font.get(5).text());
+        lesson.setWeekly(font.get(7).text());
+        lesson.setCourseRoom(font.get(8).text());
+
+
+//        Element div = td.select("div").get(1);
+//        String[] split = div.text().split(" ");
+//        if(split.length == 1){
+//            lesson.setCourseName("");
+//            lesson.setTeacherName("");
+//            lesson.setWeekly("");
+//            lesson.setCourseRoom("");
+//        }else {
+//            lesson.setCourseName(split[0]);
+//            lesson.setTeacherName(split[1]);
+//            lesson.setWeekly(split[2]);
+//            lesson.setCourseRoom(split[3]);
+//        }
         return lesson;
     }
 

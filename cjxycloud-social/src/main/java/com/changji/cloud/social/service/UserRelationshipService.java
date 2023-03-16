@@ -1,5 +1,6 @@
 package com.changji.cloud.social.service;
 
+import com.changji.cloud.api.user.feign.vo.UserFriendCircleVO;
 import com.changji.cloud.social.mapper.UserRelationshipMapper;
 import com.changji.cloud.social.model.UserRelationship;
 import com.changji.cloud.social.model.dto.UserRelationshipDTO;
@@ -27,7 +28,7 @@ public interface UserRelationshipService {
      * 查询好友申请
      * @return
      */
-    List<UserRelationship> queryFriendRequest();
+    List<UserFriendCircleVO> queryFriendRequest();
 
     /**
      * 添加好友申请

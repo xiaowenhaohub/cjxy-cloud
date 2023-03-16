@@ -84,6 +84,7 @@ public class CourseServiceImpl implements CourseService {
         //发起http请求 从官网查询数据
         CloseableHttpResponse response = HttpClientUtils.getResponse(url,cookieStore,list,null);
         String context = BufferUtil.inputToString(response);
+
         //解析 html
         List<List<Lesson>> courseList = JsoupUtil.getMyCourseList(context);
 

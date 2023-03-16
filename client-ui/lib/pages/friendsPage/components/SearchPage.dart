@@ -1,6 +1,7 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:my_fist_flutter/api/SocialApi.dart';
 import 'package:my_fist_flutter/api/UserApi.dart';
 import 'package:my_fist_flutter/model/UserInfo.dart';
 
@@ -22,11 +23,12 @@ class _SearchPageState extends State<SearchPage> {
   List<Widget> messageList = [];
 
   Widget searchUserInfo = Container();
+  Widget requestListWidget = Container();
   String? message;
   @override
   void initState() {
     super.initState();
-
+    getRequestList();
     textEditingController = TextEditingController();
   }
 
@@ -50,7 +52,11 @@ class _SearchPageState extends State<SearchPage> {
               //     padding: EdgeInsets.all(15.0),
               //   ),
               // ),
-              searchUserInfo
+              searchUserInfo,
+              Container(
+                child: Text("好友通知"),
+              ),
+              requestListWidget
             ],
           ),
         ),
@@ -148,15 +154,46 @@ class _SearchPageState extends State<SearchPage> {
       return;
     }
     setState(() {
-      searchUserInfo = friendWindow(userInfo);
+      searchUserInfo = friendWindow(userInfo, 1);
     });
+
     EasyLoading.showInfo('搜索成功');
   }
 
-  Widget friendWindow(UserInfo userInfo) {
+  void getRequestList() async {
+    List<UserInfo> userList = await SocialApi.getRequestList();
+    List<Widget> list = [];
+
+    userList.forEach((element) {
+      list.add(friendWindow(element, 2));
+    });
+    setState(() {
+      requestListWidget = Column(
+        children: list,
+      );
+    });
+  }
+
+  Widget friendWindow(UserInfo userInfo, int type) {
+    String? text;
+    Function? onTap;
+    if (type == 1) {
+      text = "添加";
+      onTap = () async {
+        await SocialApi.requestRelationship(userInfo.account);
+        EasyLoading.showInfo('添加成功');
+      };
+    } else if (type == 2) {
+      text = "同意";
+      onTap = () async {
+        await SocialApi.agreeUserRequest(userInfo.account);
+        EasyLoading.showInfo('添加成功');
+      };
+    }
+
     return Container(
       color: AppTheme.white,
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       height: 80,
       child: Row(
         children: [
@@ -174,32 +211,36 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ),
           const SizedBox(width: 10),
-          Flexible(
-            child: Container(
-                child: Text(
+          SizedBox(
+            width: 200,
+            child: Text(
               userInfo.nickName!,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            )),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
           ),
-          Expanded(child: Container()),
+          const Expanded(child: SizedBox()),
+
+          // Spacer(),
           Ink(
             color: AppTheme.white,
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                onTap!();
+              },
               child: Container(
                 height: 30,
                 width: 40,
                 decoration: BoxDecoration(
                     border: Border.all(width: 0.5),
                     borderRadius: BorderRadius.circular(10)),
-                child: const Center(
+                child: Center(
                     child: Text(
-                  "添加",
+                  text!,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 )),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
