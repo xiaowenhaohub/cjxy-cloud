@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:my_fist_flutter/api/SocialApi.dart';
 import 'package:my_fist_flutter/model/MomentModel.dart';
+import 'package:my_fist_flutter/pages/moments/components/MomentCard.dart';
 
 import '../../AppTheme.dart';
 import '../../main.dart';
 
 class MomentsPage extends StatefulWidget {
   AnimationController animationController;
-  MomentsPage({super.key, required this.animationController});
+  MomentsPage(this.animationController, {super.key});
 
   @override
   State<MomentsPage> createState() => _MomentsPageState();
@@ -59,9 +60,7 @@ class _MomentsPageState extends State<MomentsPage> {
   }
 
   Widget _renderRow(BuildContext context, int index) {
-    return ListTile(
-      title: Text(momentsList[index].nickName),
-    );
+    return MomentCard(momentModel: momentsList[index]);
   }
 
   ///下拉刷新方法,为list重新赋值

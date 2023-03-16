@@ -57,10 +57,16 @@ class SocialApi {
   static Future<List<MomentModel>> getMoments(int pageSize, int pageNum) async {
     Map<String, int> data = {"pageSize": pageSize, "pageNum": pageNum};
     var response = await HttpRequest.post("/social/moments/get", data: data);
+    // LogUtil.v(response);
     List<MomentModel> moments = [];
     response["data"].forEach((item) {
-      moments.add(MomentModel.fromJson(item));
+      MomentModel model = MomentModel.fromJson(item);
+      if (item["picture"] != "") {
+        model.picture = item["picture"].split(";");
+      }
+      moments.add(model);
     });
+
     return moments;
   }
 }

@@ -15,7 +15,7 @@ class MomentModel {
     required this.nickName,
     required this.avatar,
     required this.content,
-    required this.picture,
+    // required this.picture,
     required this.location,
     required this.likedCount,
     required this.createTime,
@@ -26,7 +26,7 @@ class MomentModel {
   String nickName;
   String avatar;
   String content;
-  String picture;
+  List<String>? picture;
   String location;
   int likedCount;
   DateTime createTime;
@@ -37,7 +37,7 @@ class MomentModel {
         nickName: json["nickName"],
         avatar: json["avatar"],
         content: json["content"],
-        picture: json["picture"],
+        // picture: json["picture"],
         location: json["location"],
         likedCount: json["likedCount"],
         createTime: DateTime.parse(json["createTime"]),
@@ -49,7 +49,7 @@ class MomentModel {
         "nickName": nickName,
         "avatar": avatar,
         "content": content,
-        "picture": picture,
+        // "picture": picture,
         "location": location,
         "likedCount": likedCount,
         "createTime": createTime.toIso8601String(),

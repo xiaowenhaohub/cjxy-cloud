@@ -46,11 +46,8 @@ class _MyHomePageState extends State<MyHomePageController>
 
     _page = [
       HomePage(animationController!),
-      // FitnessAppHomeScreen(),
+      MomentsPage(animationController!),
       FriendPage(animationController!),
-      MomentsPage(
-        animationController: animationController!,
-      )
     ];
 
     super.initState();
@@ -112,18 +109,18 @@ class _MyHomePageState extends State<MyHomePageController>
           textAlign: TextAlign.center,
         ),
         MyBottomNavigationBarItem(
-          icon: const Icon(Icons.message),
-          title: Text(titles[1]),
-          activeColor: HexColor("#9297C8"),
-          inactiveColor: _inactiveColor,
-          textAlign: TextAlign.center,
-        ),
-        MyBottomNavigationBarItem(
           icon: const Icon(Icons.looks),
           title: Text(
             titles[2],
           ),
           activeColor: HexColor("#B6C796"),
+          inactiveColor: _inactiveColor,
+          textAlign: TextAlign.center,
+        ),
+        MyBottomNavigationBarItem(
+          icon: const Icon(Icons.message),
+          title: Text(titles[1]),
+          activeColor: HexColor("#9297C8"),
           inactiveColor: _inactiveColor,
           textAlign: TextAlign.center,
         ),
