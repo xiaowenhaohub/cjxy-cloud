@@ -13,7 +13,6 @@ import javax.validation.constraints.NotBlank;
 public class FriendCircleDTO {
 
     @ApiModelProperty("正文")
-    @NotBlank(message = "正文不能为空")
     private String content;
 
     @ApiModelProperty("图片")

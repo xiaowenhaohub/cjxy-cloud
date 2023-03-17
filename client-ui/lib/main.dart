@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:common_utils/common_utils.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:my_fist_flutter/constant.dart';
 import 'package:my_fist_flutter/pages/login/LoginScreen.dart';
 import 'package:my_fist_flutter/service/UserService.dart';
@@ -92,7 +93,7 @@ class MyApp extends StatelessWidget {
                   }
                 },
               ),
-              builder: EasyLoading.init(),
+              builder: EasyLoading.init(builder: FlutterSmartDialog.init()),
             ),
           );
         });

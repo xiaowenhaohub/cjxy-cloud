@@ -62,11 +62,27 @@ class SocialApi {
     response["data"].forEach((item) {
       MomentModel model = MomentModel.fromJson(item);
       if (item["picture"] != "") {
-        model.picture = item["picture"].split(";");
+        List<String> list = item["picture"].split(";");
+        list.forEach((element) {
+          if (element != "") {
+            model.picture.add(element);
+          }
+        });
+        // model.picture = item["picture"].split(";");
       }
       moments.add(model);
     });
-
     return moments;
+  }
+
+  /// 发表校园圈
+  static Future<bool> savaMoment(String content, String picture) async {
+    Map<String, String> data = {"content": content, "picture": picture};
+    var response =
+        await HttpRequest.post("/social/social/saveFriendCircle", data: data);
+    if (response['success']) {
+      return true;
+    }
+    return false;
   }
 }

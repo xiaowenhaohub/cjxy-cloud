@@ -1,8 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:my_fist_flutter/main.dart';
 import 'package:my_fist_flutter/model/MomentModel.dart';
-
 import '../../../AppTheme.dart';
 
 class MomentCard extends StatefulWidget {
@@ -181,8 +181,8 @@ class _MomentCardState extends State<MomentCard> {
         i++) {
       list.add(Container(
         constraints: BoxConstraints(maxHeight: 100),
-        child: Image(
-          image: NetworkImage(baseUrl + widget.momentModel.picture![i]),
+        child: CachedNetworkImage(
+          imageUrl: baseUrl + widget.momentModel.picture[i],
         ),
       ));
     }

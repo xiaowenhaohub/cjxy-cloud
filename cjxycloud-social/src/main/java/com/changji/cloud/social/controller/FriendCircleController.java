@@ -29,7 +29,7 @@ public class FriendCircleController {
     @RequiresPermissions("common:social:friendCircle")
     @ApiOperation("保存朋友圈")
     @Log(title = "保存朋友圈")
-    public ServerResponseEntity<Void> saveFriendCircleMessage(@Validated @RequestBody FriendCircleDTO friendCircleDTO) {
+    public ServerResponseEntity<Void> saveFriendCircleMessage( @RequestBody FriendCircleDTO friendCircleDTO) {
         friendCircleService.saveFriendCircleMessage(friendCircleDTO);
         return ServerResponseEntity.success();
     }

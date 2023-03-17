@@ -2,7 +2,12 @@ import 'dart:io';
 
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:my_fist_flutter/api/FileApi.dart';
+import 'package:my_fist_flutter/api/SocialApi.dart';
 import 'package:my_fist_flutter/main.dart';
+import 'package:my_fist_flutter/utils/uuidUtils.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import '../../../AppTheme.dart';
 
@@ -102,7 +107,9 @@ class _AddMomentPageState extends State<AddMomentPage> {
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              saveMoments();
+            },
             icon: Icon(Icons.check),
           ),
         ]);
@@ -165,5 +172,27 @@ class _AddMomentPageState extends State<AddMomentPage> {
     });
   }
 
-  void saveMoments() {}
+  void saveMoments() async {
+    if (fileList.isEmpty && textEditingController.text == '') {
+      SmartDialog.showToast("内容不能为空");
+      return;
+    }
+    SmartDialog.showLoading();
+    if (textEditingController.text == '') {
+      textEditingController.text = " ";
+    }
+
+    String picture = '';
+    if (fileList != []) {
+      picture = await FileApi.uploadManyImage(fileList);
+    }
+    bool result =
+        await SocialApi.savaMoment(textEditingController.text, picture);
+
+    LogUtil.v(result);
+    if (result) {
+      Navigator.of(context).pop();
+    }
+    SmartDialog.dismiss();
+  }
 }

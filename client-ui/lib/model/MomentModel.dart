@@ -26,7 +26,7 @@ class MomentModel {
   String nickName;
   String avatar;
   String content;
-  List<String>? picture;
+  List<String> picture = [];
   String location;
   int likedCount;
   DateTime createTime;
