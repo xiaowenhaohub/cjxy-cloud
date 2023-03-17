@@ -1,12 +1,9 @@
-
-
 import 'package:flutter/material.dart';
 
 import '../AppTheme.dart';
-import '../component/HomeDrawer.dart';
+import '../components/HomeDrawer.dart';
 
-class DrawerUserController extends StatefulWidget{
-
+class DrawerUserController extends StatefulWidget {
   const DrawerUserController({
     Key? key,
     this.drawerWidth = 250,
@@ -26,14 +23,12 @@ class DrawerUserController extends StatefulWidget{
   final Widget? menuView;
   final DrawerIndex? screenIndex;
 
-
-
   @override
   _DrawerUserController createState() => _DrawerUserController();
 }
 
-class _DrawerUserController extends State<DrawerUserController> with TickerProviderStateMixin {
-
+class _DrawerUserController extends State<DrawerUserController>
+    with TickerProviderStateMixin {
   ScrollController? scrollController;
   AnimationController? iconAnimationController;
   AnimationController? animationController;
@@ -47,43 +42,42 @@ class _DrawerUserController extends State<DrawerUserController> with TickerProvi
     iconAnimationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 0));
     iconAnimationController?.animateTo(1.0,
-          duration: const Duration(milliseconds: 0),
-          curve: Curves.fastOutSlowIn);
+        duration: const Duration(milliseconds: 0), curve: Curves.fastOutSlowIn);
     scrollController =
         ScrollController(initialScrollOffset: widget.drawerWidth);
     scrollController!.addListener(() {
-        if (scrollController!.offset <= 0) {
-          if (scrolloffset != 1.0) {
-            setState(() {
-              scrolloffset = 1.0;
-              try {
-                widget.drawerIsOpen!(true);
-              } catch (_) {}
-            });
-          }
-          iconAnimationController?.animateTo(0.0,
-              duration: const Duration(milliseconds: 0),
-              curve: Curves.fastOutSlowIn);
-        } else if (scrollController!.offset > 0 &&
-            scrollController!.offset < widget.drawerWidth.floor()) {
-          iconAnimationController?.animateTo(
-              (scrollController!.offset * 100 / (widget.drawerWidth)) / 100,
-              duration: const Duration(milliseconds: 0),
-              curve: Curves.fastOutSlowIn);
-        } else {
-          if (scrolloffset != 0.0) {
-            setState(() {
-              scrolloffset = 0.0;
-              try {
-                widget.drawerIsOpen!(false);
-              } catch (_) {}
-            });
-          }
-          iconAnimationController?.animateTo(1.0,
-              duration: const Duration(milliseconds: 0),
-              curve: Curves.fastOutSlowIn);
+      if (scrollController!.offset <= 0) {
+        if (scrolloffset != 1.0) {
+          setState(() {
+            scrolloffset = 1.0;
+            try {
+              widget.drawerIsOpen!(true);
+            } catch (_) {}
+          });
         }
-      });
+        iconAnimationController?.animateTo(0.0,
+            duration: const Duration(milliseconds: 0),
+            curve: Curves.fastOutSlowIn);
+      } else if (scrollController!.offset > 0 &&
+          scrollController!.offset < widget.drawerWidth.floor()) {
+        iconAnimationController?.animateTo(
+            (scrollController!.offset * 100 / (widget.drawerWidth)) / 100,
+            duration: const Duration(milliseconds: 0),
+            curve: Curves.fastOutSlowIn);
+      } else {
+        if (scrolloffset != 0.0) {
+          setState(() {
+            scrolloffset = 0.0;
+            try {
+              widget.drawerIsOpen!(false);
+            } catch (_) {}
+          });
+        }
+        iconAnimationController?.animateTo(1.0,
+            duration: const Duration(milliseconds: 0),
+            curve: Curves.fastOutSlowIn);
+      }
+    });
     WidgetsBinding.instance.addPostFrameCallback((_) => getInitState());
     super.initState();
   }
@@ -181,12 +175,12 @@ class _DrawerUserController extends State<DrawerUserController> with TickerProvi
                                 child: widget.menuView != null
                                     ? widget.menuView
                                     : AnimatedIcon(
-                                    color: isLightMode
-                                        ? AppTheme.grey
-                                        : AppTheme.grey,
-                                    icon: widget.animatedIconData ??
-                                        AnimatedIcons.arrow_menu,
-                                    progress: iconAnimationController!),
+                                        color: isLightMode
+                                            ? AppTheme.grey
+                                            : AppTheme.grey,
+                                        icon: widget.animatedIconData ??
+                                            AnimatedIcons.arrow_menu,
+                                        progress: iconAnimationController!),
                               ),
                               onTap: () {
                                 FocusScope.of(context)
@@ -208,7 +202,6 @@ class _DrawerUserController extends State<DrawerUserController> with TickerProvi
     );
   }
 
-
   void onDrawerClick() {
     //if scrollcontroller.offset != 0.0 then we set to closed the drawer(with animation to offset zero position) if is not 1 then open the drawer
     if (scrollController!.offset != 0.0) {
@@ -225,5 +218,4 @@ class _DrawerUserController extends State<DrawerUserController> with TickerProvi
       );
     }
   }
-
 }

@@ -14,7 +14,7 @@ public class FriendCircleComment extends BaseModel {
 
     private Long friendCircleId;
 
-    private Long userId;
+    private String account;
 
     private String content;
 
@@ -40,12 +40,12 @@ public class FriendCircleComment extends BaseModel {
         this.friendCircleId = friendCircleId;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getAccount() {
+        return account;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getContent() {

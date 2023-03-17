@@ -54,7 +54,7 @@ public class UserRelationshipServiceImpl implements UserRelationshipService {
         List<UserFriendCircleVO> requestList = new ArrayList();
         List<UserRelationship> userRelationships = userRelationshipMapper.queryOtherToMeFriendRequest(account);
         userRelationships.forEach(userRelationship -> {
-            ServerResponseEntity<UserFriendCircleVO> responseEntity = userFeignClient.queryUserDetailByAccount(userRelationship.getFriendAccount());
+            ServerResponseEntity<UserFriendCircleVO> responseEntity = userFeignClient.queryUserDetailByAccount(userRelationship.getUserAccount());
             if (!responseEntity.isSuccess()) {
                 throw new ServiceException(responseEntity.getMsg());
             }

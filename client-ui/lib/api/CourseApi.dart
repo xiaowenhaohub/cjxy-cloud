@@ -1,7 +1,7 @@
 import 'package:my_fist_flutter/api/UserApi.dart';
+import 'package:my_fist_flutter/components/ClassSchedule.dart';
 import 'package:my_fist_flutter/utils/HttpRequest.dart';
 import 'dart:math' as math;
-import '../component/ClassSchedule.dart';
 import '../model/UserInfo.dart';
 
 class CourseApi {

@@ -19,21 +19,47 @@ class FriendPage extends StatefulWidget {
 }
 
 class _FriendPageState extends State<FriendPage> {
+  List<Widget> friendList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(milliseconds: 100)).then((value) => getDate());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       color: AppTheme.white,
       child: Scaffold(
         appBar: getAppBar(),
-        body: Column(children: [
-          MediaQuery.removePadding(
-            context: context,
-            removeTop: true,
-            child: Expanded(child: getFriendList()),
-          )
-        ]),
+        body: RefreshIndicator(
+          onRefresh: getDate,
+          child: Column(children: [
+            MediaQuery.removePadding(
+              context: context,
+              removeTop: true,
+              child: Expanded(
+                  child: ListView(
+                children: friendList,
+              )),
+            )
+          ]),
+        ),
       ),
     );
+  }
+
+  ///下拉刷新方法,为list重新赋值
+  Future<void> getDate() async {
+    List<FriendModel> list = await SocialApi.getFriendList();
+    List<Widget> friendList = [];
+    list.forEach((item) {
+      friendList.add(friendWindow(item));
+    });
+    setState(() {
+      this.friendList = friendList;
+    });
   }
 
   AppBar getAppBar() {
@@ -75,29 +101,6 @@ class _FriendPageState extends State<FriendPage> {
   //     ),
   //   );
   // }
-
-  Widget getFriendList() {
-    return FutureBuilder(
-        future: SocialApi.getFriendList(),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<FriendModel>> snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(
-                child: CircularProgressIndicator(
-              color: AppTheme.white,
-            ));
-          }
-
-          List<Widget> friendList = [];
-          snapshot.data!.forEach((item) {
-            friendList.add(friendWindow(item));
-          });
-
-          return ListView(
-            children: friendList,
-          );
-        });
-  }
 
   onTap(FriendModel friendModel) async {
     UserInfo userInfo = await UserApi.getUserInfoByLocal();

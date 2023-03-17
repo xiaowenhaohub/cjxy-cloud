@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_fist_flutter/AppTheme.dart';
 import 'package:my_fist_flutter/api/MessageApi.dart';
 import 'package:my_fist_flutter/api/WebSocketApi.dart';
-import 'package:my_fist_flutter/component/TextInput/CustomTextInput.dart';
+import 'package:my_fist_flutter/components/TextInput/CustomTextInput.dart';
 import 'package:my_fist_flutter/model/FriendModel.dart';
 import 'package:my_fist_flutter/model/MessageModel.dart';
 import 'package:my_fist_flutter/model/UserInfo.dart';

@@ -1,8 +1,12 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:my_fist_flutter/api/SocialApi.dart';
 import 'package:my_fist_flutter/main.dart';
 import 'package:my_fist_flutter/model/MomentModel.dart';
+import 'package:my_fist_flutter/pages/moments/components/MomentDetails.dart';
 import '../../../AppTheme.dart';
 
 class MomentCard extends StatefulWidget {
@@ -18,22 +22,14 @@ class _MomentCardState extends State<MomentCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 5, right: 5, bottom: 5),
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          color: AppTheme.white,
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: AppTheme.grey.withOpacity(0.2),
-                offset: Offset(1.1, 1.1),
-                blurRadius: 10.0),
-          ],
-        ),
-        child: Column(
-          children: [index(), body(), bottom()],
-        ),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      width: MediaQuery.of(context).size.width,
+      decoration: const BoxDecoration(
+        color: AppTheme.white,
+      ),
+      child: Column(
+        children: [index(), body(), bottom()],
       ),
     );
   }
@@ -75,36 +71,40 @@ class _MomentCardState extends State<MomentCard> {
   }
 
   Widget body() {
-    return LayoutBuilder(builder: (context, constrains) {
-      return Container(
-        padding: EdgeInsets.only(bottom: 8),
-        width: constrains.maxWidth,
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              width: constrains.maxWidth,
-              child: Column(
-                children: [
-                  Container(
-                    width: constrains.maxWidth,
-                    child: Text(
-                      widget.momentModel.content,
-                      softWrap: true,
-                      textAlign: TextAlign.left,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 3,
-                      style: const TextStyle(fontSize: 15, color: Colors.black),
+    return InkWell(
+      onTap: navigator,
+      child: LayoutBuilder(builder: (context, constrains) {
+        return Container(
+          padding: EdgeInsets.only(bottom: 8),
+          width: constrains.maxWidth,
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                width: constrains.maxWidth,
+                child: Column(
+                  children: [
+                    Container(
+                      width: constrains.maxWidth,
+                      child: Text(
+                        widget.momentModel.content,
+                        softWrap: true,
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
+                        style:
+                            const TextStyle(fontSize: 15, color: Colors.black),
+                      ),
                     ),
-                  ),
-                  showPicture()
-                ],
-              ),
-            )
-          ],
-        ),
-      );
-    });
+                    showPicture()
+                  ],
+                ),
+              )
+            ],
+          ),
+        );
+      }),
+    );
   }
 
   Widget bottom() {
@@ -122,12 +122,9 @@ class _MomentCardState extends State<MomentCard> {
         child: Row(children: [
           bottomIcon("20", Icons.launch, () {}),
           bottomIcon("20", Icons.menu, () {}),
+          //点赞
           bottomIcon(widget.momentModel.likedCount.toString(),
-              Icons.thumb_up_alt_outlined, () {
-            setState(() {
-              widget.momentModel.liked = true;
-            });
-          }),
+              Icons.thumb_up_alt_outlined, likeOperation),
         ]),
       );
     });
@@ -138,7 +135,6 @@ class _MomentCardState extends State<MomentCard> {
 
     if (iconData == Icons.thumb_up_alt_outlined && widget.momentModel.liked) {
       icon = Icon(Icons.thumb_up, size: 15, color: AppTheme.red);
-      onTap = () {};
     }
 
     return Expanded(
@@ -190,5 +186,45 @@ class _MomentCardState extends State<MomentCard> {
     return Row(
       children: list,
     );
+  }
+
+  void navigator() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => MomentDetails(widget.momentModel)),
+    );
+  }
+
+  void likeOperation() {
+    // 未点赞
+    if (!widget.momentModel.liked) {
+      setState(() {
+        widget.momentModel.likedCount += 1;
+        widget.momentModel.liked = true;
+      });
+      SocialApi.liked(widget.momentModel.id.toString()).then((value) {
+        if (!value) {
+          setState(() {
+            widget.momentModel.likedCount -= 1;
+            widget.momentModel.liked = false;
+          });
+        }
+      });
+    } else {
+      /// 已点赞
+      setState(() {
+        widget.momentModel.likedCount -= 1;
+        widget.momentModel.liked = false;
+      });
+      SocialApi.liked(widget.momentModel.id.toString()).then((value) {
+        if (!value) {
+          setState(() {
+            widget.momentModel.likedCount += 1;
+            widget.momentModel.liked = true;
+          });
+        }
+      });
+    }
   }
 }

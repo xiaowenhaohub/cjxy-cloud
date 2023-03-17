@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:my_fist_flutter/AppTheme.dart';
 import 'package:my_fist_flutter/MyHomePageController.dart';
+import 'package:my_fist_flutter/components/HomeDrawer.dart';
 
-import 'component/HomeDrawer.dart';
 import 'custom_drawer/drawer_user_controller.dart';
 
-class NavigationHomeScreen extends StatefulWidget{
+class NavigationHomeScreen extends StatefulWidget {
   const NavigationHomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -15,7 +15,6 @@ class NavigationHomeScreen extends StatefulWidget{
 }
 
 class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
-
   Widget? screenView;
   DrawerIndex? drawerIndex;
 
@@ -26,7 +25,6 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,7 +33,6 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         top: false,
         bottom: false,
         child: Scaffold(
-          backgroundColor: AppTheme.nearlyWhite,
           body: DrawerUserController(
             screenIndex: drawerIndex,
             drawerWidth: MediaQuery.of(context).size.width * 0.5,
@@ -79,5 +76,4 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
       }
     }
   }
-
 }

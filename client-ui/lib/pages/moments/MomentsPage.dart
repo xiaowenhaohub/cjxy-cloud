@@ -43,10 +43,11 @@ class _MomentsPageState extends State<MomentsPage> {
 
   Future<List<MomentModel>> getDate() async {
     List<MomentModel> data = await SocialApi.getMoments(pageSize, pageNum);
-    pageNum += pageSize;
     if (momentsList.isEmpty) {
       momentsList.addAll(data);
     }
+    pageNum = momentsList.length;
+
     return data;
   }
 
@@ -57,6 +58,7 @@ class _MomentsPageState extends State<MomentsPage> {
         Container(
           color: AppTheme.white,
           child: Scaffold(
+            backgroundColor: AppTheme.greyWith,
             appBar: getAppBar(),
             body: FutureBuilder(
               future: getDate(),
@@ -67,10 +69,14 @@ class _MomentsPageState extends State<MomentsPage> {
                     padding: const EdgeInsets.all(10.0),
                     child: SizedBox(
                         width: MediaQuery.of(context).size.width,
-                        height: 50,
+                        height: 20,
                         child: const Center(
-                          child: CircularProgressIndicator(
-                            color: AppTheme.nearlyBlack,
+                          child: SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              color: AppTheme.nearlyBlack,
+                            ),
                           ),
                         )),
                   );
@@ -157,7 +163,7 @@ class _MomentsPageState extends State<MomentsPage> {
         style: TextStyle(color: Colors.black),
       ),
       shadowColor: AppTheme.white,
-      elevation: 5,
+      elevation: 0.5,
       actions: [
         IconButton(
           onPressed: () {

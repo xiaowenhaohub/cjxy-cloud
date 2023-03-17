@@ -1,14 +1,15 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:my_fist_flutter/AppTheme.dart';
+import 'package:my_fist_flutter/components/wrapper/KeepAliveWrapper.dart';
 import 'package:my_fist_flutter/constant.dart';
-import 'package:my_fist_flutter/component/CustomAnimatedBottomBar.dart';
+import 'package:my_fist_flutter/components/CustomAnimatedBottomBar.dart';
 import 'package:my_fist_flutter/main.dart';
 import 'package:my_fist_flutter/pages/friendsPage/FriendsPage.dart';
 
 import 'package:my_fist_flutter/pages/home/HomePage.dart';
 import 'package:my_fist_flutter/pages/moments/MomentsPage.dart';
 
-import 'component/HomeDrawer.dart';
 import 'fitness_app/fitness_app_home_screen.dart';
 import 'fitness_app/fitness_app_theme.dart';
 import 'fitness_app/models/tabIcon_data.dart';
@@ -29,6 +30,7 @@ class _MyHomePageState extends State<MyHomePageController>
   final _inactiveColor = Constant.nearlyDarkBlue;
   //bottom
   List titles = ["首页", "好友", "校园圈", "直播"];
+  late PageController _pageController;
   AnimationController? animationController;
   List<TabIconData> tabIconsList = TabIconData.tabIconsList;
 
@@ -36,6 +38,8 @@ class _MyHomePageState extends State<MyHomePageController>
 
   @override
   void initState() {
+    this._pageController =
+        PageController(initialPage: _currentIndex, keepPage: true);
     tabIconsList.forEach((TabIconData tab) {
       tab.isSelected = false;
     });
@@ -46,8 +50,9 @@ class _MyHomePageState extends State<MyHomePageController>
 
     _page = [
       HomePage(animationController!),
-      MomentsPage(animationController!),
-      FriendPage(animationController!),
+      // KeepAliveWrapper(child: HomePage(animationController!)),
+      KeepAliveWrapper(child: MomentsPage(animationController!)),
+      KeepAliveWrapper(child: FriendPage(animationController!)),
     ];
 
     super.initState();
@@ -69,7 +74,12 @@ class _MyHomePageState extends State<MyHomePageController>
             // return const SizedBox();
             return const Center(child: CircularProgressIndicator());
           } else {
-            return _page[_currentIndex];
+            // return _page[_currentIndex];
+            return PageView(
+              physics: NeverScrollableScrollPhysics(), // 禁止左右滑动切换页面
+              controller: _pageController,
+              children: _page,
+            );
           }
         },
       ),
@@ -98,6 +108,7 @@ class _MyHomePageState extends State<MyHomePageController>
         });
         setState(() {
           _currentIndex = index;
+          _pageController.jumpToPage(index);
         });
       },
       items: <MyBottomNavigationBarItem>[
@@ -113,14 +124,14 @@ class _MyHomePageState extends State<MyHomePageController>
           title: Text(
             titles[2],
           ),
-          activeColor: HexColor("#B6C796"),
+          activeColor: const Color(0xff333366),
           inactiveColor: _inactiveColor,
           textAlign: TextAlign.center,
         ),
         MyBottomNavigationBarItem(
           icon: const Icon(Icons.message),
           title: Text(titles[1]),
-          activeColor: HexColor("#9297C8"),
+          activeColor: const Color(0xff333366),
           inactiveColor: _inactiveColor,
           textAlign: TextAlign.center,
         ),

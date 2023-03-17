@@ -2,7 +2,6 @@ import 'dart:math' as math;
 import 'package:my_fist_flutter/model/UserInfo.dart';
 import 'package:my_fist_flutter/service/UserService.dart';
 import 'package:my_fist_flutter/utils/HttpUtils.dart';
-import '../component/ClassSchedule.dart';
 import '../api/CourseApi.dart';
 import '../model/QueryCourseDTO.dart';
 import '../utils/SharedPreferencesUtils.dart';

@@ -18,4 +18,6 @@ public interface FriendCircleCommentMapper {
      * @param friendCircleComment
      */
     void save(@Param("friendCircleComment") FriendCircleComment friendCircleComment);
+
+
 }

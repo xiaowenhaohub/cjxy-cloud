@@ -85,4 +85,14 @@ class SocialApi {
     }
     return false;
   }
+
+  /// 点赞校园圈
+  static Future<bool> liked(String id) async {
+    var response =
+        await HttpRequest.get("/social/social/likedFriendCircle/$id");
+    if (response['success']) {
+      return true;
+    }
+    return false;
+  }
 }

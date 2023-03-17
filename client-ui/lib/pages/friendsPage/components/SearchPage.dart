@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:my_fist_flutter/api/SocialApi.dart';
 import 'package:my_fist_flutter/api/UserApi.dart';
+import 'package:my_fist_flutter/components/TextInput/CustomTextInput.dart';
 import 'package:my_fist_flutter/model/UserInfo.dart';
 
 import '../../../AppTheme.dart';
-import '../../../component/TextInput/CustomTextInput.dart';
 import '../../../main.dart';
 import '../../../model/FriendModel.dart';
 

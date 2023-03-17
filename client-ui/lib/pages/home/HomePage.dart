@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_fist_flutter/AppTheme.dart';
 import 'package:my_fist_flutter/api/WebSocketApi.dart';
-import '../../component/ClassSchedule.dart';
-import '../../component/ui_view/title_view.dart';
+import 'package:my_fist_flutter/components/ClassSchedule.dart';
+import 'package:my_fist_flutter/components/ui_view/title_view.dart';
 import '../../fitness_app/fitness_app_theme.dart';
 import 'package:http/http.dart' as http;
 
