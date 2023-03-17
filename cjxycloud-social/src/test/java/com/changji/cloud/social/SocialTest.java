@@ -32,7 +32,7 @@ public class SocialTest {
     public void test05() {
         FriendCircleComment friendCircleComment = new FriendCircleComment();
         friendCircleComment.setFriendCircleId(1L);
-        friendCircleComment.setUserId(2L);
+//        friendCircleComment.setUserId(2L);
         friendCircleComment.setContent("test 9/23 11:02");
         friendCircleCommentMapper.save(friendCircleComment);
     }

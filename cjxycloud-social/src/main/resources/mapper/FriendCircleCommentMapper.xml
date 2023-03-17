@@ -6,9 +6,52 @@
         comment_id, friend_circle_id, user_id, content, like_count, root_comment_id, to_comment_id
     </sql>
 
+
     <insert id="save">
-        insert into friend_circle_comment (friend_circle_id, account, content, root_comment_id, to_comment_id )
-        values (#{friendCircleComment.friendCircleId}, #{friendCircleComment.account},
-                #{friendCircleComment.content}, #{friendCircleComment.rootCommentId}, #{friendCircleComment.toCommentId})
+        insert into friend_circle_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            friend_circle_id, account, content,
+            <if test="friendCircleComment.rootCommentId != null and friendCircleComment.rootCommentId != '' ">
+                root_comment_id,
+            </if>
+            <if test="friendCircleComment.toCommentId != null and friendCircleComment.toCommentId != '' ">
+                to_comment_id,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{friendCircleComment.friendCircleId}, #{friendCircleComment.account},
+            #{friendCircleComment.content},
+            <if test="friendCircleComment.rootCommentId != null and friendCircleComment.rootCommentId != '' ">
+                #{friendCircleComment.rootCommentId},
+            </if>
+            <if test="friendCircleComment.toCommentId != null and friendCircleComment.toCommentId != '' ">
+                #{friendCircleComment.toCommentId},
+            </if>
+        </trim>
     </insert>
+    <select id="findById" resultType="com.changji.cloud.social.model.FriendCircleComment">
+        select * from friend_circle_comment
+        <where>    comment_id = #{commentId}
+            <if test="friendId != null and friendId != ''">
+                and friend_circle_id = #{friendId}
+            </if>
+        </where>
+
+    </select>
+    <select id="getComments" resultType="com.changji.cloud.social.model.FriendCircleComment">
+        select * from friend_circle_comment
+            <where>
+                friend_circle_id = #{friendId}
+
+                <if test="rootCommentId == null || rootCommentId == ''">
+                    and root_comment_id IS NULL
+                </if>
+                <if test="rootCommentId != null and rootCommentId != ''">
+                    and root_comment_id = #{rootCommentId}
+                </if>
+
+            </where>
+            LIMIT #{page.pageSize} OFFSET #{page.pageNum}
+    </select>
 </mapper>
