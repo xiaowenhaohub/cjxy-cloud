@@ -54,4 +54,7 @@
             </where>
             LIMIT #{page.pageSize} OFFSET #{page.pageNum}
     </select>
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from friend_circle_comment where friend_circle_id = #{friendCircleId}
+    </select>
 </mapper>

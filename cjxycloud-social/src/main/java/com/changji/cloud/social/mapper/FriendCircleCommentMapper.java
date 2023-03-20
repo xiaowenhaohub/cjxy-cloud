@@ -37,4 +37,11 @@ public interface FriendCircleCommentMapper {
      */
     List<FriendCircleComment> getComments(@Param("friendId") Long friendId,@Param("rootCommentId") Long rootCommentId, @Param("page")Page page);
 
+    /**
+     * 查询评论数量
+     * @param friendCircleId
+     * @return
+     */
+    int count(@Param("friendCircleId") Long friendCircleId);
+
 }

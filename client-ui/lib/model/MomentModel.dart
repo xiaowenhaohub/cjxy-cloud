@@ -10,17 +10,17 @@ MomentModel momentModelFromJson(String str) =>
 String momentModelToJson(MomentModel data) => json.encode(data.toJson());
 
 class MomentModel {
-  MomentModel({
-    required this.id,
-    required this.nickName,
-    required this.avatar,
-    required this.content,
-    // required this.picture,
-    required this.location,
-    required this.likedCount,
-    required this.createTime,
-    required this.liked,
-  });
+  MomentModel(
+      {required this.id,
+      required this.nickName,
+      required this.avatar,
+      required this.content,
+      // required this.picture,
+      required this.location,
+      required this.likedCount,
+      required this.createTime,
+      required this.liked,
+      required this.commentCount});
 
   int id;
   String nickName;
@@ -31,18 +31,19 @@ class MomentModel {
   int likedCount;
   DateTime createTime;
   bool liked;
+  int commentCount;
 
   factory MomentModel.fromJson(Map<String, dynamic> json) => MomentModel(
-        id: json["id"],
-        nickName: json["nickName"],
-        avatar: json["avatar"],
-        content: json["content"],
-        // picture: json["picture"],
-        location: json["location"],
-        likedCount: json["likedCount"],
-        createTime: DateTime.parse(json["createTime"]),
-        liked: json["liked"],
-      );
+      id: json["id"],
+      nickName: json["nickName"],
+      avatar: json["avatar"],
+      content: json["content"],
+      // picture: json["picture"],
+      location: json["location"],
+      likedCount: json["likedCount"],
+      createTime: DateTime.parse(json["createTime"]),
+      liked: json["liked"],
+      commentCount: json["commentCount"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,

@@ -51,6 +51,11 @@ public class FriendCircleMessageVO {
     private boolean isLiked;
 
     /**
+     * 评论数
+     */
+    private Integer commentCount;
+
+    /**
      * 时间
      */
     private Date createTime;
@@ -121,6 +126,14 @@ public class FriendCircleMessageVO {
 
     public Date getCreateTime() {
         return createTime;
+    }
+
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
     }
 
     public void setCreateTime(Date createTime) {

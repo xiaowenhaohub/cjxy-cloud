@@ -9,7 +9,9 @@ import com.changji.cloud.common.core.model.Page;
  */
 
 public class GetCommentDTO extends Page {
+
     private Long friendCircleId;
+
     private Long rootCommentId;
 
     public Long getFriendCircleId() {
@@ -26,5 +28,13 @@ public class GetCommentDTO extends Page {
 
     public void setRootCommentId(Long rootCommentId) {
         this.rootCommentId = rootCommentId;
+    }
+
+    @Override
+    public String toString() {
+        return "GetCommentDTO{" +
+                "friendCircleId=" + friendCircleId +
+                ", rootCommentId=" + rootCommentId +
+                '}';
     }
 }

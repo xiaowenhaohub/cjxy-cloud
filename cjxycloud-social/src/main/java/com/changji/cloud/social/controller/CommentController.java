@@ -7,6 +7,7 @@ import com.changji.cloud.common.security.annotation.RequiresPermissions;
 import com.changji.cloud.social.model.FriendCircleComment;
 import com.changji.cloud.social.model.dto.CommentDTO;
 import com.changji.cloud.social.model.dto.GetCommentDTO;
+import com.changji.cloud.social.model.vo.CommentVO;
 import com.changji.cloud.social.service.CommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,8 +43,9 @@ public class CommentController {
     @RequiresPermissions("common:social:friendCircle")
     @ApiOperation("获取评论")
     @Log(title = "获取评论")
-    public ServerResponseEntity<List<FriendCircleComment>> get( @RequestBody GetCommentDTO commentDTO) {
-        List<FriendCircleComment> commentList = commentService.getCommentList(commentDTO.getFriendCircleId(), commentDTO.getRootCommentId(), commentDTO);
+    public ServerResponseEntity<List<CommentVO>> getComment(@Validated @RequestBody GetCommentDTO commentDTO) {
+        System.out.println(commentDTO);
+        List<CommentVO> commentList = commentService.getCommentList(commentDTO, commentDTO);
         return ServerResponseEntity.success(commentList);
     }
 

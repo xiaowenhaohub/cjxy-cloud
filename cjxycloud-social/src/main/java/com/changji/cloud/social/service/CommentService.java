@@ -3,6 +3,8 @@ package com.changji.cloud.social.service;
 import com.changji.cloud.common.core.model.Page;
 import com.changji.cloud.social.model.FriendCircleComment;
 import com.changji.cloud.social.model.dto.CommentDTO;
+import com.changji.cloud.social.model.dto.GetCommentDTO;
+import com.changji.cloud.social.model.vo.CommentVO;
 
 import java.util.List;
 
@@ -27,5 +29,12 @@ public interface CommentService {
      * @param page
      * @return
      */
-    List<FriendCircleComment> getCommentList(Long friendCircleId, Long rootCommentId, Page page);
+    List<CommentVO> getCommentList(GetCommentDTO commentDTO, Page page);
+
+    /**
+     * 获取评论数量
+     * @param friendCircleId
+     * @return
+     */
+    int getCommentCount(Long friendCircleId);
 }

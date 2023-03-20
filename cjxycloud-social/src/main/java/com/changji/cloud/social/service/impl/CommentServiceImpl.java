@@ -1,19 +1,25 @@
 package com.changji.cloud.social.service.impl;
 
+import com.changji.cloud.api.user.feign.UserFeignClient;
+import com.changji.cloud.api.user.feign.vo.UserFriendCircleVO;
 import com.changji.cloud.common.core.exception.ServiceException;
 import com.changji.cloud.common.core.model.Page;
+import com.changji.cloud.common.core.response.ServerResponseEntity;
 import com.changji.cloud.common.core.utils.StringUtils;
 import com.changji.cloud.common.security.utils.SecurityUtils;
 import com.changji.cloud.social.mapper.FriendCircleCommentMapper;
 import com.changji.cloud.social.model.FriendCircleComment;
 import com.changji.cloud.social.model.FriendCircleMessage;
 import com.changji.cloud.social.model.dto.CommentDTO;
+import com.changji.cloud.social.model.dto.GetCommentDTO;
+import com.changji.cloud.social.model.vo.CommentVO;
 import com.changji.cloud.social.service.CommentService;
 import com.changji.cloud.social.service.FriendCircleService;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +38,10 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private MapperFacade mapperFacade;
+
+
+    @Autowired
+    private UserFeignClient userFeignClient;
 
     @Override
     public boolean save(CommentDTO commentDTO) {
@@ -81,11 +91,30 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<FriendCircleComment> getCommentList(Long friendCircleId,Long rootCommentId ,Page page) {
+    public List<CommentVO> getCommentList(GetCommentDTO commentDTO, Page page) {
         if (page.getPageNum() == null) {
             page.setPageNum(0);
             page.setPageSize(10);
         }
-        return commentMapper.getComments(friendCircleId,rootCommentId, page);
+        List<FriendCircleComment> comments = commentMapper.getComments(commentDTO.getFriendCircleId(), commentDTO.getRootCommentId(), page);
+        List<CommentVO> commentVOS = new ArrayList<>();
+        comments.forEach(comment -> {
+            CommentVO commentVO = mapperFacade.map(comment, CommentVO.class);
+            ServerResponseEntity<UserFriendCircleVO> responseEntity = userFeignClient.queryUserDetailByAccount(commentVO.getAccount());
+            if (!responseEntity.isSuccess()) {
+                throw new ServiceException("查询用户信息失败");
+            }
+            UserFriendCircleVO userFeignVO = responseEntity.getData();
+            commentVO.setNickName(userFeignVO.getNickName());
+            commentVO.setAvatar(userFeignVO.getPicture());
+            commentVOS.add(commentVO);
+        });
+
+        return commentVOS;
+    }
+
+    @Override
+    public int getCommentCount(Long friendCircleId) {
+        return commentMapper.count(friendCircleId);
     }
 }

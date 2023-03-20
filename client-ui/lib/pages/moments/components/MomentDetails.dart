@@ -2,7 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:my_fist_flutter/AppTheme.dart';
+import 'package:my_fist_flutter/api/CommentApi.dart';
 import 'package:my_fist_flutter/main.dart';
+import 'package:my_fist_flutter/model/CommentModel.dart';
 import 'package:my_fist_flutter/model/MomentModel.dart';
 
 class MomentDetails extends StatefulWidget {
@@ -17,7 +19,7 @@ class MomentDetails extends StatefulWidget {
 class _MomentDetailsState extends State<MomentDetails> {
   final ScrollController _scrollController = ScrollController();
   String baseUrl = "http://43.132.148.227/api/mi/file/view/";
-
+  List<CommentModel> commentList = [];
   @override
   void initState() {
     super.initState();
@@ -212,7 +214,7 @@ class _MomentDetailsState extends State<MomentDetails> {
           Container(
             width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.only(left: 10, bottom: 5),
-
+            margin: EdgeInsets.only(bottom: 10),
             // color: AppTheme.nearlyBlack,
             decoration: const BoxDecoration(
               border: Border(
@@ -233,27 +235,121 @@ class _MomentDetailsState extends State<MomentDetails> {
     );
   }
 
+  Future<List<CommentModel>> getData() async {
+    List<CommentModel> list = await CommentApi.getComment("12", null);
+    commentList = list;
+    return commentList;
+  }
+
   Widget showComment() {
-    return Container(
-      padding: EdgeInsets.only(top: 10),
-      width: MediaQuery.of(context).size.width,
-      height: 100,
-      child: Center(
-          child: Column(
-        children: const [
-          SizedBox(
-            height: 60,
-            child: Image(
-              image: AssetImage('assets/images/shafa.png'),
-            ),
-          ),
-          Text(
-            "还没有人评论哦~快来抢沙发",
-            style: TextStyle(fontSize: 11, color: AppTheme.deactivatedText),
-          )
-        ],
-      )),
+    return FutureBuilder(
+      future: getData(),
+      builder:
+          (BuildContext context, AsyncSnapshot<List<CommentModel>> snapshot) {
+        if (!snapshot.hasData) {
+          return Container(
+            padding: EdgeInsets.only(top: 10),
+            width: MediaQuery.of(context).size.width,
+            height: 100,
+            child: Center(
+                child: Column(
+              children: const [
+                SizedBox(
+                  height: 60,
+                  child: Image(
+                    image: AssetImage('assets/images/shafa.png'),
+                  ),
+                ),
+                Text(
+                  "还没有人评论哦~快来抢沙发",
+                  style:
+                      TextStyle(fontSize: 11, color: AppTheme.deactivatedText),
+                )
+              ],
+            )),
+          );
+        }
+        // return Container();
+
+        return Column(
+          children: _renderRow(),
+        );
+      },
     );
+  }
+
+  List<Widget> _renderRow() {
+    List<Widget> listWidget = [];
+    commentList.forEach((element) {
+      listWidget.add(
+        Container(
+          color: AppTheme.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const SizedBox(width: 10),
+                  Flexible(
+                    child: ClipOval(
+                      child: Container(
+                        child: Image(
+                          image: NetworkImage(element.avatar),
+                          height: 30,
+                          width: 30,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Container(
+                    width: 200,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          element.nickName,
+                          style: const TextStyle(
+                            color: AppTheme.nearlyBlack,
+                            fontSize: 13,
+                          ),
+                        ),
+                        Text(
+                          element.createTime.toString().substring(0, 16),
+                          style: const TextStyle(
+                            color: AppTheme.deactivatedText,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Expanded(child: SizedBox()),
+                ],
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 50, top: 5, bottom: 5),
+                width: MediaQuery.of(context).size.width,
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(width: 0.07),
+                  ),
+                ),
+                child: Text(
+                  element.content,
+                  style: const TextStyle(fontWeight: FontWeight.w500),
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    });
+
+    return listWidget;
   }
 
   ///下拉刷新方法,为list重新赋值

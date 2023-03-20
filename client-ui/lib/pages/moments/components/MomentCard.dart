@@ -121,7 +121,9 @@ class _MomentCardState extends State<MomentCard> {
         ),
         child: Row(children: [
           bottomIcon("20", Icons.launch, () {}),
-          bottomIcon("20", Icons.menu, () {}),
+          // 评论
+          bottomIcon(
+              widget.momentModel.commentCount.toString(), Icons.menu, () {}),
           //点赞
           bottomIcon(widget.momentModel.likedCount.toString(),
               Icons.thumb_up_alt_outlined, likeOperation),

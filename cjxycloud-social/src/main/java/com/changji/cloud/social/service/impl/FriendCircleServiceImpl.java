@@ -12,6 +12,7 @@ import com.changji.cloud.social.enums.LikedStatusEnum;
 import com.changji.cloud.social.mapper.FriendCircleMessageMapper;
 import com.changji.cloud.social.model.FriendCircleLike;
 import com.changji.cloud.social.model.FriendCircleMessage;
+import com.changji.cloud.social.service.CommentService;
 import com.changji.cloud.social.service.FriendCircleService;
 import com.changji.cloud.social.service.LikedRedisService;
 import com.changji.cloud.social.service.LikedService;
@@ -50,6 +51,9 @@ public class FriendCircleServiceImpl implements FriendCircleService {
 
     @Autowired
     private MapperFacade mapperFacade;
+
+    @Autowired
+    private CommentService commentService;
 
 
     @Override
@@ -128,6 +132,9 @@ public class FriendCircleServiceImpl implements FriendCircleService {
             friendCircleVO.setNickName(userFeignVO.getNickName());
             //设置头像
             friendCircleVO.setAvatar(userFeignVO.getPicture());
+
+            // 评论数
+            friendCircleVO.setCommentCount(commentService.getCommentCount(friendCircleVO.getId()));
             friendCircleMessageVOList.add(friendCircleVO);
         }
         return friendCircleMessageVOList;
