@@ -44,4 +44,11 @@ public interface FriendCircleCommentMapper {
      */
     int count(@Param("friendCircleId") Long friendCircleId);
 
+    /**
+     * 查询顶级评论的评论数量
+     * @param commentId
+     * @return
+     */
+    int countByCommentId(@Param("commentId")Long commentId);
+
 }

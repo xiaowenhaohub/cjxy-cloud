@@ -107,6 +107,11 @@ public class CommentServiceImpl implements CommentService {
             UserFriendCircleVO userFeignVO = responseEntity.getData();
             commentVO.setNickName(userFeignVO.getNickName());
             commentVO.setAvatar(userFeignVO.getPicture());
+            if (commentVO.getRootCommentId() == null) {
+                commentVO.setCommentCount(commentMapper.countByCommentId(commentVO.getCommentId()));
+            }else {
+                commentVO.setCommentCount(0);
+            }
             commentVOS.add(commentVO);
         });
 

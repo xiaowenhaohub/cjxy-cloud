@@ -19,4 +19,19 @@ class CommentApi {
     });
     return commentList;
   }
+
+  /// 发表评论
+  static Future<bool> sendComment(
+      String friendCircleId, String? rootCommentId, String content) async {
+    Map<String, dynamic> data = {
+      "friendCircleId": friendCircleId,
+      "rootCommentId": rootCommentId,
+      "content": content
+    };
+    var response = await HttpRequest.post("/social/comment/save", data: data);
+    if (response["success"]) {
+      return true;
+    }
+    return false;
+  }
 }

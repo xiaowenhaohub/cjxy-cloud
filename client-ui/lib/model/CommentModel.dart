@@ -20,6 +20,7 @@ class CommentModel {
     this.toCommentId,
     required this.nickName,
     required this.avatar,
+    required this.commentCount,
     required this.createTime,
   });
 
@@ -32,6 +33,7 @@ class CommentModel {
   dynamic toCommentId;
   String nickName;
   String avatar;
+  int commentCount;
   DateTime createTime;
 
   factory CommentModel.fromJson(Map<String, dynamic> json) => CommentModel(
@@ -44,6 +46,7 @@ class CommentModel {
         toCommentId: json["toCommentId"],
         nickName: json["nickName"],
         avatar: json["avatar"],
+        commentCount: json["commentCount"],
         createTime: DateTime.parse(json["createTime"]),
       );
 
@@ -57,6 +60,7 @@ class CommentModel {
         "toCommentId": toCommentId,
         "nickName": nickName,
         "avatar": avatar,
+        "commentCount": commentCount,
         "createTime": createTime.toIso8601String(),
       };
 }

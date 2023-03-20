@@ -57,4 +57,7 @@
     <select id="count" resultType="java.lang.Integer">
         select count(*) from friend_circle_comment where friend_circle_id = #{friendCircleId}
     </select>
+    <select id="countByCommentId" resultType="java.lang.Integer">
+        select count(*) from friend_circle_comment where root_comment_id = #{commentId}
+    </select>
 </mapper>

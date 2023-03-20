@@ -28,11 +28,21 @@ public class CommentVO {
 
     private String avatar;
 
+    private Integer commentCount;
+
     private Date createTime;
 
 
     public Long getCommentId() {
         return commentId;
+    }
+
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
     }
 
     public void setCommentId(Long commentId) {
