@@ -45,10 +45,10 @@ dependencies:
   shared_preferences: ^2.0.15
   provider: ^6.0.3
   web_socket_channel: ^2.2.0
-  wechat_assets_picker: ^6.3.1
   uuid: ^3.0.7
   flutter_smart_dialog: ^4.9.0+3
   cached_network_image: ^3.2.3
+  wechat_assets_picker: ^8.3.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
