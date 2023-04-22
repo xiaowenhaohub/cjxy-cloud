@@ -154,8 +154,7 @@ class _AddMomentPageState extends State<AddMomentPage> {
   }
 
   void _pickImage() async {
-    final List<AssetEntity>? assets =
-        await AssetPicker.pickAssets(context, maxAssets: 10);
+    final List<AssetEntity>? assets = await AssetPicker.pickAssets(context);
     if (assets == null) {
       return;
     }
