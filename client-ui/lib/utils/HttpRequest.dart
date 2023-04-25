@@ -14,7 +14,7 @@ typedef RequestCallBack = void Function(Map data);
 class HttpRequest {
   // 配置 Dio 实例
   static final BaseOptions _options = BaseOptions(
-    baseUrl: 'http://192.168.31.61:4230',
+    baseUrl: 'http://172.20.10.2:4230',
     // baseUrl: 'http://192.168.101.2:4230',
   );
 
