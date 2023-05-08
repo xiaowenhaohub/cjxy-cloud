@@ -274,6 +274,8 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   void sendMessage() {
+    LogUtil.v("------------");
+
     WebSocketApi.sendMessage(
         widget.friendModel.userAccount, textEditingController.text);
     MessageModel message = MessageModel(

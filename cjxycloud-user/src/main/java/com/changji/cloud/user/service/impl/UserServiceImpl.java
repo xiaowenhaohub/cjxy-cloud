@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void save(UserDTO userDTO) {
         User user = mapperFacade.map(userDTO, User.class);
+        user.setPicture("http://43.132.148.227/api/mi/file/view/1650792201787150336");
         usersMapper.save(user);
     }
 

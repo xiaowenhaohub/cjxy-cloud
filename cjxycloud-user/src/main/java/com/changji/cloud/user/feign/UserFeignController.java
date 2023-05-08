@@ -31,6 +31,7 @@ public class UserFeignController implements UserFeignClient {
 
     @Override
     public ServerResponseEntity<Object> saveUserInfo(@Validated UserDTO userDTO) {
+
         userService.save(userDTO);
         return ServerResponseEntity.success();
     }

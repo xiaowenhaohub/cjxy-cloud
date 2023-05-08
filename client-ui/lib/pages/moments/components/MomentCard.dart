@@ -120,7 +120,7 @@ class _MomentCardState extends State<MomentCard> {
           )),
         ),
         child: Row(children: [
-          bottomIcon("20", Icons.launch, () {}),
+          bottomIcon("0", Icons.launch, () {}),
           // 评论
           bottomIcon(
               widget.momentModel.commentCount.toString(), Icons.menu, () {}),

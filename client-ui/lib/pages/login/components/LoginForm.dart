@@ -1,4 +1,6 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:my_fist_flutter/AppTheme.dart';
 import 'package:my_fist_flutter/api/AuthApi.dart';
 import 'package:my_fist_flutter/api/UserApi.dart';
@@ -18,6 +20,8 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   String loading = '1';
+  String? account = null;
+  String? password = null;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +33,10 @@ class _LoginFormState extends State<LoginForm> {
             textInputAction: TextInputAction.next,
             cursorColor: Constant.kPrimaryColor,
             onSaved: (email) {},
+            onChanged: (account) {
+              LogUtil.v(account);
+              this.account = account;
+            },
             decoration: InputDecoration(
               hintText: "学号",
               prefixIcon: Padding(
@@ -43,6 +51,9 @@ class _LoginFormState extends State<LoginForm> {
               textInputAction: TextInputAction.done,
               obscureText: true,
               cursorColor: Constant.kPrimaryColor,
+              onChanged: (password) {
+                this.password = password;
+              },
               decoration: InputDecoration(
                 hintText: "密码",
                 prefixIcon: Padding(
@@ -60,11 +71,25 @@ class _LoginFormState extends State<LoginForm> {
                 return ElevatedButton(
                   onPressed: () async {
                     try {
+                      LogUtil.v(password);
+                      LogUtil.v(account);
+                      if (account == null ||
+                          account == '' ||
+                          password == null ||
+                          password == '') {
+                        EasyLoading.showInfo('账号或密码为空');
+                        return;
+                      }
                       setState(() {
                         loading = '0';
                       });
+
                       bool isSuccess =
-                          await AuthApi.login("1945829064", "(jiang.4234)");
+                          // await AuthApi.login("1945829064", "(jiang.4234)");
+                          await AuthApi.login(account!, password!);
+                      if (!isSuccess) {
+                        return;
+                      }
                       isSuccess = await UserApi.queryUserInfo();
                       if (!isSuccess) {
                         return;
