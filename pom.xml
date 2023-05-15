@@ -47,7 +47,6 @@
         <seata.version>1.4.2</seata.version>
         <nacos.version>2.0.1</nacos.version>
         <hytrix.version>2.2.6.RELEASE</hytrix.version>
-
         <swagger.bootstrap.ui>1.9.6</swagger.bootstrap.ui>
         <orika.version>1.5.4</orika.version>
         <jsoup.version>1.13.1</jsoup.version>
@@ -57,7 +56,6 @@
         <hutool.version>5.5.8</hutool.version>
         <mybatis-spring-boot-starter.version>2.1.4</mybatis-spring-boot-starter.version>
         <log4j.version>2.17.1</log4j.version>
-
         <druid.version>1.2.11</druid.version>
         <dynamic-ds.version>3.5.1</dynamic-ds.version>
         <pagehelper.version>1.4.3</pagehelper.version>
@@ -71,8 +69,6 @@
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>${pagehelper.version}</version>
             </dependency>
-
-
             <!-- springboot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
